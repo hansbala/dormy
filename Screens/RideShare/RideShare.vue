@@ -1,15 +1,30 @@
 <template>
-    <view>
-        <text> This is the get help screen </text>
+    <view class="container">
+        <text> This is the ride share screen </text>
+
+        <!-- Bottom navigation section -->
+        <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar>
     </view>
 </template>
 
 <script>
+import BottomNavBar from "../Navigation/TabNavBar.vue";
 export default {
     props: {
         navigation: {
             type: Object
         }
+    },
+    components: {
+        BottomNavBar
     }
 };
 </script>
+
+<style>
+.container {
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+</style>

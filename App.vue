@@ -18,6 +18,7 @@ import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
 import RideShareScreen from "./Screens/RideShare/RideShare.vue";
 import RoomateScreen from "./Screens/Roomate/Roomate.vue";
+import MessagesScreen from "./Screens/Communication/Messages.vue";
 
 // Will need the switch navigator for the login flow
 // to essentially remove the "Back" button from different
@@ -46,7 +47,8 @@ const StackNavigator = createSwitchNavigator({
     Home: HomeScreen,
     Housing: HousingScreen,
     RideShare: RideShareScreen,
-    Roomate: RoomateScreen
+    Roomate: RoomateScreen,
+    Messages: MessagesScreen
 });
 
 const AppNavigator = createAppContainer(StackNavigator);

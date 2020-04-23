@@ -6,25 +6,25 @@
                 :source="require('../../assets/navbar_icons/search.png')"
             />
         </touchable-opacity>
-        <touchable-opacity class="icon-wrapper">
+        <touchable-opacity :on-press="goHousing" class="icon-wrapper">
             <image
                 class="icon icon-active"
                 :source="require('../../assets/navbar_icons/house.png')"
             />
         </touchable-opacity>
-        <touchable-opacity class="icon-wrapper">
+        <touchable-opacity :on-press="goRoomate" class="icon-wrapper">
             <image
                 class="icon icon-active"
                 :source="require('../../assets/navbar_icons/roomates.png')"
             />
         </touchable-opacity>
-        <touchable-opacity class="icon-wrapper">
+        <touchable-opacity :on-press="goRideShare" class="icon-wrapper">
             <image
                 class="icon icon-active"
                 :source="require('../../assets/navbar_icons/car.png')"
             />
         </touchable-opacity>
-        <touchable-opacity class="icon-wrapper">
+        <touchable-opacity :on-press="goMessages" class="icon-wrapper">
             <image
                 class="icon icon-active"
                 :source="require('../../assets/navbar_icons/bell.png')"
@@ -42,7 +42,19 @@ export default {
     },
     methods: {
         goHome() {
-            this.navigation.openDrawer();
+            this.navigation.navigate("Home");
+        },
+        goHousing() {
+            this.navigation.navigate("Housing");
+        },
+        goRideShare() {
+            this.navigation.navigate("RideShare");
+        },
+        goRoomate() {
+            this.navigation.navigate("Roomate");
+        },
+        goMessages() {
+            this.navigation.navigate("Messages");
         }
     }
 };

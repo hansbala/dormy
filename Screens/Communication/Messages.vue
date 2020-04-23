@@ -1,6 +1,6 @@
 <template>
     <view class="container">
-        <text> This is the roomate screen </text>
+        <text> This is the messages screen </text>
 
         <!-- Bottom navigation section -->
         <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar>
