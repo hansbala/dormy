@@ -11,6 +11,7 @@ import {
 } from "vue-native-router";
 
 import StartScreen from "./Start.vue";
+import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
 import ContactsScreen from "./Screens/DrawerScreen/Contacts.vue";
 import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
@@ -48,7 +49,8 @@ const StackNavigator = createSwitchNavigator({
     Housing: HousingScreen,
     RideShare: RideShareScreen,
     Roomate: RoomateScreen,
-    Messages: MessagesScreen
+    Messages: MessagesScreen,
+    "Create Account": CreateAccountScreen,
 });
 
 const AppNavigator = createAppContainer(StackNavigator);
