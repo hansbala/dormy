@@ -57,12 +57,13 @@ Most of the shit available in React Native, can directly be used in Vue Native p
 
 
 ## TODO
-* Login/Sign-up functionality
-* App integration with Firebase
+* ~~Login/Sign-up functionality~~
+* ~~App integration with Firebase~~
 * Home screen
 * Ride-sharing
 * Roommate matching
 * Navigation (Might have to nest SwitchNavigator inside TabNavigator and DrawerNavigator to match the mockup)
 * Please upload all assets including icons, backdrops, and define useful variables in `variables.js` such as the required accent colors and shit like that.
 * Figure out shit related to `blah@blah.edu` address verification. (What happens if we are using `OAuth2`?
+* Forgot password shit?
 
