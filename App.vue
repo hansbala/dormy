@@ -12,6 +12,7 @@ import {
 
 import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
+import LoginScreen from "./Screens/UserRegistration/Login.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
 import ContactsScreen from "./Screens/DrawerScreen/Contacts.vue";
 import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
@@ -51,6 +52,7 @@ const StackNavigator = createSwitchNavigator({
     Roomate: RoomateScreen,
     Messages: MessagesScreen,
     "Create Account": CreateAccountScreen,
+    Login: LoginScreen,
 });
 
 const AppNavigator = createAppContainer(StackNavigator);

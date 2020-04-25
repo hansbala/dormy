@@ -51,7 +51,7 @@ import { Alert } from "react-native";
 import { firebaseAuth } from "../../environment/config.js";
 export default {
     props: {
-        naviagtion: {
+        navigation: {
             type: Object
         }
     },
@@ -64,19 +64,7 @@ export default {
         };
     },
     methods: {
-        createAccountHandler() {
-            /*
-            if (this.email !== this.confirmEmail || 
-                this.password !== this.confirmPassword ||
-                this.email === "" || this.password === "") {
-                // The check failed
-                Alert.alert(
-                    "User Registration Error",
-                    "Check the details and enter it again",
-                    { cancelable: false }
-                );
-                return;
-            }*/
+        createAccountHandler(){
             if (this.email === "" || this.password === "") {
                 // The check failed
                 Alert.alert(
@@ -90,20 +78,21 @@ export default {
             // a callback, and navigate to the home screen
             firebaseAuth
                 .createUserWithEmailAndPassword(this.email, this.password)
-                .then(() => this.naviagtion.navigate("Home"))
+                .then(() => this.navigation.navigate("Home"))
                 .catch(error => {
+                    console.log(error);
                     // Could not create the account, so give
                     // a popup to the user with a chance to
                     // probably sign-up again?
                     Alert.alert(
                         "User Registration Error",
-                        "Failed to create your account with dormy! You may want to try again!",
+                        "Failed to create your account with dormy! You may want to try again!" + error,
                         { cancelable: false }
                     );
                 });
         },
         goSignIn() {
-            this.navigation.naviagte("Sign In");
+            this.navigation.navigate("Login");
         },
     }
 };

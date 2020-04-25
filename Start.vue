@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         onPressSignIn() {
-            this.navigation.navigate("Home");
+            this.navigation.navigate("Login");
         },
         onPressCreateAccount() {
             this.navigation.navigate("Create Account");
