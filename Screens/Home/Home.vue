@@ -169,10 +169,8 @@ export default {
         };
     },
     methods: {
-        onButtonPress() {
-            this.navigation.navigate("Start");
-        },
         navDrawerOpen() {
+            console.log(this.navigation);
             this.navigation.openDrawer();
         }
     },
