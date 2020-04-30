@@ -3,7 +3,13 @@
         <text> This is the roomate screen </text>
 
         <!-- Bottom navigation section -->
-        <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar>
+        <bottom-nav-bar 
+            :searchActive=false
+            :housingActive=false
+            :roommateActive=true
+            :rideShareActive=false
+            :notifActive=false
+            :navigation="this.props.navigation"></bottom-nav-bar>
     </view>
 </template>
 

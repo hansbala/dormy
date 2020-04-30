@@ -3,7 +3,13 @@
         <text> This is the ride share screen </text>
 
         <!-- Bottom navigation section -->
-        <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar>
+        <bottom-nav-bar 
+            :searchActive=false
+            :housingActive=false
+            :roommateActive=false
+            :rideShareActive=true
+            :notifActive=false
+            :navigation="this.props.navigation"></bottom-nav-bar>
     </view>
 </template>
 

@@ -3,31 +3,46 @@
         <touchable-opacity :on-press="goHome" class="icon-wrapper">
             <image
                 class="icon icon-active"
-                :source="require('../../assets/navbar_icons/search.png')"
+                :source="searchActive? 
+                    require('../../assets/png_icons/navbar/search-active.png')
+                    :
+                    require('../../assets/png_icons/navbar/search-inactive.png')"
             />
         </touchable-opacity>
         <touchable-opacity :on-press="goHousing" class="icon-wrapper">
             <image
                 class="icon icon-active"
-                :source="require('../../assets/navbar_icons/house.png')"
+                :source="housingActive? 
+                    require('../../assets/png_icons/navbar/housing-active.png')
+                    :
+                    require('../../assets/png_icons/navbar/housing-inactive.png')"
             />
         </touchable-opacity>
         <touchable-opacity :on-press="goRoomate" class="icon-wrapper">
             <image
                 class="icon icon-active"
-                :source="require('../../assets/navbar_icons/roomates.png')"
+                :source="roommateActive? 
+                    require('../../assets/png_icons/navbar/roommates-active.png')
+                    :
+                    require('../../assets/png_icons/navbar/roommates-inactive.png')"
             />
         </touchable-opacity>
         <touchable-opacity :on-press="goRideShare" class="icon-wrapper">
             <image
                 class="icon icon-active"
-                :source="require('../../assets/navbar_icons/car.png')"
+                :source="rideShareActive? 
+                    require('../../assets/png_icons/navbar/carpool-active.png')
+                    :
+                    require('../../assets/png_icons/navbar/carpool-inactive.png')"
             />
         </touchable-opacity>
         <touchable-opacity :on-press="goMessages" class="icon-wrapper">
             <image
                 class="icon icon-active"
-                :source="require('../../assets/navbar_icons/bell.png')"
+                :source="notifActive? 
+                    require('../../assets/png_icons/navbar/notif-active.png')
+                    :
+                    require('../../assets/png_icons/navbar/notif-inactive.png')"
             />
         </touchable-opacity>
     </view>
@@ -38,7 +53,12 @@ export default {
     props: {
         navigation: {
             type: Object
-        }
+        },
+        searchActive: true,
+        housingActive: false,
+        roommateActive: false,
+        rideShareActive: false,
+        notifActive: false,
     },
     methods: {
         goHome() {
@@ -55,7 +75,7 @@ export default {
         },
         goMessages() {
             this.navigation.navigate("Messages");
-        }
+        },
     }
 };
 </script>

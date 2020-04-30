@@ -3,7 +3,13 @@
         <text> This is the messages screen </text>
 
         <!-- Bottom navigation section -->
-        <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar>
+        <bottom-nav-bar 
+            :searchActive=false
+            :housingActive=false
+            :roomateActive=false
+            :rideShareActive=false
+            :notifActive=true
+            :navigation="this.props.navigation"></bottom-nav-bar>
     </view>
 </template>
 
