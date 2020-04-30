@@ -2,8 +2,8 @@
     <view class="container">
         <view class="dormy-descriptor-wrapper">
             <image
-                :style="{ width: 70, height: 70 }"
-                :source="require('./assets/icon.png')"
+                :style="{ width: 100, height: 100 }"
+                :source="require('./assets/png_icons/logo.png')"
             />
             <text class="dormy-welcomer">
                 Welcome to Dormy!

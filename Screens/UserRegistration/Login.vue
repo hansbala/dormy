@@ -2,7 +2,7 @@
     <view class="container">
         <image
             class="dormy-icon"
-            :source="require('../../assets/icon.png')"
+            :source="require('../../assets/png_icons/logo.png')"
         />
         <view class="user-entry-wrapper">
             <text class="input-classifier"> Email </text>
@@ -79,8 +79,8 @@ export default {
     margin: 50;
 }
 .dormy-icon {
-    width: 70;
-    height: 70;
+    width: 120;
+    height: 120;
 }
 .user-entry-wrapper {
 }

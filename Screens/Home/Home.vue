@@ -13,7 +13,7 @@
             >
                 <image
                     class="menu-icon"
-                    :source="require('../../assets/hamburger_menu.png')"
+                    :source="require('../../assets/png_icons/hamburger-nav.png')"
                 />
             </touchable-opacity>
             <text-input class="search-bar" v-model="searchQuery" />
