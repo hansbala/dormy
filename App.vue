@@ -7,8 +7,12 @@ import {
     createAppContainer,
     createStackNavigator,
     createSwitchNavigator,
-    createDrawerNavigator
+    createDrawerNavigator,
+    createBottomTabNavigator,
 } from "vue-native-router";
+
+import React from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
@@ -31,31 +35,202 @@ import MessagesScreen from "./Screens/Communication/Messages.vue";
 // The tab naviagtor holds the home/search, housing, ridesharing,
 // messages, and other screens as deemed fit
 
-const DrawerNavigator = createDrawerNavigator(
-    {
-        Home: HomeScreen,
-        Start: StartScreen,
-        Contacts: ContactsScreen,
-        Settings: SettingsScreen,
-        "Get Help": GetHelpScreen
+// Auth stack which switches between login, create account, and landing page
+const AuthStack = createStackNavigator({
+    Landing: {
+        screen: StartScreen,
+        navigationOptions: {
+            headerTitle: 'Dormy!',
+        },
     },
-    {
-        initialRouteName: "Start"
-    }
-);
-
-const StackNavigator = createSwitchNavigator({
-    Drawer: DrawerNavigator,
-    Home: HomeScreen,
-    Housing: HousingScreen,
-    RideShare: RideShareScreen,
-    Roomate: RoomateScreen,
-    Messages: MessagesScreen,
-    "Create Account": CreateAccountScreen,
-    Login: LoginScreen,
+    "Create Account": {
+        screen: CreateAccountScreen,
+        navigationOptions: {
+            headerTitle: 'Create Account',
+        },
+    },
+    Login: {
+        screen: LoginScreen,
+        navigationOptions: {
+            headerTitle: 'Sign In',
+        },
+    },
 });
 
-const AppNavigator = createAppContainer(StackNavigator);
+// Main application tabs
+const MainTabs = createBottomTabNavigator({
+    Home: {
+        screen: HomeScreen,
+        navigationOptions: {
+            tabBarIcon: ({focused, color, size}) => {
+                const styles = StyleSheet.create({
+                    tinyLogo: {
+                        width: 30,
+                        height: 30,
+                    }
+                })
+                if (focused) {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/search-active.png")} />;
+                } else {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/search-inactive.png")} />;
+                }
+            },
+            tabBarOptions: {
+                showLabel: false,
+            }
+        },
+    },
+    Housing: {
+        screen: HousingScreen,
+        navigationOptions: {
+            tabBarIcon: ({focused, color, size}) => {
+                const styles = StyleSheet.create({
+                    tinyLogo: {
+                        width: 30,
+                        height: 30,
+                    }
+                })
+                if (focused) {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/housing-active.png")} />;
+                } else {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/housing-inactive.png")} />;
+                }
+            },
+            tabBarOptions: {
+                showLabel: false,
+            }
+        },
+    },
+    Roomate: {
+        screen: RoomateScreen,
+        navigationOptions: {
+            tabBarIcon: ({focused, color, size}) => {
+                const styles = StyleSheet.create({
+                    tinyLogo: {
+                        width: 30,
+                        height: 30,
+                    }
+                })
+                if (focused) {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/roommates-active.png")} />;
+                } else {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/roommates-inactive.png")} />;
+                }
+            },
+            tabBarOptions: {
+                showLabel: false,
+            }
+        },
+    },
+    RideShare: {
+        screen: RideShareScreen,
+        navigationOptions: {
+            tabBarIcon: ({focused, color, size}) => {
+                const styles = StyleSheet.create({
+                    tinyLogo: {
+                        width: 30,
+                        height: 30,
+                    }
+                })
+                if (focused) {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/carpool-active.png")} />;
+                } else {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/carpool-inactive.png")} />;
+                }
+            },
+            tabBarOptions: {
+                showLabel: false,
+            }
+        },
+    },
+    Messages: {
+        screen: MessagesScreen,
+        navigationOptions: {
+            tabBarIcon: ({focused, color, size}) => {
+                const styles = StyleSheet.create({
+                    tinyLogo: {
+                        width: 30,
+                        height: 30,
+                    }
+                })
+                if (focused) {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/notif-active.png")} />;
+                } else {
+                    return <Image 
+                        style={styles.tinyLogo}
+                        source={require("./assets/png_icons/navbar/notif-inactive.png")} />;
+                }
+            },
+            tabBarOptions: {
+                showLabel: false,
+            }
+        },
+    },
+});
+
+// Main drawer for the application
+const MainDrawer = createDrawerNavigator({
+    Home: MainTabs,
+    Contacts: ContactsScreen,
+    Settings: SettingsScreen,
+    "Get Help": GetHelpScreen,
+})
+
+// The main app with both navigation workflows
+const App = createSwitchNavigator({
+    Auth: {
+        screen: AuthStack,
+    },
+    App: {
+        screen: MainDrawer,
+    },
+});
+
+const AppNavigator = createAppContainer(App);
+
+// const DrawerNavigator = createDrawerNavigator(
+//     {
+//         Home: HomeScreen,
+//         Start: StartScreen,
+//         Contacts: ContactsScreen,
+//         Settings: SettingsScreen,
+//         "Get Help": GetHelpScreen
+//     },
+//     {
+//         initialRouteName: "Start"
+//     }
+// );
+
+// const StackNavigator = createSwitchNavigator({
+//     Drawer: DrawerNavigator,
+//     Home: HomeScreen,
+//     Housing: HousingScreen,
+//     RideShare: RideShareScreen,
+//     Roomate: RoomateScreen,
+//     Messages: MessagesScreen,
+//     "Create Account": CreateAccountScreen,
+//     Login: LoginScreen,
+// });
+
+// const AppNavigator = createAppContainer(StackNavigator);
 
 export default {
     components: { AppNavigator }
