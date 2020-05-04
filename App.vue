@@ -27,6 +27,7 @@ import ContactsScreen from "./Screens/DrawerScreen/Contacts.vue";
 import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
 import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
+import AddHousingScreen from "./Screens/Housing/AddHousing.vue";
 import RideShareScreen from "./Screens/RideShare/RideShare.vue";
 import RoomateScreen from "./Screens/Roomate/Roomate.vue";
 import MessagesScreen from "./Screens/Communication/Messages.vue";
@@ -63,7 +64,25 @@ const AuthStack = createStackNavigator({
         },
     },
 });
+// Housing Stack
+const HousingNavigatorStack = createStackNavigator({
+    HomeFeed: {
+        screen: HousingScreen,
+        navigationOptions: {
+            title: "Home Feed",
+            header: null,
+        }
+    },
+    AddHousing: {
+        screen: AddHousingScreen,
+        navigationOptions: {
+            title: "Add a listing!",
+            header: null,
+        }
+    }
+})
 
+// Ride Share stack
 const RideShareNavigatorStack = createStackNavigator({
     FindRideShare: {
         screen: RideShareScreen,
@@ -109,7 +128,7 @@ const MainTabs = createBottomTabNavigator({
         },
     },
     Housing: {
-        screen: HousingScreen,
+        screen: HousingNavigatorStack,
         navigationOptions: {
             tabBarIcon: ({focused, color, size}) => {
                 const styles = StyleSheet.create({

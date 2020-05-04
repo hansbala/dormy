@@ -14,7 +14,7 @@ screen should work:
         <!-- Header that stays fixed at the top -->
         <view class="header-wrapper">
             <text-input class="search-bar" v-model="searchQuery" />
-            <touchable-opacity class="menu-icon-wrapper">
+            <touchable-opacity :on-press="addHousingListing" class="menu-icon-wrapper">
                 <image
                     class="menu-icon"
                     :source="require('../../assets/plus_icon.png')"
@@ -90,6 +90,8 @@ screen should work:
 
 <script>
 import BottomNavBar from "../Navigation/TabNavBar.vue";
+import { firebaseAuth } from "../../environment/config.js";
+
 export default {
     props: {
         navigation: {
@@ -100,6 +102,13 @@ export default {
         return {
             searchQuery: "Search here.."
         };
+    },
+    methods: {
+        addHousingListing() {
+            const uid = firebaseAuth.currentUser.uid;
+            console.log(uid);
+            this.navigation.navigate("AddHousing");
+        }
     },
     components: {
         BottomNavBar

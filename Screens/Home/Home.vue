@@ -167,7 +167,6 @@ export default {
     },
     methods: {
         navDrawerOpen() {
-            console.log(this.navigation);
             this.navigation.openDrawer();
         }
     },
