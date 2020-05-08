@@ -8,6 +8,12 @@
             :source="require('../../assets/png_icons/logo.png')"
         />
         <view class="user-entry-wrapper">
+            <text class="input-classifier"> Name </text>
+            <text-input
+                class="text-entry"
+                :autoCorrect=false
+                v-model="realName"
+            />
             <text class="input-classifier"> Email </text>
             <text-input
                 class="text-entry"
@@ -49,6 +55,7 @@
 <script>
 import { Alert } from "react-native";
 import { firebaseAuth } from "../../environment/config.js";
+import { createUserAccount } from "../../api/userAuth.js";
 export default {
     props: {
         navigation: {
@@ -61,11 +68,22 @@ export default {
             confirmEmail: "",
             password: "",
             confirmPassword: "",
+            realName: "",
         };
     },
     methods: {
+        createAccountFailure() {
+            Alert.alert(
+                "User Registration Error",
+                "Failed to create your account with dormy! You may want to try again!",
+                { cancelable: false }
+            );
+        },
+        navigateHome() {
+            this.navigation.navigate("Home");
+        },
         createAccountHandler(){
-            if (this.email === "" || this.password === "") {
+            if (this.email === "" || this.password === "" || this.realName === "") {
                 // The check failed
                 Alert.alert(
                     "User Registration Error",
@@ -74,22 +92,24 @@ export default {
                 );
                 return;
             }
+            // Send over to the api to create the account
+            createUserAccount(this.email, this.password, this.realName, this.navigateHome, this.createAccountFailure);
             // If firebase account creation succeeds, we execute
             // a callback, and navigate to the home screen
-            firebaseAuth
-                .createUserWithEmailAndPassword(this.email, this.password)
-                .then(() => this.navigation.navigate("Home"))
-                .catch(error => {
-                    console.log(error);
-                    // Could not create the account, so give
-                    // a popup to the user with a chance to
-                    // probably sign-up again?
-                    Alert.alert(
-                        "User Registration Error",
-                        "Failed to create your account with dormy! You may want to try again!" + error,
-                        { cancelable: false }
-                    );
-                });
+            // firebaseAuth
+            //     .createUserWithEmailAndPassword(this.email, this.password)
+            //     .then(() => this.navigation.navigate("Home"))
+            //     .catch(error => {
+            //         console.log(error);
+            //         // Could not create the account, so give
+            //         // a popup to the user with a chance to
+            //         // probably sign-up again?
+            //         Alert.alert(
+            //             "User Registration Error",
+            //             "Failed to create your account with dormy! You may want to try again!" + error,
+            //             { cancelable: false }
+            //         );
+            //     });
         },
         goSignIn() {
             this.navigation.navigate("Login");

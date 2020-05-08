@@ -202,7 +202,7 @@ export default {
         decreaseRiders: function() {
             if(this.numberOfRiders == 0){
                 return;
-            }else{
+            } else{
                 this.numberOfRiders --;
             }
         },

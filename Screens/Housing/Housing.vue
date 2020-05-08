@@ -13,6 +13,9 @@ screen should work:
     <view class="container">
         <!-- Header that stays fixed at the top -->
         <view class="header-wrapper">
+            <touchable-opacity :on-press="navDrawerOpen">
+                <image class="menu-icon" :source="require('../../assets/png_icons/hamburger-nav.png')"/>
+            </touchable-opacity>
             <text-input class="search-bar" v-model="searchQuery" />
             <touchable-opacity :on-press="addHousingListing" class="menu-icon-wrapper">
                 <image
@@ -23,6 +26,11 @@ screen should work:
         </view>
 
         <scroll-view class="scrollable-section">
+            <RefreshControl
+                :refreshing="refreshing"
+                :onRefresh="_onRefresh"
+                :title="'Fetching more housing listings...'"
+            />
             <!-- Sort by renting, sub-leasing, or saved -->
             <view class="filter-wrapper">
                 <touchable-opacity class="filter-toggler red-br">
@@ -48,49 +56,21 @@ screen should work:
                 </touchable-opacity>
             </view>
 
-            <!-- Each individual card -->
-            <touchable-opacity class="card">
-                <image
-                    class="card-image"
-                    :source="require('../../assets/test_pictures/bedroom.jpg')"
-                />
-                <!-- Price, number of bedrooms and something like "apartment for rent" -->
-                <view class="card-info-section-wrapper">
-                    <view class="card-info">
-                        <text class="card-info-txt card-info-ppm">
-                            $2,250/Mo
-                        </text>
-                        <text class="card-info-txt">2 Bds</text>
-                        <text class="card-info-txt">1 bth</text>
-                        <text class="card-info-txt">1500 sqft</text>
-                    </view>
-                    <view>
-                        <text class="card-info-descriptor">
-                            <text class="apartment-type"> Apartment </text>
-                            for rent
-                        </text>
-                    </view>
-                </view>
-
-                <!-- Address preview -->
-                <view class="address-preview-wrapper">
-                    <image
-                        class="address-preview-icon"
-                        :source="require('../../assets/location_icon.png')"
-                    />
-                    <text class="address-preview">
-                        69 Brown Street, Providence, RI, 02912
-                    </text>
-                </view>
-            </touchable-opacity>
+            <view v-for="listing in housingListings" :key="listing.id">
+                <housing-card :listing=listing></housing-card>
+            </view>
         </scroll-view>
 
     </view>
 </template>
 
 <script>
+import { RefreshControl } from 'react-native';
 import BottomNavBar from "../Navigation/TabNavBar.vue";
 import { firebaseAuth } from "../../environment/config.js";
+import { getHousingListings } from "../../api/housingApi.js";
+import HousingCard from "./HousingCard";
+import { firebaseStore } from "../../environment/config.js";
 
 export default {
     props: {
@@ -100,18 +80,43 @@ export default {
     },
     data() {
         return {
-            searchQuery: "Search here.."
+            searchQuery: "Search here..",
+            housingListings: [],
+            refreshing: false
         };
+    },
+    mounted() {
+        this.fetchHousingListings();
+        const timestamp = new Date();
+        console.log(timestamp);
+        firebaseStore.child('housing/1.jpg').getDownloadURL().then(function(url) {
+            console.log(url);
+        }).catch(function(err) {
+            console.log(err);
+        });
     },
     methods: {
         addHousingListing() {
-            const uid = firebaseAuth.currentUser.uid;
-            console.log(uid);
+            getHousingListings();
             this.navigation.navigate("AddHousing");
+        },
+        async fetchHousingListings() {
+            let res = await getHousingListings();
+            this.housingListings = res;
+        },
+        navDrawerOpen() {
+            this.navigation.openDrawer();
+        },
+        _onRefresh() {
+            this.refreshing = true;
+            this.fetchHousingListings();
+            this.refreshing = false;
         }
     },
     components: {
-        BottomNavBar
+        BottomNavBar,
+        HousingCard,
+        RefreshControl,
     }
 };
 </script>
@@ -121,6 +126,12 @@ export default {
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
+}
+.menu-icon {
+    width: 30;
+    height: 30;
+    padding-left: 10;
+    padding-right: 10;
 }
 .header-wrapper {
     flex-direction: row;
@@ -140,7 +151,7 @@ export default {
     color: #a9a9a9;
 }
 .menu-icon {
-    margin-left: 10;
+    /* margin-left: 10; */
     width: 40;
     height: 40;
 }
@@ -179,45 +190,5 @@ export default {
 .blue-br {
     border-color: blue;
 }
-.card {
-    margin: 10;
-    border-radius: 10;
-    border-color: #eee;
-    border-width: 3;
-}
-.card-image {
-    border-radius: 5;
-    height: 200;
-    width: 100%;
-}
-.card-info {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.card-info-ppm {
-    flex: 2;
-    font-size: 18;
-}
-.card-info-txt {
-    margin: 10;
-    font-size: 14;
-    font-weight: bold;
-}
-.card-info-descriptor {
-    font-size: 14;
-    padding: 5;
-    color: #a9a9a9;
-}
-.apartment-type {
-    font-size: 14;
-    color: orange;
-    font-weight: bold;
-}
-.address-preview-wrapper {
-    flex-direction: row;
-    align-items: center;
-    padding: 10;
-    background-color: #eee;
-}
+
 </style>

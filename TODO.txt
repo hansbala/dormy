@@ -1,0 +1,5 @@
+- Add images to firebase storage (housing_pic/*UUID*.jpg)
+- Add apartment type and renting type to add housing list
+
+
+- PLUS: Add touch functionality and another screen to the housing store

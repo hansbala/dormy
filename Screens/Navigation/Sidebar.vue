@@ -5,7 +5,7 @@
                 :source="require('../../assets/Images/rmate-man1.jpeg')"
                 class="nav-drawer-img"
             />
-            <text class="user-name"> John Doe </text>
+            <text class="user-name">{{realName}} </text>
            
             <nb-list class="drawer-items-list">
                 <nb-list-item
@@ -32,8 +32,7 @@
 </template>
 
 <script>
-
-
+import { getUserNameFromUID, getCurrentUID } from "../../api/userAuth.js";
 export default {
     props: {
         navigation:{
@@ -60,7 +59,11 @@ export default {
                     route: "Get Help"
                 }
             ],
+            realName: 'John Doe',
         }
+    },
+    mounted() {
+        this.getUserName();
     },
     methods: {
         handleListItemClick(screen) {
@@ -68,6 +71,13 @@ export default {
         },
         logout() {
             this.navigation.navigate("Logout");
+        },
+        async getUserName() {
+            let localRealName = await getUserNameFromUID(getCurrentUID(), this.getUserNameFail);
+            this.realName = localRealName;
+        },
+        getUserNameFail() {
+            this.realName = 'John Doe'
         }
     }
 }
