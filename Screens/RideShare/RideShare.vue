@@ -5,7 +5,7 @@
                 <touchable-opacity :on-press="navDrawerOpen">
                     <image class="menu-icon" :source="require('../../assets/png_icons/hamburger-nav.png')"/>
                 </touchable-opacity>
-                <text-input class="search-bar" placeholder="Search for rideshares"/>
+                <text-input class="search-bar" placeholder="Search for rideshares" v-model="searchString"/>
             </view>
 
             <nb-card>
@@ -13,30 +13,30 @@
                     <scroll-view :horizontal="true" class="ride-scroll-section" :contentContainerStyle="{alignItems: 'center', justifyContent: 'center'}">
 
                         <touchable-opacity class="new-ride-share-btn" :on-press="goToMakeRideShare">
-                            <image class="icon" :source="require('../../assets/Icons/green-plus-sign.png')"/>
+                            <image class="icon" :source="require('../../assets/png_icons/green-plus-sign.png')"/>
                         </touchable-opacity>
 
-                        <touchable-opacity class="filter-btn">
+                        <!-- <touchable-opacity class="filter-btn">
                             <text class="filter-btn-txt">Location</text>
-                        </touchable-opacity>
+                        </touchable-opacity> -->
 
-                        <touchable-opacity class="filter-btn">
+                        <touchable-opacity class="filter-btn" :on-press="sortByDate">
                             <text class="filter-btn-txt">Date</text>
                         </touchable-opacity>
 
-                        <touchable-opacity  class="ride-btn" style="background-color: black">
+                        <touchable-opacity  class="ride-btn" style="background-color: black" :on-press="() => changeRideType('Uber')">
                             <text style="color:white; text-align: center"> Uber </text>
                         </touchable-opacity>
 
-                        <touchable-opacity  class="ride-btn" style="background-color: #ff00bf">
+                        <touchable-opacity  class="ride-btn" style="background-color: #ff00bf" :on-press="() => changeRideType('Lyft')">
                             <text style="color:white; text-align: center"> Lyft </text>
                         </touchable-opacity>
 
-                        <touchable-opacity  class="ride-btn" style="background-color: #FEC33A">
+                        <touchable-opacity  class="ride-btn" style="background-color: #FEC33A" :on-press="() => changeRideType('Taxi')">
                             <text style="text-align: center"> Taxi </text>
                         </touchable-opacity>
 
-                        <touchable-opacity  class="ride-btn" style="background-color: #89cff0 ">
+                        <touchable-opacity  class="ride-btn" style="background-color: #89cff0" :on-press="() => changeRideType('Carpool')">
                             <text style="color:white; text-align: center"> Carpool </text>
                         </touchable-opacity>
                     </scroll-view>
@@ -45,24 +45,28 @@
             </nb-card>
 
             <ScrollView>
-                <view v-for="user in dataArray" :key="user.username">
-                     <ride-card :user=user></ride-card>
+                <RefreshControl
+                    :refreshing="refreshing"
+                    :onRefresh="_onRefresh"
+                    :title="'Fetching rideshare posts...'"
+                />
+                <view v-for="post in filteredPosts" :key="post.id">
+                    <ride-card :post=post></ride-card>
                 </view>
             </ScrollView>
         </view>
-        <!-- Bottom navigation section -->
-        <!-- <bottom-nav-bar :navigation="this.props.navigation"></bottom-nav-bar> -->
     </view>
 </template>
 
 <script>
-
-import { DrawerActions } from 'react-navigation-drawer'
+import { RefreshControl } from 'react-native';
 import BottomNavBar from "../Navigation/TabNavBar.vue";
-
+import { firebaseAuth } from "../../environment/config.js";
+import { getRideshares } from "../../api/rideshareApi.js";
 import RideCard from './UserCard.vue';
+import { firebaseStore } from "../../environment/config.js";
 
-
+import moment from 'moment'
 
 export default {
     props: {
@@ -71,55 +75,79 @@ export default {
         }
     },
     data: {
-        visibleItems: 1,
-        dataArray: [
-            {
-                username: 'Katie Mac',
-                img: '../../assets/Images/rmate-man1.jpeg',
-                dates: {
-                    postDate: '1 hr',
-                    rideShareDate: '18 DEC',
-                    rideShareTime: 'Morning'
-                },
-                location: {
-                    start: 'Providence',
-                    end: 'T.F. Green Airport'
-                },
-                numPassengers: 2,
-                rideType: 'Uber',
-                comment: 'Hit me up if you wanna split a ride'
-            },
-            {
-                username: 'John Doe',
-                img: '../../assets/Images/rmate-man1.jpeg',
-                dates: {
-                    postDate: '4 hr',
-                    rideShareDate: '20 DEC',
-                    rideShareTime: 'Afternoon'
-                },
-                location: {
-                    start: 'Providence',
-                    end: 'T.F. Green Airport'
-                },
-                numPassengers: 3,
-                rideType: 'Lyft',
-                comment: 'Hit me up if you wanna split a ride'
-            }
-        ],
+        dataArray: [],
+        searchString: '',
+        rideType: '',
+        dateSort: true, //True:newest->oldest false: oldest->newest
+        refreshing: false
+    },
+    mounted () {
+        this.fetchRideshares();
     },
     methods: {
-        navDrawerOpen() {
-            this.navigation.dispatch(DrawerActions.toggleDrawer());
+        async fetchRideshares() {
+            let res = await getRideshares();
+            this.dataArray = res;
         },
-        searchQuery () {
-            console.log("searching");
+        navDrawerOpen() {
+            this.navigation.openDrawer();
         },
         goToMakeRideShare () {
             this.navigation.navigate("MakeRideShare");
+        },
+        changeRideType (type) {
+            console.log(type);
+            if (type == this.rideType) {
+                this.rideType = ''
+                console.log(this.rideType);
+            }else{
+                this.rideType = type;
+                console.log(this.rideType);
+            }
+        },
+        sortByDate(){
+            let time = this.dataArray[0].data.dates.fireBasePostedDate;
+            let time2 = this.dataArray[0].data.dates.longDate;
+            console.log(time);
+            console.log(time2);
+
+
+            // let d = new Date(time2);
+            // console.log(d);
+            // let date = time.toDate();
+            // console.log(date);
+
+
+            // if(this.dateSort){
+            //     console.log( this.dataArray.sort((a, b) => {
+            //         return new Date(b.data.dates.postedDate) - new Date(a.data.dates.postedDate)
+            //     }));
+            //     this.dateSort = !this.dateSort;
+            //     console.log("newest-oldest: ", this.dataArray);
+            // }else{
+            //     this.dataArray = this.dataArray.sort((a, b) => {
+            //         return new Date(a.data.dates.postedDate) - new Date(b.data.dates.postedDate)
+            //     });
+            //     this.dateSort = !this.dateSort;
+            //     console.log("oldest-newest: ", this.dataArray);
+            // }  
+           
+        },
+        _onRefresh() {
+            this.refreshing = true;
+            this.fetchRideshares();
+            this.refreshing = false;
         }
+
+    },
+    computed: {
+        filteredPosts () {
+            return this.dataArray.filter((post) => {
+                return ((post.username.match(this.searchString)|| post.location.pickup.match(this.searchString)) ||  post.location.dropoff.match(this.searchString)) && (post.rideType.match(this.rideType))
+            })   
+        },
     },
     components: {
-        // BottomNavBar,
         RideCard
     }
 };

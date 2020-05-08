@@ -7,10 +7,10 @@
                         <image class="icon" :source="require('../../assets/Icons/Arrow-left.png')"/>
                     </nb-button> 
                     <view class="header-text"> 
-                        <nb-text >Schedule Your Ride</nb-text>
+                        <nb-text>Schedule Your Ride</nb-text>
                     </view>
                     
-                    <nb-button  class="info-btn" :on-press="increaseRiders" light>
+                    <nb-button  class="info-btn" :on-press="displayInfo" light>
                         <image class="icon" :source="require('../../assets/Icons/more-info.png')"/>
                     </nb-button>  
                 </view>
@@ -23,11 +23,11 @@
                         <view class="horizontal-flex">
                             <view class="vertical-flex">
                                 <text class="card-heading">From</text>
-                                <text-input class="destination-input" placeholder="Enter Pickup" />
+                                <text-input class="destination-input" placeholder="Enter Pickup" v-model="rideShare.location.pickup"/>
                             </view>
                             <view class="vertical-flex">
                                 <text class="card-heading">To</text>
-                                <text-input class="destination-input" placeholder="Enter Destination" />
+                                <text-input class="destination-input" placeholder="Enter Destination" v-model="rideShare.location.dropoff"/>
                             </view> 
                         </view>
                     </nb-card-item>
@@ -37,7 +37,6 @@
                         <view class="horizontal-flex">
                             <view class="vertical-flex">
                                 <text class="card-heading">Departure</text>
-                                <!-- When Refactoring make this a component!!! -->
                                 <view class="horizontal-flex date-picker">
                                     <image class="icon" :source="require('../../assets/Icons/cal-sched.png')"/>
                                     <nb-date-picker
@@ -65,7 +64,7 @@
                                         mode="dropdown"
                                         placeholder="Select Time"
                                         headerBackButtonText="Back"
-                                        :selectedValue="timeValue"
+                                        :selectedValue="rideShare.dates.rideShareTime"
                                         :onValueChange="onTimeChange"
                                     >
                                         <nb-item v-for="time in times" 
@@ -85,7 +84,9 @@
 
                             <view class="horizontal-flex fair-splitting">
                                 <view class="horizontal-flex">
+
                                     <image class="icon" :source="require('../../assets/Icons/Nav-bar/roommates-inactive.png')"/>
+
                                     <text class="adults-txt">ADULTS</text>
                                 </view>
 
@@ -94,7 +95,7 @@
                                         <text> - </text>
                                     </touchable-opacity>
 
-                                    <text class="num-riders">{{numberOfRiders}}</text>
+                                    <text class="num-riders">{{rideShare.numPassengers}}</text>
 
                                     <touchable-opacity :on-press="increaseRiders" class="num-rider-btn">
                                         <text> + </text>
@@ -110,19 +111,19 @@
                             <text class="card-heading">Select Ride Type</text>
 
                             <scroll-view :horizontal="true" >
-                                <touchable-opacity :on-press="decreaseRiders" class="ride-btn" style="background-color: black">
+                                <touchable-opacity :on-press="() => rideType('Uber')" class="ride-btn" style="background-color: black">
                                     <text style="color:white; text-align: center"> Uber </text>
                                 </touchable-opacity>
 
-                                <touchable-opacity :on-press="decreaseRiders" class="ride-btn" style="background-color: #ff00bf">
+                                <touchable-opacity :on-press="() => rideType('Lyft')" class="ride-btn" style="background-color: #ff00bf">
                                     <text style="color:white; text-align: center"> Lyft </text>
                                 </touchable-opacity>
 
-                                 <touchable-opacity :on-press="decreaseRiders" class="ride-btn" style="background-color: #FEC33A">
+                                 <touchable-opacity :on-press="() => rideType('Taxi')" class="ride-btn" style="background-color: #FEC33A">
                                     <text style="text-align: center"> Taxi </text>
                                 </touchable-opacity>
 
-                                 <touchable-opacity :on-press="decreaseRiders" class="ride-btn" style="background-color: #89cff0 ">
+                                 <touchable-opacity :on-press="() => rideType('Carpool')" class="ride-btn" style="background-color: #89cff0 ">
                                     <text style="color:white; text-align: center"> Carpool </text>
                                 </touchable-opacity>
                             </scroll-view>
@@ -133,7 +134,7 @@
                         <nb-form class="text-area">
                             <view class="vertical-flex">
                                 <text class="card-heading">Comments or Additional Details</text>
-                                <nb-textarea  :rowSpan="5" bordered/>
+                                <nb-textarea  :rowSpan="5" bordered v-model="rideShare.comment"/>
                             </view>
                         </nb-form>
                     </nb-card-item>
@@ -142,10 +143,11 @@
 
                 <!-- Bottom Post Ride Share Button -->
                 <view class="post-btn-wrapper">
-                    <nb-button class="post-btn" :on-press="goToRideShare">
+                    <nb-button class="post-btn" :on-press="addPostDate">
                         <nb-text>Post Ride Share</nb-text>
                     </nb-button>
                 </view>
+
             </nb-content>
         </nb-container>
         <!-- Bottom navigation section -->
@@ -154,24 +156,55 @@
 </template>
 
 <script>
+/* TODOS: 
+    -Validate inputs for Schedule Ride 
+*/
+import React from "react";
+import { Alert } from "react-native";
 import BottomNavBar from "../Navigation/TabNavBar.vue";
 import moment from 'moment'
+
+import { postRideshare } from "../../api/rideshareApi.js";
+import { firebaseAuth } from "../../environment/config.js";
+import { getUserNameFromUID } from '../../api/userAuth.js';
+
+
 export default {
-    data () {
-        return { 
-            defaultDate: new Date(),
-            minimumDate: new Date(),
-            maximumDate: new Date('2020-12-31'),
-            chosenFromDate:  new Date(),
-            chosenReturnDate: new Date(),
-            numberOfRiders: 1,
-            timeValue: '',
-            times: this.generateTimes()
-        }
+    mounted () {
+        this.getUserNameFromUID();
     },
     props: {
         navigation: {
             type: Object
+        }
+    },
+    data () {
+        return { 
+            rideShare: {
+                userUID: firebaseAuth.currentUser.uid,
+                username: '',
+                profilepic: '',
+                dates: {
+
+                    rideShareDate: '',
+                    rideShareTime: '',
+                    postedDate: new Date(),
+                    fireBasePostedDate: new Date(),
+                    longDate: new Date(),
+                },
+                location: {
+                    pickup: '',
+                    dropoff: '',
+                },
+                numPassengers: 1,
+                rideType: '',
+                comment: '',
+            },
+            defaultDate: new Date(),
+            minimumDate: new Date(),
+            maximumDate: new Date('2020-12-31'),
+            times: this.generateTimes(),
+            formError: ''
         }
     },
     components: {
@@ -179,35 +212,29 @@ export default {
     },
     methods: {
         formatFromDate: function(date) {
-           this.chosenFromDate = moment(date).format("MMM Do");
-           return this.chosenFromDate
-        },
-        formatReturnDate: function(date) {
-            this.chosenReturnDate = moment(date).format("MMM Do");
-            return this.chosenReturnDate
+           this.rideShare.dates.rideShareDate = moment(date).format("MMM Do");
+            // this.rideShare.dates.rideShareDate = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+            return this.rideShare.dates.rideShareDate
         },
         setFromDate: function(newDate) {
-            this.chosenFromDate = newDate;
-        },
-        setReturnDate: function(newDate) {
-            this.chosenReturnDate = newDate;
+            this.rideShare.dates.rideShareDate = newDate;
         },
         increaseRiders: function () {
-            if(this.numberOfRiders == 8) {
+            if(this.rideShare.numPassengers == 8) {
                 return;
             } else{
-                this.numberOfRiders ++;
+                this.rideShare.numPassengers ++;
             }
         },
         decreaseRiders: function() {
-            if(this.numberOfRiders == 0){
+            if(this.rideShare.numPassengers == 0){
                 return;
-            } else{
-                this.numberOfRiders --;
+            }else{
+                this.rideShare.numPassengers --;
             }
         },
         onTimeChange: function (time) {
-            this.timeValue = time;
+            this.rideShare.dates.rideShareTime = time;
         },
         generateTimes () {
             const times = [];
@@ -222,8 +249,93 @@ export default {
             times.push('23:59');
             return times
         },
+        rideType (type) {
+            this.rideShare.rideType = type;
+            console.log("rideType:" + this.rideShare.rideType);
+        },
+        addPostDate () {
+            let currDate = new Date();
+            this.rideShare.dates.postedDate = moment(currDate).format("MMM Do");
+            // this.rideShare.dates.fireBasePostedDate = firebase.database.ServerValue.TIMESTAMP;
+            this.rideShare.dates.longDate = moment(currDate).format();
+
+            this.addRideShare();
+        },
         goToRideShare () {
             this.navigation.navigate("FindRideShare");
+        },
+        addRideShare() {
+            if(this.formValid()){
+                postRideshare( this.rideShare, this.postingFailed, this.postingSuccess);
+                // let key = firebase.database().ref('/rideShare').push().key;
+                // firebase.database().ref('/rideShare').child(key).set({data: this.rideShare})
+                // this.navigation.navigate("FindRideShare");
+            }else {
+                console.log("did not add rideshare")
+                Alert.alert(
+                    "Invalid Form",
+                    "Please make sure to fill out the " + this.formError + " category on the form",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") } 
+                    ],
+                    { cancelable: false}
+                )
+            }
+        },
+        postingFailed(errorMessage) {
+            Alert.alert(
+                "Failed to Create Listing",
+                "Error: " + errorMessage,
+                { cancelable: false }
+            );
+        },
+         postingSuccess() {
+            this.navigation.navigate("FindRideShare");
+        },
+        displayInfo() {
+            Alert.alert(
+                "What to Do?",
+                "Please fill out all the categories and then press the 'Post Ride Share' button when you are done.",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+            );
+        },
+        formValid() {
+            console.log(this.rideShare.dates.rideShareDate);
+            if(this.rideShare.location.pickup == ''){
+                this.formError = "From"
+                return false;
+            }else if (this.rideShare.location.dropoff == '') {
+                this.formError = "To"
+                return false;
+            }else if (this.rideShare.dates.rideShareDate == '') {
+                this.formError = "Departure"
+                return false;
+            }else if (this.rideShare.dates.rideShareTime == '') {
+                this.formError = "Time"
+                return false;
+            }else if (this.rideShare.rideType == '') {
+                this.formError = "Ride Type"
+                return false;
+            }else if (this.rideShare.comment == '') {
+                this.formError = "Comment"
+                return false;
+            }else {
+                return true;
+            }
+        },
+        async getUserNameFromUID() {
+            let realName = await getUserNameFromUID(firebaseAuth.currentUser.uid, this.postFailed);
+            this.rideShare.username = realName;
+        },
+        postingFailed() {
+            Alert.alert(
+                "Failed to Create Rideshare post",
+                "Error: " + errorMessage,
+                { cancelable: false }
+            );
         },
     }
 };

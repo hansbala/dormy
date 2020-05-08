@@ -1,197 +1,263 @@
 <template>
-    <view class="container">
-        <!-- Header Bar -->
-        <view class="header-bar">
-            <image
-                class="menu-icon"
-                :source="require('../../assets/png_icons/hamburger-nav.png')"
-            />
+    <nb-container :style="{ backgroundColor: '#fff' }">
+        <nb-header class="header-wrapper">
+            <view class="horizontal-flex">
+                <touchable-opacity :on-press="navDrawerOpen">
+                    <view class="left-header-icon">
+                        <image class="header-icon" :source="require('../../assets/png_icons/hamburger-nav.png')"/>
+                    </view>
+                </touchable-opacity>
 
-            <text class="header-text"> Find Roommates </text>
-            <image
-                class="matches-icon"
-                :source="require('../../assets/Icons/heart-inactive.png')"
-            />
-        </view>
-
-         <!-- Roommate Card -->
-         <view class="card">
-            <image
-                class="Roommate-image"
-                :source="require('../../assets/Images/rmate-woman1.jpeg')"
-            />
-            <view class="roommate-block" >
+                <view class="header-text">
+                    <text >Find Roomates</text>
+                </view>
+                
+                <touchable-opacity>
+                    <view class="right-header-icon">
+                        <image class="header-icon" :source="require('../../assets/Icons/heart-inactive.png')"/>
+                    </view>
+                </touchable-opacity>
             </view>
+        </nb-header>
+                <view :style="{ flex: 1, padding: 12 }">
+                    <nb-deck-swiper
+                        ref="_deckSwiper"
+                        :dataSource="users"
+                        :looping="isLoopingRequired"
+                        :renderEmpty="handleCardEmpty"
+                        :renderItem="handleCardRendering"
+                    >
+                    </nb-deck-swiper>
+                    
+                </view>
+                
+                <view class="btn-wrapper">
+                    <view class="card-btns">
+                        <touchable-opacity  class="card-btn" :on-press="swipeLeft">
+                            <image class="card-icon" :source="require('../../assets/Icons/thumbs-up.png')"/>
+                        </touchable-opacity>
 
-            <view class="roommate-info" >
-                <text class= "Roommate-name">
-                    Maddie
-                </text>
-                <text class= "Roommate-bio">Clean, Easy going, Virgo
-                    Looking to share 2 bd Apartment...
-                </text>
-            </view>
-         </view>
+                        <touchable-opacity  class="card-btn" >
+                            <image class="card-icon" :source="require('../../assets/Icons/heart-active.png')"/>
+                        </touchable-opacity>
 
-        <!-- Matching options -->
-        <view class="roommate-select">
-            <view class="matching-container">
-                <image
-                    class="thumbsUp-icon"
-                    :source="require('../../assets/Icons/thumbs-up.png')"
-                />
-                <image
-                    class="superLike-icon"
-                    :source="require('../../assets/Icons/heart-active.png')"
-                />
-                <image
-                    class="thumbsDown-icon"
-                    :source="require('../../assets/Icons/thumbs-down.png')"
-                />
-            </view>
-        </view>
-    </view>
+                        <touchable-opacity  class="card-btn" :on-press="swipeRight">
+                            <image class="card-icon" :source="require('../../assets/Icons/thumbs-down.png')"/>
+                        </touchable-opacity>
+                    </view>
+                </view>
+                
+            
+    </nb-container>
+
 </template>
 
 <script>
+import React from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import CardComponent from './RoomateCard';
+import { DrawerActions } from 'react-navigation-drawer'
+import { getUsers } from "../../api/roommatesApi.js";
+import { Alert } from "react-native";
+
 export default {
     props: {
         navigation: {
             type: Object
         }
     },
+    data () {
+        return {
+            users: [],
+            isLoopingRequired: false,
+            cardItemsArr: [
+                {
+                    name: " Maddie",
+                    image: '../../assets/Images/rmate-woman1.jpeg',
+                    bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
+                },
+                {
+                    name: " top",
+                    image: '../../assets/Images/rmate-woman1.jpeg',
+                    bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment..."
+                }
+            ],
+        };
+    },
+    mounted () {
+        this.fetchUsers();
+    },
     components: {
-        
+        CardComponent
+    },
+    methods: {
+        navDrawerOpen() {
+            this.navigation.dispatch(DrawerActions.toggleDrawer());
+        },
+        handleCardEmpty() {
+            return ( 
+                <View style={styles.container}>
+                    <Image
+                    style={styles.logo} 
+                    source={require('../../assets/png_icons/logo.png')}/>
+                    <Text style={styles.txt}> Sorry No More Users to View </Text>
+                </View>
+            );
+        },
+        handleCardRendering (item) {
+            return <CardComponent item={item} />;
+        },
+        swipeLeft() {
+            this.$refs._deckSwiper._root.swipeLeft();
+        },
+        swipeRight() {
+            this.$refs._deckSwiper._root.swipeRight();
+        },
+        async fetchUsers() {
+            let res = await getUsers();
+            this.users = res;
+            console.log("the users stuff", this.users);
+        },
+        // postingFailed() {
+        //     Alert.alert(
+        //         "Failed to fetch users",
+        //         "Error: " + errorMessage,
+        //         { cancelable: false }
+        //     );
+        // }
     }
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 300,
+  },
+  txt: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+});
+
+
+
 </script>
 
 <style>
 .container {
     height: 100%;
-    padding-top: 30;
-     flex-direction: column;
-     justify-content: space-between;
- }
- .header-wrapper {
-     flex-direction: row;
-     margin-top: 50;
-     margin-left: 20;
-     margin-right: 20;
- }
+    flex-direction: column;
+    justify-content: space-between;
+}
 
- .menu-icon {
-     width: 30;
-     height: 30;
-     margin-top: 20;
-     margin-left: 15;
- }
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
- .matches-icon{
-    width: 25;
-    height: 25;
-    margin-top: 20;
-    margin-left: 20%;
- }
+/*************************************** 
 
- .header-bar{
+   Header Styling
+
+****************************************/
+.header-wrapper {
     display: flex;
     flex-direction: row;
- }
+    justify-content: center;
+    align-items: center;
+}
 
- .header-text{
- color: #2a2a2a;
- font-weight: 500;
- font-size: 17;
- padding-left:15%;
- margin-top: 20;
- }
+.header-icon {
+    width: 20;
+    height: 20;
+}
 
- .card{
- flex:3;
- background-color: white;
- margin: 20;
- margin-top: 20;
- margin-bottom: 5;
- border-radius: 20px;
- border-color: #a9a9a9;
- border-width: 1;
+.left-header-icon {
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: 10;
+}
 
- }
+.header-text {
+    flex: 2;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
 
- .roommate-select{
- flex:0.5;
- background-color: white;
- margin: 20;
- margin-top: 10;
- margin-bottom:10;
- border-radius: 10px;
- border-color: #a9a9a9;
- border-width: 1;
+.right-header-icon {
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 10;
+}
 
- }
+.horizontal-flex {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
- .matching-container{
- flex-direction: row;
- }
+/*************************************** 
 
- .thumbsUp-icon{
- width:38px;
- height:35px;
- align-items:flex-start;
- margin-left: 10%;
- margin-Top: 12px;
- }
+    Card Deck Styling
 
- .superLike-icon{
- width:35px;
- height:30px;
- align-items: center;
- justify-content: space-evenly;
- margin-left: 23%;
- margin-right:23%;
- margin-Top: 18px;
+****************************************/
 
- }
+.deck-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
- .thumbsDown-icon{
- width:38px;
- height:35px;
- justify-content: space-evenly;
- margin-Top: 15px;
+.deck-swipper{
+    display: flex;
+    flex: 1;
+}
 
- }
+.card-deck {
+    flex: 10;
+    width: 90%;
+    height: 80%;
+}
 
- .Roommate-image{
- width:auto;
- height:400px;
- border-radius: 10px;
- }
- .Roommate-name{
- font-size: 35;
- margin-top:-125;
- margin-left: 10;
- color: white;
- font-weight: 500;
- }
- .Roommate-bio{
- font-size: 15;
- width: 220;
- margin-top:5;
- margin-left: 20;
- color: white;
- }
- .roommate-info{
- width:100%;
- height:140;
- }
- .roommate-block{
- width: 100%;
- height: 130px;
- margin-top: -130;
- background-color: black;
- opacity:0.5;
- border-radius: 10px;
- }
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+.card-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    border-width: 1;
+    border-radius: 5;
+    border-color: gray;
+    padding-top: 10;
+    padding-bottom: 10;
+}
+
+.card-btn {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-icon {
+    width: 40;
+    height: 40;
+}
 
 </style>
