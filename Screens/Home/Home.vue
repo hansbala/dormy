@@ -16,11 +16,20 @@
                     :source="require('../../assets/png_icons/hamburger-nav.png')"
                 />
             </touchable-opacity>
-            <text-input class="search-bar" v-model="searchQuery" />
+            <text-input
+                :placeholder="'Search housing, rides, and roommates'"
+                class="search-bar" 
+                v-model="searchQuery" />
         </view>
 
         <!-- Scrollable content (renting, roomates, sub-leasing) -->
         <scroll-view class="scrollable-content">
+            <!-- Swipe Down for refresh functionality -->
+            <RefreshControl
+                :refreshing="refreshing"
+                :onRefresh="_onRefresh"
+                :title="'Fetching new data from Dormy!'"
+            />
             <!-- Renting Section -->
             <view class="section-wrapper">
                 <!-- Header Information -->
@@ -31,7 +40,9 @@
                             Latest based on your location
                         </text>
                     </view>
-                    <touchable-opacity class="arrow-icon-wrapper">
+                    <touchable-opacity 
+                        :on-press="() => this.props.navigation.navigate('HomeFeed')"
+                        class="arrow-icon-wrapper">
                         <image
                             class="arrow-icon"
                             :source="require('../../assets/right_arrow.png')"
@@ -42,15 +53,10 @@
                 <!-- Horizontall scroll view section -->
                 <scroll-view
                     :horizontal="true"
-                    class="scroll-section"
-                    id="renting-section"
-                >
-                    <image
-                        class="img-preview"
-                        :source="
-                            require('../../assets/test_pictures/bedroom.jpg')
-                        "
-                    />
+                    class="scroll-section">
+                    <view v-for="post in rentingPosts" :key="post.id">
+                        <home-house-card :cardData=post></home-house-card>
+                    </view>
                 </scroll-view>
             </view>
             <!-- Roomate section -->
@@ -72,6 +78,13 @@
                 <!-- Horizontall scroll view section -->
                 <scroll-view
                     :horizontal="true"
+                    class="scroll-section">
+                    <view v-for="post in roommates" :key="post.id">
+                        <roommate-house-card :roommateData=post></roommate-house-card>
+                    </view>
+                </scroll-view>
+                <!-- <scroll-view
+                    :horizontal="true"
                     class="scroll-section"
                     id="renting-section"
                 >
@@ -81,7 +94,7 @@
                             require('../../assets/test_pictures/bedroom.jpg')
                         "
                     />
-                </scroll-view>
+                </scroll-view> -->
             </view>
             <!-- Sub-leasing section -->
             <view class="section-wrapper">
@@ -93,7 +106,9 @@
                             >Latest based on your location</text
                         >
                     </view>
-                    <touchable-opacity class="arrow-icon-wrapper">
+                    <touchable-opacity
+                        :on-press="() => this.props.navigation.navigate('HomeFeed')"
+                        class="arrow-icon-wrapper">
                         <image
                             class="arrow-icon"
                             :source="require('../../assets/right_arrow.png')"
@@ -104,47 +119,10 @@
                 <!-- Horizontall scroll view section -->
                 <scroll-view
                     :horizontal="true"
-                    class="scroll-section"
-                    id="renting-section"
-                >
-                    <image
-                        class="img-preview"
-                        :source="
-                            require('../../assets/test_pictures/bedroom.jpg')
-                        "
-                    />
-                </scroll-view>
-            </view>
-            <!-- Sub-leasing section -->
-            <view class="section-wrapper">
-                <!-- Header Information -->
-                <view class="section-header">
-                    <view class="section-descriptor">
-                        <text class="fnt-grey bold">Sub-leasing near you</text>
-                        <text class="fnt-grey"
-                            >Latest based on your location</text
-                        >
+                    class="scroll-section">
+                    <view v-for="post in subLeasePosts" :key="post.id">
+                        <home-house-card :cardData=post></home-house-card>
                     </view>
-                    <touchable-opacity class="arrow-icon-wrapper">
-                        <image
-                            class="arrow-icon"
-                            :source="require('../../assets/right_arrow.png')"
-                        />
-                    </touchable-opacity>
-                </view>
-
-                <!-- Horizontall scroll view section -->
-                <scroll-view
-                    :horizontal="true"
-                    class="scroll-section"
-                    id="renting-section"
-                >
-                    <image
-                        class="img-preview"
-                        :source="
-                            require('../../assets/test_pictures/bedroom.jpg')
-                        "
-                    />
                 </scroll-view>
             </view>
         </scroll-view>
@@ -152,7 +130,11 @@
 </template>
 
 <script>
-import BottomNavBar from "../Navigation/TabNavBar.vue";
+import { RefreshControl } from 'react-native';
+import HomeHouseCard from './HomeHouseCard.vue';
+import RoommateHouseCard from './RoommateHouseCard';
+import { getHousingListings } from '../../api/housingApi.js';
+import { getUsers } from '../../api/roommatesApi.js';
 export default {
     props: {
         navigation: {
@@ -162,16 +144,53 @@ export default {
     data: function() {
         return {
             // Also serves as the placeholder
-            searchQuery: "Search housing, rides, roomates"
+            searchQuery: '',
+            refreshing: false,
+            rentingPosts: [],
+            subLeasePosts: [],
+            roommates: [],
         };
     },
     methods: {
         navDrawerOpen() {
             this.navigation.openDrawer();
+        },
+        async getRequiredPosts() {
+            this.rentingPosts = await this.getRentingPosts();
+            this.subLeasePosts = await this.getSubleasePosts();
+            this.roommates = await this.getAllRoommates();
+        },
+        async getRentingPosts() {
+            let housingPosts = await getHousingListings();
+            housingPosts = housingPosts.filter((listing) => {
+                return listing.rentalType === 'Rent';
+            });
+            return housingPosts;
+        },
+        async getSubleasePosts() {
+            let housingPosts = await getHousingListings();
+            housingPosts = housingPosts.filter((listing) => {
+                return listing.rentalType === 'Sub lease';
+            });
+            return housingPosts;
+        },
+        async getAllRoommates() {
+            let result = await getUsers();
+            return result;
+        },
+        _onRefresh() {
+            this.refreshing = true;
+            this.getRequiredPosts();
+            this.refreshing = false;
         }
     },
+    mounted() {
+        this.getRequiredPosts();
+    },
     components: {
-        BottomNavBar
+        HomeHouseCard,
+        RefreshControl,
+        RoommateHouseCard,
     }
 };
 </script>
@@ -200,7 +219,6 @@ export default {
     border-radius: 5;
     margin-left: 10;
     padding: 4;
-    color: #a9a9a9;
 }
 .section-header {
     flex-direction: row;
@@ -227,5 +245,8 @@ export default {
 }
 .scrollable-content {
     flex-grow: 2;
+}
+.horizontal-flex {
+    flex-direction: row;
 }
 </style>

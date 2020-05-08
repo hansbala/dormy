@@ -9,7 +9,8 @@ export async function getHousingListings() {
     snapshot.forEach(async (doc) => {
         const houseItem = doc.data();
         houseItem.id = doc.id;
-        houseItem.imagePath = 'https://source.unsplash.com/collection/8578312/800x600' + '?key=' + Math.floor(Math.random() * 1000);
+        // houseItem.imagePath = 'https://source.unsplash.com/collection/8578312/800x600' + '?key=' + Math.floor(Math.random() * 1000);
+        houseItem.imagePath = 'https://picsum.photos/600/400?key=' + Math.floor(Math.random() * 1000);
         housingList.push(houseItem);
     });
     // console.log(housingList);
@@ -22,8 +23,8 @@ export async function getHousingListings() {
 export async function postListing(housingData, failCallback, successCallback) {
     const housingDB = firebaseDB.collection('housing');
     // const images = housingData.housingImages;
-    // const imagesRef = postImagesToStorage(images);
-    // housingData.images = images;
+    // const imagesRef = await postImagesToStorage(images);
+    // housingData.images = imagesRef;
     housingDB.add(housingData).then((docRef) => {
         console.log("document written to database with reference: " + docRef)
         successCallback();
