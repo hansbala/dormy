@@ -65,7 +65,6 @@ export default {
             this.listing.numberOfBedrooms = 'Studio';
         }
         this.getUserNameFromUID();
-        console.log(this.listing.imagePath);
     },
     methods: {
         async getUserNameFromUID() {
