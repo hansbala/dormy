@@ -5,13 +5,11 @@ import { firebaseAuth, firebaseDB, firebaseStore } from "../environment/config.j
 // provided as an argument
 export async function getHousingListings() {
     let housingList = [];
-    let imagesList = ['bedroom.jpg', 'apartment-1.jpg', 'apartment-2.jpg', 'apartment-3.jpg', 'house-1.jpg'];
-    let imagePath = '../../assets/test_pictures/';
     let snapshot = await firebaseDB.collection('housing').get()
     snapshot.forEach(async (doc) => {
         const houseItem = doc.data();
         houseItem.id = doc.id;
-        houseItem.imagePath = imagePath + imagesList[Math.floor(Math.random() * imagesList.length)];
+        houseItem.imagePath = 'https://source.unsplash.com/collection/8578312/800x600' + '?key=' + Math.floor(Math.random() * 1000);
         housingList.push(houseItem);
     });
     // console.log(housingList);

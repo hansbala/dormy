@@ -1,5 +1,5 @@
-- Add images to firebase storage (housing_pic/*UUID*.jpg)
-- Add apartment type and renting type to add housing list
+- Home Screen Renting
+- Home Screen Sub-lease section
 
-
-- PLUS: Add touch functionality and another screen to the housing store
+** IVAN **
+- Home Screen Roommate Section (fetch from firestore)

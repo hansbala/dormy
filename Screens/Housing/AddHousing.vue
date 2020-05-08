@@ -139,20 +139,20 @@
                             class="icon"
                             :source="require('../../assets/Icons/destination.png')"
                         />
-                        <text-input class="location-entry-box" v-model="houseLocation" />
+                        <text-input :placeholder="'Enter the house address here (Required)'" class="location-entry-box" v-model="houseLocation" />
                     </view>
                 </view>
 
                 <!-- Description -->
                 <view class="section">
                     <text class="section-descriptor"> Description </text>
-                    <text-input class="description-entry-box" v-model="description" />
+                    <text-input :placeholder="'Enter a brief description here (Optional)'" class="description-entry-box" v-model="description" />
                 </view>
 
                 <!-- Phone Number -->
                 <view class="section">
                     <text class="section-descriptor"> Phone Number </text>
-                    <text-input class="description-entry-box" v-model="phoneNumber" />
+                    <text-input :placeholder="'Enter phone number here (required)'" class="description-entry-box" v-model="phoneNumber" />
                 </view>
 
                 <!-- House Type (Apartment / House / Room in apartment) -->

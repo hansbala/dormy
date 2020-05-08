@@ -10,10 +10,8 @@
             <image
                 class="card-image"
                 :source="{uri: listing.imagePath}"
+                :key="Math.floor(Math.random() * 1000)"
             />
-            <!-- <view class="user-descriptor">
-                <text> Hans Bala </text>
-            </view> -->
             <!-- Price, number of bedrooms and something like "apartment for rent" -->
             <view class="card-info-section-wrapper">
                 <view class="card-info">
@@ -26,11 +24,15 @@
                 </view>
                 <view class="card-info-descriptor-wrapper">
                     <text class="card-info-descriptor">
-                        <text class="apartment-type"> Apartment </text>
-                        for rent
+                        <text class="apartment-type"> {{listing.housingType}} </text>
+                        For <text class="apartment-type">{{listing.rentalType}}</text>
                     </text>
                     <text class="phone-number"> {{listing.phoneNumber}} </text>
                 </view>
+            </view>
+
+            <view class="description-wrapper">
+                <text> {{listing.description}} </text>
             </view>
 
             <!-- Address preview -->
@@ -123,24 +125,23 @@ export default {
 .card-info-descriptor-wrapper {
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 5;
+    background-color: #eee;
+    padding: 5;
 }
 .card-info-descriptor {
     font-size: 14;
     padding: 5;
     color: #a9a9a9;
 }
-.phone-number {
-    /* border-width: 1;
-    border-radius: 10;
-    border-color: #eee; */
-    justify-content: center;
-    /* background-color: #eee; */
-}
 .apartment-type {
     font-size: 14;
     color: orange;
     font-weight: bold;
+}
+.description-wrapper {
+    padding: 10;
 }
 .address-preview-wrapper {
     flex-direction: row;
