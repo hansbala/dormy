@@ -54,7 +54,7 @@
                 <scroll-view
                     :horizontal="true"
                     class="scroll-section">
-                    <view v-for="post in rentingPosts" :key="post.id">
+                    <view v-for="post in filteredRentalPosts" :key="post.id">
                         <home-house-card :cardData=post></home-house-card>
                     </view>
                 </scroll-view>
@@ -79,22 +79,10 @@
                 <scroll-view
                     :horizontal="true"
                     class="scroll-section">
-                    <view v-for="post in roommates" :key="post.id">
+                    <view v-for="post in filteredRoommates" :key="post.id">
                         <roommate-house-card :roommateData=post></roommate-house-card>
                     </view>
                 </scroll-view>
-                <!-- <scroll-view
-                    :horizontal="true"
-                    class="scroll-section"
-                    id="renting-section"
-                >
-                    <image
-                        class="img-preview"
-                        :source="
-                            require('../../assets/test_pictures/bedroom.jpg')
-                        "
-                    />
-                </scroll-view> -->
             </view>
             <!-- Sub-leasing section -->
             <view class="section-wrapper">
@@ -120,7 +108,7 @@
                 <scroll-view
                     :horizontal="true"
                     class="scroll-section">
-                    <view v-for="post in subLeasePosts" :key="post.id">
+                    <view v-for="post in filteredSubleasePosts" :key="post.id">
                         <home-house-card :cardData=post></home-house-card>
                     </view>
                 </scroll-view>
@@ -150,6 +138,51 @@ export default {
             subLeasePosts: [],
             roommates: [],
         };
+    },
+    computed: {
+        filteredRentalPosts() {
+            return this.rentingPosts.filter((listing) => {
+                if (this.searchQuery === '') {
+                    return true;
+                }
+                if (listing.housingType.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+                    listing.rentalType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    listing.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    listing.houseLocation.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                    return true;
+                }
+                return false;
+            });
+        },
+        filteredSubleasePosts() {
+            return this.subLeasePosts.filter((listing) => {
+                if (this.searchQuery === '') {
+                    return true;
+                }
+                if (listing.housingType.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+                    listing.rentalType.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    listing.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    listing.houseLocation.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                    return true;
+                }
+                return false;
+            });
+        },
+        filteredRoommates() {
+            return this.roommates.filter((listing) => {
+                console.log(listing);
+                if (this.searchQuery === '') {
+                    console.log('true');
+                    return true;
+                }
+                if (listing.realName.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                    console.log('true');
+                    return true;
+                }
+                console.log('false');
+                return false;
+            });
+        }
     },
     methods: {
         navDrawerOpen() {

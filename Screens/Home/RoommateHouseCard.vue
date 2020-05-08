@@ -20,7 +20,7 @@ export default {
         return {
             imageLink: 'https://picsum.photos/600/400?key=' + Math.floor(Math.random() * 1000),
         }
-    }
+    },
 }
 </script>
 
