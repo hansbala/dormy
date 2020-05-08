@@ -28,14 +28,14 @@
                                         color: 'white',
                                         backgroundColor: 'transparent'
                                 }">{{item.realName}} </text>
-                                <!-- <view class="bio-txt">
+                                <view class="bio-txt">
                                     <text :style="{
                                         fontSize: 15,
                                         fontWeight: 'bold',
                                         color: 'white',
                                         backgroundColor: 'transparent'
                                     }">{{item.bio}} </text>
-                                </view> -->
+                                </view>
                                 
                             </view>
                         </ImageBackground>
@@ -52,7 +52,7 @@ import React from 'react';
 import { View, ImageBackground} from 'react-native';
 export default {
     mounted () {
-        console.log("mounted cards");
+        this.show();
     },
     props: {
         item: {
@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         show () {
-            console.log(this.item);
+            console.log("card doc: ", this.item);
         }
     },
     components: {

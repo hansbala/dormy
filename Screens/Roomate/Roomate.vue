@@ -22,7 +22,7 @@
                 <view :style="{ flex: 1, padding: 12 }">
                     <nb-deck-swiper
                         ref="_deckSwiper"
-                        :dataSource="users"
+                        :dataSource="cardItemsArr"
                         :looping="isLoopingRequired"
                         :renderEmpty="handleCardEmpty"
                         :renderItem="handleCardRendering"
@@ -72,19 +72,25 @@ export default {
             isLoopingRequired: false,
             cardItemsArr: [
                 {
-                    name: " Maddie",
+                    realName: "Maddie",
                     image: '../../assets/Images/rmate-woman1.jpeg',
                     bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
                 },
                 {
-                    name: " top",
+                    realName: "Sarah",
                     image: '../../assets/Images/rmate-woman1.jpeg',
-                    bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment..."
+                    bio: "Hey everyone, looking forward to some great ride shares!"
+                },
+                {
+                    realName: "Emiliy",
+                    image: '../../assets/Images/rmate-woman1.jpeg',
+                    bio: "22 year-old looking for roommates in a new city."
                 }
+
             ],
         };
     },
-    mounted () {
+    created() {
         this.fetchUsers();
     },
     components: {
@@ -115,7 +121,9 @@ export default {
         },
         async fetchUsers() {
             let res = await getUsers();
+            
             this.users = res;
+            console.log("local array", this.cardItemsArr);
             console.log("the users stuff", this.users);
         },
         // postingFailed() {

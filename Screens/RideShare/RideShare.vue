@@ -87,7 +87,9 @@ export default {
     methods: {
         async fetchRideshares() {
             let res = await getRideshares();
-            this.dataArray = res;
+            this.dataArray = res.sort((a, b) => {
+                return new Date(b.dates.longDate) - new Date(a.dates.longDate)
+            })
         },
         navDrawerOpen() {
             this.navigation.openDrawer();
@@ -106,32 +108,22 @@ export default {
             }
         },
         sortByDate(){
-            let time = this.dataArray[0].data.dates.fireBasePostedDate;
-            let time2 = this.dataArray[0].data.dates.longDate;
-            console.log(time);
-            console.log(time2);
-
-
-            // let d = new Date(time2);
-            // console.log(d);
-            // let date = time.toDate();
-            // console.log(date);
-
-
-            // if(this.dateSort){
-            //     console.log( this.dataArray.sort((a, b) => {
-            //         return new Date(b.data.dates.postedDate) - new Date(a.data.dates.postedDate)
-            //     }));
-            //     this.dateSort = !this.dateSort;
-            //     console.log("newest-oldest: ", this.dataArray);
-            // }else{
-            //     this.dataArray = this.dataArray.sort((a, b) => {
-            //         return new Date(a.data.dates.postedDate) - new Date(b.data.dates.postedDate)
-            //     });
-            //     this.dateSort = !this.dateSort;
-            //     console.log("oldest-newest: ", this.dataArray);
-            // }  
-           
+            if(this.dateSort){
+                this.dataArray.sort((a, b) => {
+                    return new Date(b.dates.longDate) - new Date(a.dates.longDate)
+                })
+                // console.log( this.dataArray.sort((a, b) => {
+                //     return new Date(b.data.dates.postedDate) - new Date(a.data.dates.postedDate)
+                // }));
+                this.dateSort = !this.dateSort;
+                // console.log("newest-oldest: ", this.dataArray);
+            }else{
+                this.dataArray = this.dataArray.sort((a, b) => {
+                    return new Date(a.dates.longDate) - new Date(b.dates.longDate)
+                });
+                this.dateSort = !this.dateSort;
+                console.log("oldest-newest: ", this.dataArray);
+            }    
         },
         _onRefresh() {
             this.refreshing = true;
