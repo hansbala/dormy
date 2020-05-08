@@ -2,8 +2,6 @@
 
 The Dormy app for iOS and Android. Written in Vue Native.
 
-![Dormy App Image](https://user-images.githubusercontent.com/20383602/79877510-f2205a00-8409-11ea-9c20-688f5a7a99e6.jpg)
-
 ## Structure
 The app is structured into different Vue components. In the terminology of Dormy, they are referred to as `Screen`(s).
 
@@ -22,16 +20,16 @@ App.vue -> Entry point
 ```
 
 ## Database Standard
-`Firebase:` Mostly all of the codebase is just a front-end to the Firebase `noSQL` database. The plan is to have the following components linked to FireBase:
-* User Registration and Login (probably should use [`OAuth2`](https://oauth.net/2/))
-* Images
-* Chats (1-on-1 chats seemed to be supported out-of-the-box by Firebase. TODO: Look into Sync issues)
-* Ridesharing Document information
+`Firebase:` Mostly all of the code-base is just a front-end to the Firebase `noSQL` database. We have the following components linked to FireBase:
+* User Registration and Login (using [`OAuth2`](https://oauth.net/2/))
+* Images (TODO as free version quota has been exhausted)
+* Chats (1-on-1 chats seemed to be supported out-of-the-box by Firebase. (TODO)
+* Ride sharing Document information
+* Housing Document Information
 
 The FireBase database and all other communication for the app is done with the following Gmail address (try to keep this secure). This prevents any personal conflicts:
 ```
-Email: 		dormyproject@gmail.com
-Password: 	dormy@brown420
+*** Removed due to privacy requirements by the Dormy Team ***
 ```
 
 ## Requirements
@@ -40,9 +38,14 @@ Password: 	dormy@brown420
 * [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) for running the simulator to test the application.
 * Double check the requirements in the `package.json` file. Running it with `npm install` while being `cd`'d in the directory should ideally work fine.
 
-## Building 
+## Building and Running the Application
 * `iOS:` `cd` into the dormy repo and run `npm run ios` to run the iOS simulator. If you wish to change the default simulator, just select the new device from the simulator, quit the simulator, and run the `npm run ios` command again to run the application on the target device.
 * `Android:` Yet has to be tested, but assuming you have the Android SDK on your system, all you would have to run is `npm run android`.
+
+Here are the steps to follow to get it running on `iOS:`
+* Download and install [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12). Also make sure that `Xcode` runs fine and agree to the privacy statement as the `iOS preview`er will not work if this is not followed correctly.
+* Once inside the root of the project, run `npm install` to install all dependencies related to the project. 
+* To run the app in the `iOS preview` application type: `npm run ios`. The app should be up and running.
 
 ## Contribution 
 * Please do keep your commits small with an informative message accompanying the commit.
@@ -55,15 +58,7 @@ and use the [`1TBS`](https://en.wikipedia.org/wiki/Indentation_style#Variant:_1T
 Vue Native is still an in-alpha stages sort-of-thing project so if you have some issues, consult the [React Native Docs](https://reactnative.dev/docs/getting-started)
 Most of the shit available in React Native, can directly be used in Vue Native provided you `npm install`'d the sub-library.
 
+## Privacy Agreement
+The privacy agreement can be found in the root of the project folder in a file name `privacy_license.pdf`
 
-## TODO
-* ~~Login/Sign-up functionality~~
-* ~~App integration with Firebase~~
-* Home screen
-* Ride-sharing
-* Roommate matching
-* Navigation (Might have to nest SwitchNavigator inside TabNavigator and DrawerNavigator to match the mockup)
-* Please upload all assets including icons, backdrops, and define useful variables in `variables.js` such as the required accent colors and shit like that.
-* Figure out shit related to `blah@blah.edu` address verification. (What happens if we are using `OAuth2`?
-* Forgot password shit?
 

@@ -1,5 +1,0 @@
-- Home Screen Renting
-- Home Screen Sub-lease section
-
-** IVAN **
-- Home Screen Roommate Section (fetch from firestore)
