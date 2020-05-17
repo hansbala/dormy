@@ -2,6 +2,17 @@
 
 The Dormy app for iOS and Android. Written in Vue Native.
 
+## TODO
+* Matching rideShare and possibly remove the listing once matched with someone
+* Messaging functionality
+* Individual housing listing separate screen
+* Upload of images (firebase free quota was exhausted, so may need to rework this)
+* Image compression (since uploading a 14MB file to firebase was clearly not economical)
+* Proper functionality for the drawer navigator including profile, settings, and contact
+* Saving housing listings
+* A way to contact the lister of either rideshare/housing using a button or some shit like that
+* .edu address verification (might send over an email verification for production)
+
 ## Structure
 The app is structured into different Vue components. In the terminology of Dormy, they are referred to as `Screen`(s).
 
