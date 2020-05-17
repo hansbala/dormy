@@ -29,7 +29,8 @@ App.vue -> Entry point
 
 The FireBase database and all other communication for the app is done with the following Gmail address (try to keep this secure). This prevents any personal conflicts:
 ```
-*** Removed due to privacy requirements by the Dormy Team ***
+Email:  dormyproject@gmail.com
+Pass:   weed@brown420 
 ```
 
 ## Requirements
@@ -60,5 +61,4 @@ Most of the shit available in React Native, can directly be used in Vue Native p
 
 ## Privacy Agreement
 The privacy agreement can be found in the root of the project folder in a file name `privacy_license.pdf`
-
 
