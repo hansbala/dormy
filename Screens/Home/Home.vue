@@ -123,6 +123,7 @@ import HomeHouseCard from './HomeHouseCard.vue';
 import RoommateHouseCard from './RoommateHouseCard';
 import { getHousingListings } from '../../api/housingApi.js';
 import { getUsers } from '../../api/roommatesApi.js';
+import { firebaseAuth } from '../../environment/config.js';
 export default {
     props: {
         navigation: {
@@ -170,16 +171,12 @@ export default {
         },
         filteredRoommates() {
             return this.roommates.filter((listing) => {
-                console.log(listing);
                 if (this.searchQuery === '') {
-                    console.log('true');
                     return true;
                 }
                 if (listing.realName.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-                    console.log('true');
                     return true;
                 }
-                console.log('false');
                 return false;
             });
         }

@@ -9,6 +9,7 @@
             <text-input
                 class="text-entry"
                 :autoCorrect=false
+                :autoCapitalize="'none'"
                 v-model="email"
             />
             <text class="input-classifier">Password</text>
@@ -32,7 +33,7 @@
 
 <script>
 import { Alert } from "react-native";
-import { firebaseAuth } from "../../environment/config.js";
+import { loginUser } from "../../api/userAuth.js";
 export default {
     props: {
         navigation: {
@@ -47,21 +48,19 @@ export default {
     },
     methods: {
         loginHandler(){
-            firebaseAuth.signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                    // Successfully logged the user in
-                    this.navigation.navigate("Home");
-                })
-                .catch(error => {
-                    // Could not create the account, so give
-                    // a popup to the user with a chance to
-                    // probably sign-in again?
-                    Alert.alert(
-                        "User Registration Error",
-                        "Failed to create your account with dormy! You may want to try again!" + error,
-                        { cancelable: false }
-                    );
-                });
+            loginUser(this.email.trim(), this.password, this.navigateHome, this.loginFailure);
+        },
+        // Navigates home
+        navigateHome() {
+            this.navigation.navigate("Home");
+        },
+        // Displays an alert message with the reason for failure
+        loginFailure(error = 'Could not log you in :(') {
+            Alert.alert(
+                "Error",
+                "" + error,
+                { cancelable: false }
+            );
         },
         goCreateAccount() {
             this.navigation.navigate("Create Account");

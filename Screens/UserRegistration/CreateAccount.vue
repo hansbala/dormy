@@ -18,28 +18,16 @@
             <text-input
                 class="text-entry"
                 :autoCorrect=false
+                :autoCapitalize="'none'"
                 v-model="email"
             />
-            <!-- <text class="input-classifier">Confirm Email</text> -->
-            <!-- <text-input -->
-            <!--     class="text-entry" -->
-            <!--     v-bind:autoCorrect="false" -->
-            <!--     v-model="confirmEmail" -->
-            <!-- /> -->
             <text class="input-classifier">Password</text>
             <text-input
                 class="text-entry"
-                v-bind:autoCorrect="false"
+                :autoCorrect="false"
                 :secureTextEntry=true
                 v-model="password"
             />
-            <!-- <text class="input-classifier">Confirm Password</text> -->
-            <!-- <text-input -->
-            <!--     class="text-entry" -->
-            <!--     v-bind:autoCorrect="false" -->
-            <!--     :secureTextEntry=true -->
-            <!--     v-model="confirmPassword" -->
-            <!-- /> -->
         </view>
 
         <touchable-opacity :on-press="createAccountHandler" class="signup-btn">
@@ -55,7 +43,7 @@
 <script>
 import { Alert } from "react-native";
 import { firebaseAuth } from "../../environment/config.js";
-import { createUserAccount } from "../../api/userAuth.js";
+import { createUserAccount, verifyUserEmail, addUserToCollection } from "../../api/userAuth.js";
 export default {
     props: {
         navigation: {
@@ -72,47 +60,38 @@ export default {
         };
     },
     methods: {
-        createAccountFailure() {
+        createAccountFailure(error = 'Failed to create your account with dormy!') {
             Alert.alert(
-                "User Registration Error",
-                "Failed to create your account with dormy! You may want to try again!",
+                "Error",
+                "" + error,
                 { cancelable: false }
             );
         },
-        navigateHome() {
-            this.navigation.navigate("Home");
-        },
         createAccountHandler(){
-            if (this.email === "" || this.password === "" || this.realName === "") {
-                // The check failed
-                Alert.alert(
-                    "User Registration Error",
-                    "Check the details and enter it again",
-                    { cancelable: false }
-                );
+            if (this.realName === "") {
+                this.createAccountFailure('Enter a valid name');
                 return;
             }
             // Send over to the api to create the account
-            createUserAccount(this.email, this.password, this.realName, this.navigateHome, this.createAccountFailure);
-            // If firebase account creation succeeds, we execute
-            // a callback, and navigate to the home screen
-            // firebaseAuth
-            //     .createUserWithEmailAndPassword(this.email, this.password)
-            //     .then(() => this.navigation.navigate("Home"))
-            //     .catch(error => {
-            //         console.log(error);
-            //         // Could not create the account, so give
-            //         // a popup to the user with a chance to
-            //         // probably sign-up again?
-            //         Alert.alert(
-            //             "User Registration Error",
-            //             "Failed to create your account with dormy! You may want to try again!" + error,
-            //             { cancelable: false }
-            //         );
-            //     });
+            createUserAccount(this.email, this.password, this.verifyEmail, this.createAccountFailure);
         },
-        goSignIn() {
-            this.navigation.navigate("Login");
+        verifyEmail() {
+            verifyUserEmail(this.addUserToFirestore, this.createAccountFailure);
+        },
+        addUserToFirestore() {
+            addUserToCollection(this.email, this.realName, this.goSignIn, this.createAccountFailure);
+        },
+        goSignIn(flag = 'empty') {
+            if (flag === 'empty') {
+                this.navigation.navigate("Login");
+            } else {
+                Alert.alert(
+                    "Verification needed",
+                    "An email has been sent. Click on the link provided to verify your email!",
+                    { cancelable: false }
+                );
+                this.navigation.navigate("Login");
+            }
         },
     }
 };
