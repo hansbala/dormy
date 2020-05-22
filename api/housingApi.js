@@ -17,6 +17,28 @@ export async function getHousingListings() {
     return housingList;
 }
 
+/**
+ * Gets a housing listing based on the listing ID
+ * @params {String} id the id of the listing
+ * @return {JSON} The housing object
+ */
+export async function getHousingListingFromID(id) {
+    let docRef = firebaseDB.collection('housing').doc(id);
+    let houseItem;
+    await docRef.get().then((doc) => {
+        if (doc.exists) {
+            houseItem = doc.data();
+            houseItem.id = doc.id;
+        } else {
+            houseItem = null;  
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
+    // Return the constructed housing listing
+    return houseItem;
+}
+
 // Adds a housing data object to the firestore database
 // If it fails at any point it calls the failCallback function
 // passing in a string as to why it failed

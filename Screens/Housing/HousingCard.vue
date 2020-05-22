@@ -1,5 +1,6 @@
 <template>
-    <view>
+    <touchable-opacity 
+        :on-press="() => goToListing()">
         <!-- Each individual card -->
         <!-- :source="require('../../assets/test_pictures/bedroom.jpg')" -->
         <view class="card">
@@ -46,14 +47,19 @@
                 </text>
             </view>
         </view>
-    </view>
+    </touchable-opacity>
 </template>
 
 <script>
 import { getUserNameFromUID } from '../../api/userAuth.js';
 export default {
     props: {
-        listing: Object
+        navigation: {
+            type: Object
+        },
+        listing: {
+            type: Object
+        }
     },
     data() {
         return {
@@ -76,7 +82,12 @@ export default {
             let imageTitle = imageTitles[Math.floor(Math.random() * imageTitles.length)];
             let imagePath = '../../assets/test_pictures/';
             this.randomImage = imagePath + imageTitle;
-        }
+        },
+        goToListing() {
+            this.navigation.navigate('HousingListing', {
+                listingID: this.listing.id,
+            });
+        },
     }
 }
 </script>

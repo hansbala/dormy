@@ -28,6 +28,7 @@ import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
 import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
 import AddHousingScreen from "./Screens/Housing/AddHousing.vue";
+import HousingListingScreen from "./Screens/Housing/HousingListing.vue";
 import RideShareScreen from "./Screens/RideShare/RideShare.vue";
 import RoomateScreen from "./Screens/Roomate/Roomate.vue";
 import MessagesScreen from "./Screens/Communication/Messages.vue";
@@ -79,7 +80,13 @@ const HousingNavigatorStack = createStackNavigator({
             title: "Add a listing!",
             header: null,
         }
-    }
+    },
+    HousingListing: {
+        screen: HousingListingScreen,
+        navigationOptions: {
+            title: "Housing Listing",
+        }
+    },
 })
 
 // Ride Share stack

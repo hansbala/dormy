@@ -109,7 +109,7 @@
                     :horizontal="true"
                     class="scroll-section">
                     <view v-for="post in filteredSubleasePosts" :key="post.id">
-                        <home-house-card :cardData=post></home-house-card>
+                        <home-house-card :navigation=this.props.navigation :cardData=post></home-house-card>
                     </view>
                 </scroll-view>
             </view>

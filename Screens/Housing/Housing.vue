@@ -96,7 +96,7 @@ screen should work:
             </view>
 
             <view v-for="listing in filteredPosts" :key="listing.id">
-                <housing-card :listing=listing></housing-card>
+                <housing-card :navigation=this.props.navigation :listing=listing></housing-card>
             </view>
         </scroll-view>
 
