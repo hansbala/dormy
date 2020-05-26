@@ -1,5 +1,7 @@
 // All housing related API calls go in here
 import { firebaseAuth, firebaseDB, firebaseStore } from "../environment/config.js";
+import { uploadImagesToFirebase } from './imageApi.js';
+
 // Downloads all housing listings from the firestore database
 // Then passes in the data downloaded into a callback function
 // provided as an argument
@@ -44,70 +46,71 @@ export async function getHousingListingFromID(id) {
 // passing in a string as to why it failed
 export async function postListing(housingData, failCallback, successCallback) {
     const housingDB = firebaseDB.collection('housing');
-    // const images = housingData.housingImages;
-    // const imagesRef = await postImagesToStorage(images);
-    // housingData.images = imagesRef;
-    housingDB.add(housingData).then((docRef) => {
-        console.log("document written to database with reference: " + docRef)
-        successCallback();
-    })
-    .catch((err) => {
-        console.log('error writing document', err);
-    });
-}
-
-async function postImagesToStorage(imagesArray) {
-    console.log('running upload images');
-    let imagesRef = [];
-    for (let i = 0; i < imagesArray.length; i++) {
-        uriToBlob(imagesArray[i]).then(
-            (blob) => {
-                return uploadImageToFirebase(blob, i);
-            }
-        ).then((snapshot) => {
-            console.log(snapshot);
-            snapshot.ref.getDownloadUrl().then(function(downloadUrl) {
-                console.log(downloadUrl);
-                imagesRef.push(downloadUrl);
-            })
-            console.log('file uploaded');
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+    const images = housingData.housingImages;
+    const imagesRef = await uploadImagesToFirebase(images, '/housing/');
     console.log(imagesRef);
-    return imagesRef;
+    // housingData.images = imagesRef;
+    // housingDB.add(housingData).then((docRef) => {
+    //     console.log("document written to database with reference: " + docRef)
+    //     successCallback();
+    // })
+    // .catch((err) => {
+    //     console.log('error writing document', err);
+    // });
 }
 
-async function uploadImageToFirebase(blob, filename) {
-    return new Promise((resolve, reject) => {
+// async function postImagesToStorage(imagesArray) {
+//     console.log('running upload images');
+//     let imagesRef = [];
+//     for (let i = 0; i < imagesArray.length; i++) {
+//         uriToBlob(imagesArray[i]).then(
+//             (blob) => {
+//                 return uploadImageToFirebase(blob, i);
+//             }
+//         ).then((snapshot) => {
+//             console.log(snapshot);
+//             snapshot.ref.getDownloadUrl().then(function(downloadUrl) {
+//                 console.log(downloadUrl);
+//                 imagesRef.push(downloadUrl);
+//             })
+//             console.log('file uploaded');
+//         }).catch((error) => {
+//             console.log(error);
+//         });
+//     }
+//     console.log(imagesRef);
+//     return imagesRef;
+// }
+
+// async function uploadImageToFirebase(blob, filename) {
+//     return new Promise((resolve, reject) => {
   
-        firebaseStore.child('housing/' + filename + '.jpg').put(blob, {
-            contentType: 'image/jpeg'
-        }).then((snapshot)=>{
-            blob.close();
-            resolve(snapshot);
-        }).catch((error)=>{
-            reject(error);
-        });
-    });
-}
+//         firebaseStore.child('housing/' + filename + '.jpg').put(blob, {
+//             contentType: 'image/jpeg'
+//         }).then((snapshot)=>{
+//             blob.close();
+//             resolve(snapshot);
+//         }).catch((error)=>{
+//             reject(error);
+//         });
+//     });
+// }
 
-async function uriToBlob(uri) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();    
-        xhr.onload = function() {
-            // return the blob
-            resolve(xhr.response);
-        };
+// async function uriToBlob(uri) {
+//     return new Promise((resolve, reject) => {
+//         const xhr = new XMLHttpRequest();    
+//         xhr.onload = function() {
+//             // return the blob
+//             resolve(xhr.response);
+//         };
             
-        xhr.onerror = function() {
-            // something went wrong
-            reject(new Error('uriToBlob failed'));
-        };    // this helps us get a blob
-        xhr.responseType = 'blob';    
-        xhr.open('GET', uri, true);
+//         xhr.onerror = function() {
+//             // something went wrong
+//             reject(new Error('uriToBlob failed'));
+//         };    // this helps us get a blob
+//         xhr.responseType = 'blob';    
+//         xhr.open('GET', uri, true);
         
-        xhr.send(null);
-    });
-}
+//         xhr.send(null);
+//     });
+// }

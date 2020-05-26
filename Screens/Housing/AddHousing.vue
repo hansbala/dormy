@@ -322,7 +322,6 @@ export default {
         },
         askingPriceChanged(value) {
             this.monthlyAskingPrice = Math.ceil(value);
-            console.log("value changed to: " + this.monthlyAskingPrice);
         },
         faslifyAllBedrooms() {
             this.numberOfBedrooms.studioSelected = false;
@@ -370,10 +369,8 @@ export default {
         },
         squareFootageChanged(value) {
             this.squareFootage = Math.ceil(value);
-            console.log("value changed to: " + this.squareFootage);
         },
         saveListing() {
-            console.log("save btn clicked");
             this.goToHousing();
         },
         getPermissionAsync: async function() {
@@ -393,14 +390,12 @@ export default {
                     mediaTypes: ImagePicker.MediaTypeOptions.All,
                     // allowsEditing: true,
                     aspect: [4, 3],
-                    quality: 1,
-                    allowsMultipleSelection: true,
+                    quality: 0.5,
                 });
                 if (!result.cancelled) {
                     this.imagePicked = true;
                     this.imageSelectedUri.push(result.uri);
                 }
-                // console.log(result.uri);
             } catch (E) {
                 console.log(E);
             }
