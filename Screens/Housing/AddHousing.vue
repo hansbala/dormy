@@ -1,6 +1,12 @@
 <template>
     <view class="container">
-        <nb-container>
+        <!-- Loading indicator used when an upload is in progress -->
+        <view class="loading-wrapper" v-if="loading">
+            <activity-indicator size="large" color="#f74c01" />
+            <text>Creating your listing! Please wait..</text>
+        </view>
+        <!-- Otherwise conditionally render the add housing fields -->
+        <nb-container v-else>
             <nb-header class="header-wrapper">
                 <view class="horizontal-flex">
                     <nb-button class="left-arrow" :on-press="goToHousing" light>
@@ -207,7 +213,7 @@
 </template>
 
 <script>
-import { Alert } from "react-native";
+import { Alert, ActivityIndicator } from "react-native";
 import { Slider } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -223,6 +229,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             monthlyAskingPrice: 1000,
             squareFootage: 1500,
             numberOfBedrooms: {
@@ -298,6 +305,8 @@ export default {
                 rentalType: this.rentalTypeValue,
             };
 
+            this.loading = true;
+
             // Send the object over to the API
             postListing(housingData, this.postingFailed, this.postingSuccess);
         },
@@ -308,6 +317,7 @@ export default {
             this.rentalTypeValue = rentalType;
         },
         postingFailed(errorMessage) {
+            this.loading = false;
             Alert.alert(
                 "Failed to Create Listing",
                 "Error: " + errorMessage,
@@ -315,6 +325,7 @@ export default {
             );
         },
         postingSuccess() {
+            this.loading = false;
             this.navigation.navigate("HomeFeed");
         },
         goToHousing() {
@@ -403,11 +414,18 @@ export default {
     },
     components: {
         Slider,
+        ActivityIndicator,
     }
 };
 </script>
 
 <style>
+/* Loading indicator styles */
+.loading-wrapper {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
 /* Container Styles */
 .container {
     height: 100%;

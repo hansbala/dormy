@@ -20,7 +20,6 @@ export async function getRideshares() {
 export async function postRideshare(rideshareData, failCallback, successCallback) {
     const rideshareDB = firebaseDB.collection('rideshare');
     rideshareDB.add(rideshareData).then((docRef) => {
-        console.log("document written to database with reference: " + docRef)
         successCallback();
     })
     .catch((err) => {

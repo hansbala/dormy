@@ -65,7 +65,6 @@ export default {
     mounted() {
         const listingID = this.navigation.getParam('listingID');
         this.generateListingData(listingID);
-        console.log(this.listing);
     },
     methods: {
         async generateListingData(listingID) {

@@ -19,12 +19,16 @@ import { uuidv4 } from './utils.js';
  * @return {Array} array of image references
  */
 export async function uploadImagesToFirebase(alou, childLocation) {
-    let aloir = [];
-    for (let i = 0; i < alou.length; i++) {
-        let currImageRef = await uploadImageToFirebase(alou[i], childLocation);
-        aloir.push(currImageRef);
-    }
-    return aloir;
+    // let aloir = [];
+    let promises = alou.map((currUri) => {
+        return uploadImageToFirebase(currUri, childLocation);
+    });
+    return Promise.all(promises);
+    // for (let i = 0; i < alou.length; i++) {
+    //     let currImageRef = await uploadImageToFirebase(alou[i], childLocation);
+    //     aloir.push(currImageRef);
+    // }
+    // return aloir;
 }
 
 /** 
@@ -32,16 +36,47 @@ export async function uploadImagesToFirebase(alou, childLocation) {
  * and returns a downloadUrl to the image uploaded
  */
 export async function uploadImageToFirebase(uri, childLocation) {
-    uriToBlob(uri).then((blob) => {
-        return uploadBlobToFirebase(blob, childLocation);
-    }).then((snapshot) => {
-        console.log('image uploaded');
-        return snapshot.ref.getDownloadUrl();
-    }).then((downloadUrl) => {
-        console.log('Download URL: ' + downloadUrl);
-        return downloadUrl;
-    }).catch((error) => {
-        console.log(error);
+    return new Promise((resolve, reject) => {
+        uriToBlob(uri).then((blob) => {
+            return uploadBlobToFirebase(blob, childLocation);
+        }).then((snapshot) => {
+            console.log('image uploaded');
+            return snapshot.ref.getDownloadURL();
+        }).then((downloadUrl) => {
+            console.log('Download URL: ' + downloadUrl);
+            // return downloadUrl;
+            resolve(downloadUrl);
+        }).catch((error) => {
+            // console.log(error);
+            reject(error);
+        });
+    });
+}
+
+/** 
+ * Given a BLOB, returns a promise that we can
+ * monitor using .then() to see the upload progress
+ * to firebase
+ */
+// TODO: Handle filename extensions
+async function uploadBlobToFirebase(blob, childLocation) {
+    const uid = uuidv4();
+
+    return new Promise((resolve, reject) => {
+
+        let storageRef = firebaseStore;
+
+        storageRef.child(childLocation + '' + uid + '.jpg').put(blob, {
+            contentType: 'image/jpeg'
+        }).then((snapshot) => {
+            blob.close(); // let's free up the blob
+            // snapshot.ref.getDownloadUrl().then((downloadUrl) => {
+            //     console.log('file available at: ' + downloadUrl);
+            // });
+            resolve(snapshot);
+        }).catch((error)=>{
+            reject(error);
+        });
     });
 }
 
@@ -69,29 +104,5 @@ async function uriToBlob(uri) {
 
         xhr.open('GET', uri, true);
         xhr.send(null);
-    });
-}
-
-/** 
- * Given a BLOB, returns a promise that we can
- * monitor using .then() to see the upload progress
- * to firebase
- */
-// TODO: Handle filename extensions
-async function uploadBlobToFirebase(blob, childLocation) {
-    const uid = uuidv4();
-
-    return new Promise((resolve, reject) => {
-
-        let storageRef = firebaseStore;
-
-        storageRef.child(childLocation + '' + uid + '.jpg').put(blob, {
-            contentType: 'image/jpeg'
-        }).then((snapshot) => {
-            blob.close(); // let's free up the blob
-            resolve(snapshot);
-        }).catch((error)=>{
-            reject(error);
-        });
     });
 }
