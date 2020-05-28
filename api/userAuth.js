@@ -5,20 +5,23 @@ import { firebaseDB } from '../environment/config.js';
 // Once everything is done, call the callback function
 // If there is a failure, call the failCallback function
 export function createUserAccount(email, password, successCallback, failCallback) {
+    const approved_schools = ["brown.edu", "risd.edu"];
     email = email.trim().toLowerCase();
     if (email === "" || password === "") {
         failCallback('Invalid form data');
         return;
     }
-    if (!email.endsWith('.edu')) {
-        failCallback('A .edu address is required to use Dormy!');
-        return;
+    for (let school of approved_schools) {
+        if (email.endsWith(school)) {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).then(() => {
+                successCallback();
+            }).catch((err) => {
+                failCallback(err);
+            });
+            return;
+        }
     }
-    firebaseAuth.createUserWithEmailAndPassword(email, password).then(() => {
-        successCallback();
-    }).catch((err) => {
-        failCallback(err);
-    });
+    failCallback('A .edu address is required to use Dormy!');
 }
 
 /**
