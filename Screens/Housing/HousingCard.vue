@@ -10,7 +10,7 @@
             </view>
             <image
                 class="card-image"
-                :source="{uri: listing.imagePath}"
+                :source="{uri: listing.images[0]}"
                 :key="Math.floor(Math.random() * 1000)"
             />
             <!-- Price, number of bedrooms and something like "apartment for rent" -->

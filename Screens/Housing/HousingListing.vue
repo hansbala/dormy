@@ -1,8 +1,13 @@
 <template>
     <view class="container">
-        <image class="test-img"
-            :source="{uri: 'https://picsum.photos/200/300'}"
-        />
+        <scroll-view :horizontal="true" v-for="currUri in listing.images" :key="currUri">
+            <image class="test-img"
+                :source="{uri: currUri}"
+            />
+        </scroll-view>
+        <!-- <image class="test-img"
+            :source="{uri: listing.images[0]}"
+        /> -->
         <!-- Price, number of bedrooms and something like "apartment for rent" -->
         <view class="card-info-section-wrapper">
             <view class="card-info">
@@ -62,10 +67,14 @@ export default {
             listing: {},
         }
     },
-    mounted() {
+    created() {
         const listingID = this.navigation.getParam('listingID');
         this.generateListingData(listingID);
     },
+    // mounted() {
+    //     const listingID = this.navigation.getParam('listingID');
+    //     this.generateListingData(listingID);
+    // },
     methods: {
         async generateListingData(listingID) {
             const listingData = await getHousingListingFromID(listingID);
@@ -85,6 +94,9 @@ export default {
     height: 100%;
     flex-direction: column;
 }
+/* .test-img {
+    height: 300; */
+/* } */
 .test-img {
     width: 100%;
     height: 300;

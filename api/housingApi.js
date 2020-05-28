@@ -1,5 +1,5 @@
 // All housing related API calls go in here
-import { firebaseAuth, firebaseDB, firebaseStore } from "../environment/config.js";
+import { firebaseDB } from "../environment/config.js";
 import { uploadImagesToFirebase } from './imageApi.js';
 
 // Downloads all housing listings from the firestore database
@@ -11,8 +11,10 @@ export async function getHousingListings() {
     snapshot.forEach(async (doc) => {
         const houseItem = doc.data();
         houseItem.id = doc.id;
-        // houseItem.imagePath = 'https://source.unsplash.com/collection/8578312/800x600' + '?key=' + Math.floor(Math.random() * 1000);
-        houseItem.imagePath = 'https://picsum.photos/600/400?key=' + Math.floor(Math.random() * 1000);
+        if (!houseItem.images) {
+            // If user uploaded image path is undefined
+            houseItem.images = ['https://picsum.photos/600/400?key=' + Math.floor(Math.random() * 1000), 'test'];
+        }
         housingList.push(houseItem);
     });
     // console.log(housingList);
@@ -31,6 +33,11 @@ export async function getHousingListingFromID(id) {
         if (doc.exists) {
             houseItem = doc.data();
             houseItem.id = doc.id;
+            // Again, if the housing image data is undefined, 
+            // put in a placeholder image
+            if (!houseItem.images) {
+                houseItem.images = ['https://picsum.photos/600/400?key=' + Math.floor(Math.random() * 1000), 'test'];
+            }
         } else {
             houseItem = null;  
         }
