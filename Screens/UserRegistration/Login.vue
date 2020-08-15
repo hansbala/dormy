@@ -33,7 +33,7 @@
 
 <script>
 import { Alert } from "react-native";
-import { loginUser } from "../../api/userAuth.js";
+import { loginUser, verifyUserEmail } from "../../api/userAuth.js";
 export default {
     props: {
         navigation: {
@@ -55,11 +55,23 @@ export default {
             this.navigation.navigate("Home");
         },
         // Displays an alert message with the reason for failure
-        loginFailure(error = 'Could not log you in :(') {
+        loginFailure(error = 'Could not log you in :(', errorType = 'loginError') {
+            // Initializing a buttons list with just the "return" or do-nothing option
+            buttons = [{
+                text: "Return"
+                }]
+            if(errorType == 'verification') { // option to re-verify email
+                // Adds to front of list so that resend comes before return
+                buttons.unshift({
+                    text: "Resend Verification?",
+                    onPress: () => verifyUserEmail(this.email),
+                    style: "Send"
+                })
+            }
             Alert.alert(
                 "Error",
                 "" + error,
-                { cancelable: false }
+                 buttons, {cancelable: false}
             );
         },
         goCreateAccount() {
