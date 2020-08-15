@@ -73,7 +73,7 @@ export function loginUser(email, password, successCallback, failureCallback) {
         if (firebaseAuth.currentUser.emailVerified) {
             successCallback();
         } else {
-            failureCallback('Email has not been verified');
+            failureCallback('Email has not been verified', 'verification');
         }
     }).catch(error => {
         failureCallback(error);
