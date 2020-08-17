@@ -161,7 +161,6 @@
 */
 import React from "react";
 import { Alert } from "react-native";
-import BottomNavBar from "../Navigation/TabNavBar.vue";
 import moment from 'moment'
 
 import { postRideshare } from "../../api/rideshareApi.js";
@@ -206,9 +205,6 @@ export default {
             times: this.generateTimes(),
             formError: ''
         }
-    },
-    components: {
-        BottomNavBar
     },
     methods: {
         formatFromDate: function(date) {
