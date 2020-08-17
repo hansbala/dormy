@@ -157,6 +157,7 @@ export default {
         if (
           !this.housingTypeFilter.filterOn &&
           !this.rentalTypeFilter.filterOn &&
+          !this.savedFilter.filterOn &&
           this.searchQuery === ""
         ) {
           return true;
