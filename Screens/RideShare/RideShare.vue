@@ -2,9 +2,6 @@
   <view class="container">
     <view class="component-container">
       <view class="header">
-        <touchable-opacity :on-press="navDrawerOpen">
-          <image class="menu-icon" :source="require('../../assets/png_icons/hamburger-nav.png')" />
-        </touchable-opacity>
         <text-input class="search-bar" placeholder="Search for rideshares" v-model="searchString" />
       </view>
 
@@ -18,10 +15,6 @@
             <touchable-opacity class="new-ride-share-btn" :on-press="goToMakeRideShare">
               <image class="icon" :source="require('../../assets/png_icons/green-plus-sign.png')" />
             </touchable-opacity>
-
-            <!-- <touchable-opacity class="filter-btn">
-                            <text class="filter-btn-txt">Location</text>
-            </touchable-opacity>-->
 
             <touchable-opacity class="filter-btn" :on-press="sortByDate">
               <text class="filter-btn-txt">Date</text>
@@ -221,10 +214,10 @@ export default {
 
 .search-bar {
   border-width: 1;
-  margin-left: 10;
+  margin-left: 0;
   padding-left: 10;
   height: 35;
-  width: 80%;
+  width: 90%;
   border-radius: 5;
   border-color: gray;
 }
