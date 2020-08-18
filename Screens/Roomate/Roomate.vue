@@ -2,21 +2,9 @@
     <nb-container :style="{ backgroundColor: '#fff' }">
         <nb-header class="header-wrapper">
             <view class="horizontal-flex">
-                <touchable-opacity :on-press="navDrawerOpen">
-                    <view class="left-header-icon">
-                        <image class="header-icon" :source="require('../../assets/png_icons/hamburger-nav.png')"/>
-                    </view>
-                </touchable-opacity>
-
                 <view class="header-text">
                     <text >Find Roomates</text>
                 </view>
-                
-                <touchable-opacity>
-                    <view class="right-header-icon">
-                        <image class="header-icon" :source="require('../../assets/Icons/heart-inactive.png')"/>
-                    </view>
-                </touchable-opacity>
             </view>
         </nb-header>
                 <view :style="{ flex: 1, padding: 12 }">
@@ -30,24 +18,6 @@
                     </nb-deck-swiper>
                     
                 </view>
-                
-                <view class="btn-wrapper">
-                    <view class="card-btns">
-                        <touchable-opacity  class="card-btn" :on-press="swipeLeft">
-                            <image class="card-icon" :source="require('../../assets/Icons/thumbs-up.png')"/>
-                        </touchable-opacity>
-
-                        <touchable-opacity  class="card-btn" >
-                            <image class="card-icon" :source="require('../../assets/Icons/heart-active.png')"/>
-                        </touchable-opacity>
-
-                        <touchable-opacity  class="card-btn" :on-press="swipeRight">
-                            <image class="card-icon" :source="require('../../assets/Icons/thumbs-down.png')"/>
-                        </touchable-opacity>
-                    </view>
-                </view>
-                
-            
     </nb-container>
 
 </template>
