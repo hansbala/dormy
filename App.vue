@@ -18,7 +18,7 @@ import Vue from "vue-native-core";
 import { VueNativeBase, Icon } from "native-base";
 Vue.use(VueNativeBase);
 
-import sideBar from "./Screens/Navigation/Sidebar.vue";
+import MenuScreen from "./Screens/Navigation/Menu.vue";
 import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import LoginScreen from "./Screens/UserRegistration/Login.vue";
@@ -233,8 +233,8 @@ const MainTabs = createBottomTabNavigator({
       },
     },
   },
-  SideBarAccess: {
-    screen: sideBar,
+  Menu: {
+    screen: MenuScreen,
     navigationOptions: {
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
@@ -281,7 +281,7 @@ const MainDrawer = createDrawerNavigator(
       activeTintColor: "orange",
       inactiveBackgroundColor: "#e91e63",
     },
-    contentComponent: sideBar,
+    contentComponent: MenuScreen,
   }
 );
 
