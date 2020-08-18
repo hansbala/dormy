@@ -19,7 +19,7 @@ screen should work:
         v-model="searchQuery"
       />
       <touchable-opacity :on-press="addHousingListing" class="menu-icon-wrapper">
-        <image class="plus-icon" :source="require('../../assets/plus_icon.png')" />
+        <image class="plus-icon" :source="require('../../assets/iconsv2/plus-icon.png')" />
       </touchable-opacity>
     </view>
 

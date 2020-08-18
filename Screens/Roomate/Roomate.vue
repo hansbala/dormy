@@ -8,7 +8,7 @@
 
         <touchable-opacity>
           <view class="right-header-icon">
-            <image class="header-icon" :source="require('../../assets/Icons/heart-inactive.png')" />
+            <image class="header-icon" :source="require('../../assets/iconsv2/heart-inactive.png')" />
           </view>
         </touchable-opacity>
       </view>
@@ -26,15 +26,15 @@
     <view class="btn-wrapper">
       <view class="card-btns">
         <touchable-opacity class="card-btn" :on-press="swipeLeft">
-          <image class="card-icon" :source="require('../../assets/Icons/thumbs-up.png')" />
+          <image class="card-icon" :source="require('../../assets/iconsv2/thumbs-up.png')" />
         </touchable-opacity>
 
         <touchable-opacity class="card-btn">
-          <image class="card-icon" :source="require('../../assets/Icons/heart-active.png')" />
+          <image class="card-icon" :source="require('../../assets/iconsv2/heart-active.png')" />
         </touchable-opacity>
 
         <touchable-opacity class="card-btn" :on-press="swipeRight">
-          <image class="card-icon" :source="require('../../assets/Icons/thumbs-down.png')" />
+          <image class="card-icon" :source="require('../../assets/iconsv2/thumbs-down.png')" />
         </touchable-opacity>
       </view>
     </view>
@@ -89,7 +89,7 @@ export default {
         <View style={styles.container}>
           <Image
             style={styles.logo}
-            source={require("../../assets/png_icons/logo.png")}
+            source={require("../../assets/iconsv2/logo.png")}
           />
           <Text style={styles.txt}> Sorry No More Users to View </Text>
         </View>

@@ -3,7 +3,7 @@
         <nb-list-item avatar>
             <touchable-opacity class="horizontal-flex" :on-press="contactClick">
                 <nb-left>
-                    <nb-thumbnail small :source="testimg"/>
+                    <!-- <nb-thumbnail small :source="testimg"/> -->
                 </nb-left>
                 <nb-body>
                     <nb-text class="contact-name">{{ messages.text }}</nb-text>
@@ -22,18 +22,12 @@
 <script>
 import React from "react";
 import { Alert } from "react-native";
-import testimg from "../../assets/Images/rmate-man1.jpeg";
 
 export default {
     props: {
-        messages: Object,
+        messages: String,
         navigation: {
             type: Object
-        }
-    },
-    data () {
-        return {
-            testimg: testimg,
         }
     },
     methods: {

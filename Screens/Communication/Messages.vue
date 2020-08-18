@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import testimg from "../../assets/Images/rmate-man1.jpeg";
 import MessageCard from "./messagesCard";
 import { getUserContacts } from "../../api/contactsApi.js";
 import { firebaseAuth } from "../../environment/config.js";

@@ -13,7 +13,7 @@
             :contentContainerStyle="{alignItems: 'center', justifyContent: 'center'}"
           >
             <touchable-opacity class="new-ride-share-btn" :on-press="goToMakeRideShare">
-              <image class="icon" :source="require('../../assets/png_icons/green-plus-sign.png')" />
+              <image class="icon" :source="require('../../assets/iconsv2/green-plus-sign.png')" />
             </touchable-opacity>
 
             <touchable-opacity class="filter-btn" :on-press="sortByDate">

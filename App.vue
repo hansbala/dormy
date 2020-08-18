@@ -123,14 +123,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/housing-active.png")}
+              source={require("./assets/iconsv2/housing-active.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/housing-inactive.png")}
+              source={require("./assets/iconsv2/housing-inactive.png")}
             />
           );
         }
@@ -154,14 +154,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/roommates-active.png")}
+              source={require("./assets/iconsv2/roomie-active.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/roommates-inactive.png")}
+              source={require("./assets/iconsv2/roomie-inactive.png")}
             />
           );
         }
@@ -185,14 +185,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/carpool-active.png")}
+              source={require("./assets/iconsv2/carpool-active.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/carpool-inactive.png")}
+              source={require("./assets/iconsv2/carpool-inactive.png")}
             />
           );
         }
@@ -216,14 +216,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/notif-active.png")}
+              source={require("./assets/iconsv2/bell-active.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/navbar/notif-inactive.png")}
+              source={require("./assets/iconsv2/bell-inactive.png")}
             />
           );
         }
@@ -247,14 +247,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/hamburger-nav.png")}
+              source={require("./assets/iconsv2/hamburger-nav.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/png_icons/hamburger-nav.png")}
+              source={require("./assets/iconsv2/hamburger-nav.png")}
             />
           );
         }
