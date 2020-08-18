@@ -1,44 +1,24 @@
 <template>
-  <nb-container :style="{ backgroundColor: '#fff' }">
-    <nb-header class="header-wrapper">
-      <view class="horizontal-flex">
-        <view class="header-text">
-          <text>Find Roomates</text>
-        </view>
-
-        <touchable-opacity>
-          <view class="right-header-icon">
-            <image class="header-icon" :source="require('../../assets/iconsv2/heart-inactive.png')" />
-          </view>
-        </touchable-opacity>
-      </view>
-    </nb-header>
-    <view :style="{ flex: 1, padding: 12 }">
-      <nb-deck-swiper
-        ref="_deckSwiper"
-        :dataSource="cardItemsArr"
-        :looping="isLoopingRequired"
-        :renderEmpty="handleCardEmpty"
-        :renderItem="handleCardRendering"
-      ></nb-deck-swiper>
-    </view>
-
-    <view class="btn-wrapper">
-      <view class="card-btns">
-        <touchable-opacity class="card-btn" :on-press="swipeLeft">
-          <image class="card-icon" :source="require('../../assets/iconsv2/thumbs-up.png')" />
-        </touchable-opacity>
-
-        <touchable-opacity class="card-btn">
-          <image class="card-icon" :source="require('../../assets/iconsv2/heart-active.png')" />
-        </touchable-opacity>
-
-        <touchable-opacity class="card-btn" :on-press="swipeRight">
-          <image class="card-icon" :source="require('../../assets/iconsv2/thumbs-down.png')" />
-        </touchable-opacity>
-      </view>
-    </view>
-  </nb-container>
+    <nb-container :style="{ backgroundColor: '#fff' }">
+        <nb-header class="header-wrapper">
+            <view class="horizontal-flex">
+                <view class="header-text">
+                    <text >Find Roomates</text>
+                </view>
+            </view>
+        </nb-header>
+                <view :style="{ flex: 1, padding: 12 }">
+                    <nb-deck-swiper
+                        ref="_deckSwiper"
+                        :dataSource="cardItemsArr"
+                        :looping="isLoopingRequired"
+                        :renderEmpty="handleCardEmpty"
+                        :renderItem="handleCardRendering"
+                    >
+                    </nb-deck-swiper>
+                    
+                </view>
+    </nb-container>
 </template>
 
 <script>
