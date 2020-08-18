@@ -4,14 +4,14 @@
             <nb-header class="header-wrapper">
                 <view class="horizontal-flex">
                      <nb-button  class="left-arrow" :on-press="goToRideShare" light>
-                        <image class="icon" :source="require('../../assets/Icons/Arrow-left.png')"/>
+                        <image class="icon" :source="require('../../assets/iconsv2/Arrow-left.png')"/>
                     </nb-button> 
                     <view class="header-text"> 
                         <nb-text>Schedule Your Ride</nb-text>
                     </view>
                     
                     <nb-button  class="info-btn" :on-press="displayInfo" light>
-                        <image class="icon" :source="require('../../assets/Icons/more-info.png')"/>
+                        <image class="icon" :source="require('../../assets/iconsv2/more-info.png')"/>
                     </nb-button>  
                 </view>
             </nb-header>
@@ -38,7 +38,7 @@
                             <view class="vertical-flex">
                                 <text class="card-heading">Departure</text>
                                 <view class="horizontal-flex date-picker">
-                                    <image class="icon" :source="require('../../assets/Icons/cal-sched.png')"/>
+                                    <image class="icon" :source="require('../../assets/iconsv2/cal-sched.png')"/>
                                     <nb-date-picker
                                     :defaultDate="defaultDate"
                                     :minimumDate="minimumDate"
@@ -59,7 +59,7 @@
                             <view class="vertical-flex">
                                 <text class="card-heading">Time</text>
                                 <view class="horizontal-flex date-picker">
-                                    <image class="icon" :source="require('../../assets/Icons/time.png')"/>
+                                    <image class="icon" :source="require('../../assets/iconsv2/time.png')"/>
                                     <nb-picker
                                         mode="dropdown"
                                         placeholder="Select Time"
@@ -85,7 +85,7 @@
                             <view class="horizontal-flex fair-splitting">
                                 <view class="horizontal-flex">
 
-                                    <image class="icon" :source="require('../../assets/Icons/Nav-bar/roommates-inactive.png')"/>
+                                    <image class="icon" :source="require('../../assets/iconsv2/roomie-inactive.png')"/>
 
                                     <text class="adults-txt">ADULTS</text>
                                 </view>
@@ -161,7 +161,6 @@
 */
 import React from "react";
 import { Alert } from "react-native";
-import BottomNavBar from "../Navigation/TabNavBar.vue";
 import moment from 'moment'
 
 import { postRideshare } from "../../api/rideshareApi.js";
@@ -206,9 +205,6 @@ export default {
             times: this.generateTimes(),
             formError: ''
         }
-    },
-    components: {
-        BottomNavBar
     },
     methods: {
         formatFromDate: function(date) {
