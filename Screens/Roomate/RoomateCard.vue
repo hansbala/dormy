@@ -16,7 +16,7 @@
                         >
                             <view class='white-back' :style="{
                                     flex: 1,
-                                    justifyContent: 'top',
+                                    justifyContent: 'center',
                                     alignItems: 'center',
                                     alignSelf: 'flex-end',
                                     backgroundColor: 'rgba(255,255,255, 0.5)'
