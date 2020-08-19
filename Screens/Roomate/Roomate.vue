@@ -32,20 +32,21 @@ export default {
     return {
       users: [],
       isLoopingRequired: false,
+      // TODO: Pull these from firebase instead of hardcoding here
       cardItemsArr: [
         {
           realName: "Maddie",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image: 'https://reactjs.org/logo-og.png',
           bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
         },
         {
           realName: "Sarah",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image: 'https://reactjs.org/logo-og.png',
           bio: "Hey everyone, looking forward to some great ride shares!",
         },
         {
           realName: "Emiliy",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image: 'https://reactjs.org/logo-og.png',
           bio: "22 year-old looking for roommates in a new city.",
         },
       ],

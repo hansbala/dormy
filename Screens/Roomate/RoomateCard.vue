@@ -12,11 +12,11 @@
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }"
-                            :source="require('../../assets/Images/rmate-woman1.jpeg')"
+                            :source="{uri: item.image}"
                         >
                             <view class='white-back' :style="{
                                     flex: 1,
-                                    justifyContent: 'center',
+                                    justifyContent: 'top',
                                     alignItems: 'center',
                                     alignSelf: 'flex-end',
                                     backgroundColor: 'rgba(255,255,255, 0.5)'
