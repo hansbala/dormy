@@ -8,7 +8,7 @@
       </view>
     </nb-header>
     <scroll-view :style="{ flex: 1, padding: 12 }">
-      <view v-for="todo in cardItemsArr" :key="todo.realName" >
+      <view v-for="todo in cardItemsArr" :key="todo.realName">
         <CardComponent :item="todo"></CardComponent>
       </view>
     </scroll-view>
@@ -32,20 +32,22 @@ export default {
     return {
       users: [],
       isLoopingRequired: false,
+      // TODO: Pull these from firebase instead of hardcoding here
       cardItemsArr: [
         {
           realName: "Maddie",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image:
+            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
           bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
         },
         {
           realName: "Sarah",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
           bio: "Hey everyone, looking forward to some great ride shares!",
         },
         {
           realName: "Emiliy",
-          image: "../../assets/Images/rmate-woman1.jpeg",
+          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
           bio: "22 year-old looking for roommates in a new city.",
         },
       ],
