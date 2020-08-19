@@ -3,7 +3,7 @@
     <nb-header>
       <nb-left>
         <touchable-opacity :on-press="navDrawerOpen">
-          <image class="menu-icon" :source="require('../../assets/iconsv2/hamburger-nav.png')" />
+          <image class="menu-icon" :source="require('../../assets/iconsv2/arrow-left.png')" />
         </touchable-opacity>
       </nb-left>
       <nb-body>

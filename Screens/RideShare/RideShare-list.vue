@@ -4,7 +4,7 @@
             <nb-header class="header-wrapper">
                 <view class="horizontal-flex">
                      <nb-button  class="left-arrow" :on-press="goToRideShare" light>
-                        <image class="icon" :source="require('../../assets/iconsv2/Arrow-left.png')"/>
+                        <image class="icon" :source="require('../../assets/iconsv2/arrow-left.png')"/>
                     </nb-button> 
                     <view class="header-text"> 
                         <nb-text>Schedule Your Ride</nb-text>

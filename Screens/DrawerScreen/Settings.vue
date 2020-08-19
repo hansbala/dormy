@@ -2,8 +2,8 @@
   <nb-container class="container" :style="{ backgroundColor: '#fff' }">
     <nb-header>
       <nb-left>
-        <touchable-opacity :on-press="navDrawerOpen">
-          <image class="menu-icon" :source="require('../../assets/iconsv2/hamburger-nav.png')" />
+        <touchable-opacity :on-press="navToMenu">
+          <image class="menu-icon" :source="require('../../assets/iconsv2/arrow-left.png')" />
         </touchable-opacity>
       </nb-left>
       <nb-body>
@@ -88,8 +88,8 @@ export default {
     this.fetchUserData();
   },
   methods: {
-    navDrawerOpen() {
-      this.navigation.dispatch(DrawerActions.toggleDrawer());
+    navToMenu() {
+      this.navigation.navigate('Home');
     },
     async fetchUserData() {
       let res = await getUserData(

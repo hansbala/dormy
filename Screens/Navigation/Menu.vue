@@ -1,9 +1,10 @@
 <template>
   <nb-container>
     <nb-content>
-      <image :source="require('../../assets/Images/rmate-man1.jpeg')" class="nav-drawer-img" />
-      <text class="user-name">{{realName}}</text>
-
+      <view class="horizontal-flex profile-image">
+        <image :source="require('../../assets/Images/rmate-man1.jpeg')" class="nav-drawer-img" />
+        <text class="user-name">{{realName}}</text>
+      <view/>
       <nb-list class="drawer-items-list">
         <nb-list-item
           v-for="item in drawerItems"
@@ -106,14 +107,14 @@ export default {
   margin: 30;
 }
 
-.drawer-items-list {
-  margin: 15;
-}
-
 .user-name {
   font-size: 25;
   text-align: center;
   margin-top: 10;
+}
+
+.drawer-items-list {
+  margin: 15;
 }
 
 .logout-btn {
