@@ -1,24 +1,18 @@
 <template>
-    <nb-container :style="{ backgroundColor: '#fff' }">
-        <nb-header class="header-wrapper">
-            <view class="horizontal-flex">
-                <view class="header-text">
-                    <text >Find Roomates</text>
-                </view>
-            </view>
-        </nb-header>
-                <view :style="{ flex: 1, padding: 12 }">
-                    <nb-deck-swiper
-                        ref="_deckSwiper"
-                        :dataSource="cardItemsArr"
-                        :looping="isLoopingRequired"
-                        :renderEmpty="handleCardEmpty"
-                        :renderItem="handleCardRendering"
-                    >
-                    </nb-deck-swiper>
-                    
-                </view>
-    </nb-container>
+  <nb-container :style="{ backgroundColor: '#fff' }">
+    <nb-header class="header-wrapper">
+      <view class="horizontal-flex">
+        <view class="header-text">
+          <text>Find Roomates</text>
+        </view>
+      </view>
+    </nb-header>
+    <scroll-view :style="{ flex: 1, padding: 12 }">
+      <view v-for="todo in cardItemsArr" :key="todo.realName" >
+        <CardComponent :item="todo"></CardComponent>
+      </view>
+    </scroll-view>
+  </nb-container>
 </template>
 
 <script>
@@ -144,17 +138,6 @@ const styles = StyleSheet.create({
   align-items: center;
 }
 
-.header-icon {
-  width: 20;
-  height: 20;
-}
-
-.left-header-icon {
-  flex: 1;
-  justify-content: flex-start;
-  margin-left: 10;
-}
-
 .header-text {
   flex: 2;
   display: flex;
@@ -162,70 +145,10 @@ const styles = StyleSheet.create({
   align-items: center;
 }
 
-.right-header-icon {
-  flex: 1;
-  justify-content: flex-end;
-  margin-right: 10;
-}
-
 .horizontal-flex {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-}
-
-/*************************************** 
-
-    Card Deck Styling
-
-****************************************/
-
-.deck-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.deck-swipper {
-  display: flex;
-  flex: 1;
-}
-
-.card-deck {
-  flex: 10;
-  width: 90%;
-  height: 80%;
-}
-
-.btn-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5%;
-}
-
-.card-btns {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  border-width: 1;
-  border-radius: 5;
-  border-color: gray;
-  padding-top: 10;
-  padding-bottom: 10;
-}
-
-.card-btn {
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-icon {
-  width: 40;
-  height: 40;
 }
 </style>
