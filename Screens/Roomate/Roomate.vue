@@ -3,14 +3,16 @@
     <nb-header class="header-wrapper">
       <view class="horizontal-flex">
         <view class="header-text">
-          <text>Find Roomates</text>
+          <text>Find Roommates</text>
         </view>
       </view>
     </nb-header>
-    <scroll-view :style="{ flex: 1, padding: 12 }">
-      <view v-for="todo in cardItemsArr" :key="todo.realName">
-        <CardComponent :item="todo"></CardComponent>
-      </view>
+    <scroll-view>
+        <!-- TODO: Helper function to loop through users instead of hardcoding -->
+        <view :style="{display: 'flex', flexDirection: 'row', justifyContent: 'center'}">
+        <CardComponent :item="cardItemsArr[0]"></CardComponent>
+        <CardComponent :item="cardItemsArr[0]"></CardComponent>
+        </view>
     </scroll-view>
   </nb-container>
 </template>
@@ -37,17 +39,17 @@ export default {
         {
           realName: "Maddie",
           image:
-            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
+            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
           bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
         },
         {
           realName: "Sarah",
-          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
+          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
           bio: "Hey everyone, looking forward to some great ride shares!",
         },
         {
           realName: "Emiliy",
-          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=c88e437a-ef26-48e2-b5a8-d0016d92ce7b",
+          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
           bio: "22 year-old looking for roommates in a new city.",
         },
       ],
