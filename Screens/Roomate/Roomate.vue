@@ -10,8 +10,8 @@
     <scroll-view>
         <!-- TODO: Helper function to loop through users instead of hardcoding -->
         <view :style="{display: 'flex', flexDirection: 'row', justifyContent: 'center'}">
-        <CardComponent :item="cardItemsArr[0]"></CardComponent>
-        <CardComponent :item="cardItemsArr[0]"></CardComponent>
+        <CardComponent :navigation="this.props.navigation" :item="cardItemsArr[0]"></CardComponent>
+        <CardComponent :navigation="this.props.navigation" :item="cardItemsArr[0]"></CardComponent>
         </view>
     </scroll-view>
   </nb-container>
