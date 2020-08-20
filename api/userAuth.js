@@ -52,13 +52,13 @@ export async function addUserToCollection(email, realName, successCallback, fail
         realName: realName,
         email: localEmail,
     })
-    .then(() => {
-        // name has also been added to the database, so we can call the successcallback
-        successCallback('verification sent');
-    })
-    .catch((err) => {
-        failCallback();
-    });
+        .then(() => {
+            // name has also been added to the database, so we can call the successcallback
+            successCallback('verification sent');
+        })
+        .catch((err) => {
+            failCallback();
+        });
 }
 
 /** 
@@ -80,6 +80,18 @@ export function loginUser(email, password, successCallback, failureCallback) {
     });
 }
 
+/**
+ * Returns a promise that the user will be signed out
+ * This is important because to keep the app
+ * from asking credentials each time the app starts,
+ * firebase can cache the credentials for a limited period
+ * of time. Then when we signout, we purge the cache to make
+ * sure that cache can not be accessed.
+ * PS: This makes development also super easy :')
+ */
+export function signOutUser() {
+    return firebaseAuth.signOut();
+}
 
 // Gets a username from a UID of a user.
 // If it exists, it returns the real name, otherwise it calls the failCallback
@@ -88,7 +100,7 @@ export async function getUserNameFromUID(uid, failCallback) {
     let realName = '';
     await usersRef.doc(uid).get().then((doc) => {
         if (doc.exists) {
-            realName =  doc.data().realName;
+            realName = doc.data().realName;
         } else {
             failCallback();
         }

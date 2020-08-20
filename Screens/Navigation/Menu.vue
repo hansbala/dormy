@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import { getUserNameFromUID, getCurrentUID } from "../../api/userAuth.js";
+import { Alert } from 'react-native';
+import { getUserNameFromUID, getCurrentUID, signOutUser } from "../../api/userAuth.js";
 export default {
   props: {
     navigation: {
@@ -81,7 +82,11 @@ export default {
       this.navigation.navigate(screen.route);
     },
     logout() {
-      this.navigation.navigate("Logout");
+      signOutUser().then(() => {
+        this.navigation.navigate("Logout");
+      }).catch((err) => {
+        Alert.alert('Failed to sign out user: ' + err);
+      })
     },
     async getUserName() {
       let localRealName = await getUserNameFromUID(

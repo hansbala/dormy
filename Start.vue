@@ -33,13 +33,16 @@ export default {
       this.navigation.navigate("Create Account");
     },
   },
-  /*
-    mounted: function() {
-        firebaseAuth.onAuthStateChanged(user => {
-            console.log("user authenticated");
-            this.navigation.navigate("Home");
-        });
-    }*/
+  mounted() {
+    firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.navigation.navigate("Housing");
+      } else {
+        // Do nothing since user is not authenticated
+        // and stay on the start page
+      }
+    });
+  },
 };
 </script>
 

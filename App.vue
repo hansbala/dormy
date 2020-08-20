@@ -297,32 +297,6 @@ const App = createSwitchNavigator({
 
 const AppNavigator = createAppContainer(App);
 
-// const DrawerNavigator = createDrawerNavigator(
-//     {
-//         Home: HomeScreen,
-//         Start: StartScreen,
-//         Contacts: ContactsScreen,
-//         Settings: SettingsScreen,
-//         "Get Help": GetHelpScreen
-//     },
-//     {
-//         initialRouteName: "Start"
-//     }
-// );
-
-// const StackNavigator = createSwitchNavigator({
-//     Drawer: DrawerNavigator,
-//     Home: HomeScreen,
-//     Housing: HousingScreen,
-//     RideShare: RideShareScreen,
-//     Roomate: RoomateScreen,
-//     Messages: MessagesScreen,
-//     "Create Account": CreateAccountScreen,
-//     Login: LoginScreen,
-// });
-
-// const AppNavigator = createAppContainer(StackNavigator);
-
 export default {
   components: { AppNavigator },
 };
