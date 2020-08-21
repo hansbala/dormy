@@ -23,7 +23,7 @@ import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import LoginScreen from "./Screens/UserRegistration/Login.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
-import ContactsScreen from "./Screens/DrawerScreen/Contacts.vue";
+import ProfileScreen from "./Screens/DrawerScreen/Profile.vue";
 import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
 import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
@@ -177,8 +177,8 @@ const MainTabs = createBottomTabNavigator({
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
           tinyLogo: {
-            width: 30,
-            height: 30,
+            width: 27,
+            height: 27,
           },
         });
         if (focused) {
@@ -247,14 +247,14 @@ const MainTabs = createBottomTabNavigator({
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/iconsv2/hamburger-nav.png")}
+              source={require("./assets/iconsv2/menu-active.png")}
             />
           );
         } else {
           return (
             <Image
               style={styles.tinyLogo}
-              source={require("./assets/iconsv2/hamburger-nav.png")}
+              source={require("./assets/iconsv2/menu-inactive.png")}
             />
           );
         }
@@ -270,7 +270,6 @@ const MainTabs = createBottomTabNavigator({
 const MainDrawer = createDrawerNavigator(
   {
     Home: MainTabs,
-    Contacts: ContactsScreen,
     Settings: SettingsScreen,
     "Get Help": GetHelpScreen,
     Logout: StartScreen,
@@ -284,6 +283,24 @@ const MainDrawer = createDrawerNavigator(
     contentComponent: MenuScreen,
   }
 );
+
+// // Menu stack
+// const MainDrawer = createStackNavigator({
+//   Menu: {
+//     screen: MenuScreen,
+//     navigationOptions: {
+//       title: "Menu",
+//       header: null,
+//     },
+//   },
+//   Settings: {
+//     screen: SettingsScreen,
+//     navigationOptions: {
+//       title: "Settings",
+//       header: null,
+//     },
+//   },
+// });
 
 // The main app with both navigation workflows
 const App = createSwitchNavigator({

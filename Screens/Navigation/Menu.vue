@@ -1,10 +1,15 @@
 <template>
   <nb-container>
     <nb-content>
-      <view class="horizontal-flex profile-image">
-        <image :source="require('../../assets/Images/rmate-man1.jpeg')" class="nav-drawer-img" />
-        <text class="user-name">{{realName}}</text>
-      <view/>
+      <touchable-opacity class="profile-card"> 
+          <view :style="{flexDirection: 'row', alignItems: 'center'}">
+            <image :source="require('../../assets/Images/rmate-man1.jpeg')" class="nav-drawer-img" />
+            <view style="{{flexDirection: 'column'}}">
+              <text class="user-name">{{realName}}</text>
+              <text class="show-profile">Show profile</text>
+            </view>
+          </view>
+      </touchable-opacity>
       <nb-list class="drawer-items-list">
         <nb-list-item
           v-for="item in drawerItems"
@@ -103,30 +108,47 @@ export default {
 </script>
 
 <style>
+.profile-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 25;
+  height: 20%;
+  margin: 10;
+}
+
 .nav-drawer-img {
   width: 80;
   height: 80;
   border-radius: 70;
   align-self: flex-start;
-  margin-top: 10%;
-  margin: 30;
+  margin-top: 5%;
+  margin: 15;
 }
 
 .user-name {
   font-size: 25;
   text-align: center;
-  margin-top: 10;
+  margin-top: 4;
+}
+
+.show-profile {
+  font-size: 15;
+  font-weight: 600;
+  color: #56aabd;
 }
 
 .drawer-items-list {
-  margin: 15;
+  width: 100%;
+  margin-top: 0;
+  background-color: #fafafa;
 }
 
 .logout-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 60%;
+  margin-top: 30;
   margin-left: auto;
   margin-right: auto;
   background-color: #f74c01;
