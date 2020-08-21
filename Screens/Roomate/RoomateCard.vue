@@ -1,5 +1,5 @@
 <template>
-  <touchable-opacity :on-press="() => goToRoommate()">
+  <TouchableOpacity :disabled="item.isEmpty" :on-press="() => goToRoommate()">
     <nb-card class="card">
       <nb-cardItem cardBody>
         <view>
@@ -35,7 +35,7 @@
         </view>
       </nb-cardItem>
     </nb-card>
-  </touchable-opacity>
+  </TouchableOpacity>
 </template>
 
 <script>
