@@ -9,8 +9,8 @@
     </nb-header>
     <nb-content>
       <ScrollView>
-        <view v-for="message in messages" :key="message.id">
-          <message-card :messages="message"></message-card>
+        <view v-for="contact in contacts" :key="contact">
+          <inbox-card :navigation="this.props.navigation" :contact="contact"></inbox-card>
         </view>
       </ScrollView>
     </nb-content>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import MessageCard from "./messagesCard";
+import InboxCard from "./InboxCard.vue";
 import { getUserContacts } from "../../api/contactsApi.js";
 import { firebaseAuth } from "../../environment/config.js";
 import { Alert } from "react-native";
@@ -31,32 +31,27 @@ export default {
   },
   data() {
     return {
-      messages: [],
+      contacts: [],
     };
   },
   beforeMount() {
-    this.fetchMessages();
+    this.fetchContacts();
   },
   methods: {
-    contactOptions() {
-      console.log("pressed");
-    },
-    async fetchMessages() {
-      let res = await getUserContacts(
+    async fetchContacts() {
+      this.contacts = await getUserContacts(
         firebaseAuth.currentUser.uid,
-        this.postingFailed
+        () => {
+          Alert.alert(
+            "Failed to get user contacts for UID: " +
+              firebaseAuth.currentUser.uid
+          );
+        }
       );
-      this.messages = res;
-      console.log(this.messages);
-    },
-    postingFailed() {
-      Alert.alert("Failed to fetch contacts", "Error: " + errorMessage, {
-        cancelable: false,
-      });
     },
   },
   components: {
-    MessageCard,
+    InboxCard,
   },
 };
 </script>

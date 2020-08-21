@@ -11,6 +11,9 @@ import {
   createBottomTabNavigator,
 } from "react-navigation";
 
+// Disable annoying warnings
+console.disableYellowBox = true;
+
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
@@ -32,6 +35,7 @@ import HousingListingScreen from "./Screens/Housing/HousingListing.vue";
 import RideShareScreen from "./Screens/RideShare/RideShare.vue";
 import RoomateScreen from "./Screens/Roomate/Roomate.vue";
 import MessagesScreen from "./Screens/Communication/Messages.vue";
+import InboxScreen from "./Screens/Communication/Inbox.vue";
 import RideShareListScreen from "./Screens/RideShare/RideShare-list.vue";
 import RoommateScreen from "./Screens/Roomate/Roomate.vue";
 
@@ -102,6 +106,24 @@ const RideShareNavigatorStack = createStackNavigator({
     screen: RideShareListScreen,
     navigationOptions: {
       title: "Schedule a Rideshare",
+      header: null,
+    },
+  },
+});
+
+const MessagesNavigatorStack = createStackNavigator({
+  MessagesScreen: {
+    screen: MessagesScreen,
+    navigationOptions: {
+      title: "Messages",
+      header: null,
+    },
+  },
+  Inbox: {
+    screen: InboxScreen,
+    navigationOptions: {
+      title: "Inbox",
+      // We keep the header null since we make a custom design
       header: null,
     },
   },
@@ -203,7 +225,7 @@ const MainTabs = createBottomTabNavigator({
     },
   },
   Messages: {
-    screen: MessagesScreen,
+    screen: MessagesNavigatorStack,
     navigationOptions: {
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
