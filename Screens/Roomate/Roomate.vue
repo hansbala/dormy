@@ -21,6 +21,7 @@
             :class="[card.isEmpty ? 'emptyCard' : 'other']"
             :navigation="this.props.navigation"
             :item="card"
+            :style="{margin: 7}"
           ></CardComponent>
         </view>
       </view>
@@ -50,32 +51,12 @@ export default {
         isEmpty: true,
       },
       // TODO: Pull these from firebase instead of hardcoding here
-      cardItemsArr: [
-        {
-          realName: "Maddie",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
-        },
-        {
-          realName: "Sarah",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "Hey everyone, looking forward to some great ride shares!",
-        },
-        {
-          realName: "Emiliy",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "22 year-old looking for roommates in a new city.",
-        },
-      ],
+      cardItemsArr: [],
       roommateCardPairs: [],
     };
   },
-  created() {
+  mounted() {
     this.fetchUsers();
-    this.createPairsForDisplay();
   },
   components: {
     CardComponent,
@@ -83,8 +64,10 @@ export default {
   methods: {
     async fetchUsers() {
       let res = await getUsers();
-
-      this.users = res;
+      console.log("he")
+      this.cardItemsArr = res;
+      console.log(this.cardItemsArr.length)
+      this.createPairsForDisplay();
     },
     // Take the array of roommate cards and turn it into an array of pairs of cards
     createPairsForDisplay() {
