@@ -8,6 +8,11 @@
       </view>
     </nb-header>
     <scroll-view>
+      <RefreshControl
+        :refreshing="refreshing"
+        :onRefresh="_onRefresh"
+        :title="'Reloading roommates'"
+      />
       <!-- Loop through the list of pairs of roommate cards -->
       <view
         :style="{display: 'flex', flexDirection: 'row', justifyContent: 'center'}"
@@ -31,7 +36,7 @@
 
 <script>
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, RefreshControl } from "react-native";
 import CardComponent from "./RoomateCard";
 import { getUsers } from "../../api/roommatesApi.js";
 import { Alert } from "react-native";
@@ -53,6 +58,7 @@ export default {
       // TODO: Pull these from firebase instead of hardcoding here
       cardItemsArr: [],
       roommateCardPairs: [],
+      refreshing: false,
     };
   },
   mounted() {
@@ -64,25 +70,26 @@ export default {
   methods: {
     async fetchUsers() {
       let res = await getUsers();
-      console.log("he")
       this.cardItemsArr = res;
-      console.log(this.cardItemsArr.length)
       this.createPairsForDisplay();
     },
     // Take the array of roommate cards and turn it into an array of pairs of cards
     createPairsForDisplay() {
       var numCards = this.cardItemsArr.length;
+      let roommatePairs = [];
       for (var i = 0; i < numCards; i++) {
         if (i + 1 < numCards) {
-          this.roommateCardPairs.push([
-            this.cardItemsArr[i],
-            this.cardItemsArr[++i],
-          ]);
+          roommatePairs.push([this.cardItemsArr[i], this.cardItemsArr[++i]]);
         } else {
-          this.roommateCardPairs.push([this.cardItemsArr[i], this.emptyCard]);
+          roommatePairs.push([this.cardItemsArr[i], this.emptyCard]);
         }
       }
-      return this.roommateCardPairs;
+      this.roommateCardPairs = roommatePairs;
+    },
+    _onRefresh() {
+      this.refreshing = true;
+      this.fetchUsers();
+      this.refreshing = false;
     },
   },
 };
