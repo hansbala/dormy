@@ -89,7 +89,7 @@ const HousingNavigatorStack = createStackNavigator({
   },
 });
 
-// Ride Share stack
+// Rideshare stack
 const RideShareNavigatorStack = createStackNavigator({
   FindRideShare: {
     screen: RideShareScreen,
@@ -107,26 +107,9 @@ const RideShareNavigatorStack = createStackNavigator({
   },
 });
 
-// // Menu stack
-// const MainDrawer = createStackNavigator({
-//   Menu: {
-//     screen: MenuScreen,
-//     navigationOptions: {
-//       title: "Menu",
-//       header: null,
-//     },
-//   },
-//   Settings: {
-//     screen: SettingsScreen,
-//     navigationOptions: {
-//       title: "Settings",
-//       header: null,
-//     },
-//   },
-// });
 // Roommate Stack
 const RoommateNavigatorStack = createStackNavigator({
-  Roommates: {
+  Roommate: {
     screen: RoommateScreen,
     navigationOptions: {
       title: "Browse",
@@ -137,6 +120,24 @@ const RoommateNavigatorStack = createStackNavigator({
     screen: RoommateCardExpanded,
     navigationOptions: {
       title: "Individual Card",
+    },
+  },
+});
+
+// Menu stack
+const MenuStack = createStackNavigator({
+  Menu: {
+    screen: MenuScreen,
+    navigationOptions: {
+      title: "Menu",
+      header: null,
+    },
+  },
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      title: "Settings",
+      header: null,
     },
   },
 });
