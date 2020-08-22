@@ -1,5 +1,5 @@
 <template>
-  <touchable-opacity :on-press="() => goToRoommate()">
+  <TouchableOpacity :disabled="item.isEmpty" :on-press="() => goToRoommate()">
     <nb-card class="card">
       <nb-cardItem cardBody>
         <view>
@@ -15,12 +15,12 @@
 
           <!-- Name, TODO: Add the compatibility score and potentially the age-->
           <view class="profile-info">
-            <text class="profile-info-txt">Alex</text>
+            <text class="profile-info-txt">{{item.realName}}</text>
           </view>
 
           <!-- Budget for the room. TODO: Don't hardcode, pull from a user account-->
           <view class="profile-info">
-            <text class="profile-ppm">$900</text>
+            <text class="profile-ppm">${{item.budget}}</text>
             <text :style="{color: '#808080', flex: 1}">/ Mo</text>
           </view>
 
@@ -30,12 +30,12 @@
               :style="{margin: 5, marginLeft: 10, height: 20, width: 20}"
               :source="require('../../assets/iconsv2/location-icon.png')"
             />
-            <text :style="{flex: 1, alignText: 'center'}">TODO: Pull real loc</text>
+            <text :style="{flex: 1, alignText: 'center'}">{{item.preferredLocation}}</text>
           </view>
         </view>
       </nb-cardItem>
     </nb-card>
-  </touchable-opacity>
+  </TouchableOpacity>
 </template>
 
 <script>

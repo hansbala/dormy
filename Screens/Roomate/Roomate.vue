@@ -8,11 +8,23 @@
       </view>
     </nb-header>
     <scroll-view>
-        <!-- TODO: Helper function to loop through users instead of hardcoding -->
-        <view :style="{display: 'flex', flexDirection: 'row', justifyContent: 'center'}">
-        <CardComponent :navigation="this.props.navigation" :item="cardItemsArr[0]"></CardComponent>
-        <CardComponent :navigation="this.props.navigation" :item="cardItemsArr[0]"></CardComponent>
+      <!-- Loop through the list of pairs of roommate cards -->
+      <view
+        :style="{display: 'flex', flexDirection: 'row', justifyContent: 'center'}"
+        v-for="(cardPair, index) in roommateCardPairs"
+        :key="index"
+      >
+        <!-- Loop through each pair, changing opacity to 0 if it's an empty card -->
+        <view v-for="card in cardPair" :key="card.realName">
+          <!-- TODO: use a different value for the key, potentially a user ID -->
+          <CardComponent
+            :class="[card.isEmpty ? 'emptyCard' : 'other']"
+            :navigation="this.props.navigation"
+            :item="card"
+            :style="{margin: 7}"
+          ></CardComponent>
         </view>
+      </view>
     </scroll-view>
   </nb-container>
 </template>
@@ -33,69 +45,45 @@ export default {
   data() {
     return {
       users: [],
-      isLoopingRequired: false,
+      alignment: 0,
+      emptyCard: {
+        realName: "", // Used as the key in the html v-for
+        isEmpty: true,
+      },
       // TODO: Pull these from firebase instead of hardcoding here
-      cardItemsArr: [
-        {
-          realName: "Maddie",
-          image:
-            "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "Clean, Easy going, Virgo Looking to share 2 bd Apartment...",
-        },
-        {
-          realName: "Sarah",
-          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "Hey everyone, looking forward to some great ride shares!",
-        },
-        {
-          realName: "Emiliy",
-          image: "https://firebasestorage.googleapis.com/v0/b/dormy-94adf.appspot.com/o/roommate%2Fman.jpg?alt=media&token=919f832c-bfff-4eaa-a246-edfbe3867586",
-          bio: "22 year-old looking for roommates in a new city.",
-        },
-      ],
+      cardItemsArr: [],
+      roommateCardPairs: [],
     };
   },
-  created() {
+  mounted() {
     this.fetchUsers();
   },
   components: {
     CardComponent,
   },
   methods: {
-    handleCardEmpty() {
-      return (
-        <View style={styles.container}>
-          <Image
-            style={styles.logo}
-            source={require("../../assets/iconsv2/logo.png")}
-          />
-          <Text style={styles.txt}> Sorry No More Users to View </Text>
-        </View>
-      );
-    },
-    handleCardRendering(item) {
-      return <CardComponent item={item} />;
-    },
-    swipeLeft() {
-      this.$refs._deckSwiper._root.swipeLeft();
-    },
-    swipeRight() {
-      this.$refs._deckSwiper._root.swipeRight();
-    },
     async fetchUsers() {
       let res = await getUsers();
-
-      this.users = res;
-      console.log("local array", this.cardItemsArr);
-      console.log("the users stuff", this.users);
+      console.log("he")
+      this.cardItemsArr = res;
+      console.log(this.cardItemsArr.length)
+      this.createPairsForDisplay();
     },
-    // postingFailed() {
-    //     Alert.alert(
-    //         "Failed to fetch users",
-    //         "Error: " + errorMessage,
-    //         { cancelable: false }
-    //     );
-    // }
+    // Take the array of roommate cards and turn it into an array of pairs of cards
+    createPairsForDisplay() {
+      var numCards = this.cardItemsArr.length;
+      for (var i = 0; i < numCards; i++) {
+        if (i + 1 < numCards) {
+          this.roommateCardPairs.push([
+            this.cardItemsArr[i],
+            this.cardItemsArr[++i],
+          ]);
+        } else {
+          this.roommateCardPairs.push([this.cardItemsArr[i], this.emptyCard]);
+        }
+      }
+      return this.roommateCardPairs;
+    },
   },
 };
 
@@ -154,5 +142,10 @@ const styles = StyleSheet.create({
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+/* Opacity should be 0 for empty cards */
+.emptyCard {
+  opacity: 0;
 }
 </style>
