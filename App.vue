@@ -30,10 +30,10 @@ import HousingScreen from "./Screens/Housing/Housing.vue";
 import AddHousingScreen from "./Screens/Housing/AddHousing.vue";
 import HousingListingScreen from "./Screens/Housing/HousingListing.vue";
 import RideShareScreen from "./Screens/RideShare/RideShare.vue";
-import RoomateScreen from "./Screens/Roomate/Roomate.vue";
 import MessagesScreen from "./Screens/Communication/Messages.vue";
 import RideShareListScreen from "./Screens/RideShare/RideShare-list.vue";
 import RoommateScreen from "./Screens/Roomate/Roomate.vue";
+import RoommateCardExpanded from "./Screens/Roomate/RoommateCardExpanded.vue";
 
 // Will need the switch navigator for the login flow
 // to essentially remove the "Back" button from different
@@ -124,6 +124,22 @@ const RideShareNavigatorStack = createStackNavigator({
 //     },
 //   },
 // });
+// Roommate Stack
+const RoommateNavigatorStack = createStackNavigator({
+  Roommates: {
+    screen: RoommateScreen,
+    navigationOptions: {
+      title: "Browse",
+      header: null,
+    },
+  },
+  RoommateCardExpanded: {
+    screen: RoommateCardExpanded,
+    navigationOptions: {
+      title: "Individual Card",
+    },
+  },
+});
 
 // Main application tabs
 const MainTabs = createBottomTabNavigator({
@@ -158,8 +174,8 @@ const MainTabs = createBottomTabNavigator({
       },
     },
   },
-  Roomate: {
-    screen: RoomateScreen,
+  Roommate: {
+    screen: RoommateNavigatorStack,
     navigationOptions: {
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
