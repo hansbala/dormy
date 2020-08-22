@@ -18,14 +18,11 @@ import Vue from "vue-native-core";
 import { VueNativeBase, Icon } from "native-base";
 Vue.use(VueNativeBase);
 
-import MenuScreen from "./Screens/Navigation/Menu.vue";
+
 import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import LoginScreen from "./Screens/UserRegistration/Login.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
-import PersonalInfoScreen from "./Screens/DrawerScreen/PersonalInfo.vue";
-import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
-import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
 import AddHousingScreen from "./Screens/Housing/AddHousing.vue";
 import HousingListingScreen from "./Screens/Housing/HousingListing.vue";
@@ -34,6 +31,10 @@ import MessagesScreen from "./Screens/Communication/Messages.vue";
 import RideShareListScreen from "./Screens/RideShare/RideShare-list.vue";
 import RoommateScreen from "./Screens/Roomate/Roomate.vue";
 import RoommateCardExpanded from "./Screens/Roomate/RoommateCardExpanded.vue";
+import MenuScreen from "./Screens/Navigation/Menu.vue";
+import PersonalInfoScreen from "./Screens/DrawerScreen/PersonalInfo.vue";
+import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
+import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 
 // Will need the switch navigator for the login flow
 // to essentially remove the "Back" button from different
@@ -125,7 +126,7 @@ const RoommateNavigatorStack = createStackNavigator({
 });
 
 // Menu stack
-const MenuStack = createStackNavigator({
+const MenuNavigatorStack = createStackNavigator({
   Menu: {
     screen: MenuScreen,
     navigationOptions: {
@@ -133,11 +134,22 @@ const MenuStack = createStackNavigator({
       header: null,
     },
   },
+  "Personal Information": {
+    screen: PersonalInfoScreen,
+    navigationOptions: {
+      title: "Personal Information",
+    },
+  },
   Settings: {
     screen: SettingsScreen,
     navigationOptions: {
       title: "Settings",
-      header: null,
+    },
+  },
+  'Get Help': {
+    screen: GetHelpScreen,
+    navigationOptions: {
+      title: "Get Help",
     },
   },
 });
@@ -269,7 +281,7 @@ const MainTabs = createBottomTabNavigator({
     },
   },
   Menu: {
-    screen: MenuScreen,
+    screen: MenuNavigatorStack,
     navigationOptions: {
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
@@ -301,32 +313,13 @@ const MainTabs = createBottomTabNavigator({
   },
 });
 
-// Main drawer for the application
-const MainDrawer = createDrawerNavigator(
-  {
-    Home: MainTabs,
-    'Personal Information': PersonalInfoScreen,
-    Settings: SettingsScreen,
-    "Get Help": GetHelpScreen,
-    Logout: StartScreen,
-  },
-  {
-    initialRouteName: "Logout",
-    contentOptions: {
-      activeTintColor: "orange",
-      inactiveBackgroundColor: "#e91e63",
-    },
-    contentComponent: MenuScreen,
-  }
-);
-
 // The main app with both navigation workflows
 const App = createSwitchNavigator({
   Auth: {
     screen: AuthStack,
   },
   App: {
-    screen: MainDrawer,
+    screen: MainTabs,
   },
 });
 

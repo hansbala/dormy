@@ -12,7 +12,7 @@
       </touchable-opacity>
       <nb-list class="drawer-items-list">
         <nb-list-item
-          v-for="item in drawerItems"
+          v-for="item in menuItems"
           :key="item.route"
           button
           border
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      drawerItems: [
+      menuItems: [
         {
           name: "Personal Information",
           route: "Personal Information",
@@ -144,7 +144,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 60%;
-  margin-top: 40;
+  margin-top: 70;
   margin-left: auto;
   margin-right: auto;
   border-width: 1;

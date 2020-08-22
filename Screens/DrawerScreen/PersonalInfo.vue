@@ -1,98 +1,84 @@
 <template>
   <nb-container class="container" :style="{ backgroundColor: '#fff' }">
-    <nb-header>
-      <nb-left>
-        <touchable-opacity :on-press="navToMenu">
-          <image class="menu-icon" :source="require('../../assets/iconsv2/arrow-left.png')" />
-        </touchable-opacity>
-      </nb-left>
-      <!-- <nb-body>
-        <nb-title>Personal Information</nb-title>
-      </nb-body>
-      <nb-right /> -->
-    </nb-header>
     <nb-content class="screen-wrapper">
-      <text class="edit-info-txt">Edit personal info</text>
+
+      <text class="edit-txt">Edit personal info</text>
       <view class="personal-information">
         <view class="data">
 
           <view class="data-field">
             <view class="horizontal-flex">
               <text class="input-heading">First name</text>
+              <text-input
+                class="input-field"
+                v-model="firstname">{{userData.realName}}
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false"
-              v-model="username">{{userData.realName}}
-            </text-input>
           </view>
 
           <view class="data-field">
             <view class="horizontal-flex">
               <text class="input-heading">Last name</text>
+              <text-input
+                class="input-field"
+                v-model="lastname">{{userData.realName}}
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false">{{userData.realName}}
-            </text-input>
           </view>
 
           <view class="data-field">
             <view class="horizontal-flex">
               <text class="input-heading">Gender</text>
+              <text-input
+                class="input-field"
+                v-model="gender">Pull from DB
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false">Call to gender from DB
-            </text-input>
           </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Mobile</text>
+              <text-input
+                class="input-field"
+                v-model="mobile">6099152488
+              </text-input>
+            </view>
+          </view>
+
+        </view>
+      </view>
+
+      <text class="security-txt">Security</text>
+      <view class="personal-information">
+        <view class="data">
 
           <view class="data-field">
             <view class="horizontal-flex">
               <text class="input-heading">Email</text>
+              <text-input
+                class="input-field"
+                v-model="email">weed@brown420.com
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false">weed420@brown.edu
-            </text-input>
-          </view>
-
-          <view class="data-field">
-            <view class="horizontal-flex">
-              <text class="input-heading">Phone number</text>
-            </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false">911
-            </text-input>
           </view>
 
           <view class="data-field">
             <view class="horizontal-flex">
               <text class="input-heading">Password</text>
+              <text-input
+                class="input-field"
+                v-model="password">*****
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              :secureTextEntry="false"
-              v-model="password">*****
-            </text-input>
-          </view>
-
-          <view class="data-field">
-            <text class="input-heading">Bio:</text>
-            <text class="currentVal">{{userData.bio}}</text>
-            <nb-textarea
-              placeholder="This would be a prop value"
-              :rowSpan="5"
-              bordered
-              v-model="bio"
-            />
           </view>
 
         </view>
+
         <nb-button :on-press="updateChanges" class="save-btn">
           <nb-text class="save-txt">Save</nb-text>
         </nb-button>
+
       </view>
     </nb-content>
   </nb-container>
@@ -114,9 +100,12 @@ export default {
   data() {
     return {
       userData: Object,
-      username: "",
-      password: "",
-      bio: "",
+      firstname: "",
+      lastname: "",
+      gender: "",
+      mobile: "",
+      email: "",
+      password: ""
     };
   },
   mounted() {
@@ -162,16 +151,16 @@ export default {
   flex-direction: row;
 }
 
-.menu-icon {
-  width: 30;
-  height: 30;
-  padding-left: 10;
-  padding-right: 10;
+.edit-txt {
+  margin-top: 30;
+  margin: 10%;
+  font-size: 20;
+  font-weight: 600;
 }
 
-.edit-info-txt {
-  margin-top: 30;
-  margin: 35;
+.security-txt {
+  margin-top: 10;
+  margin: 10%;
   font-size: 20;
   font-weight: 600;
 }
@@ -187,27 +176,27 @@ export default {
 }
 
 .data-field {
-  margin-bottom: 20;
+  margin-bottom: 40;
   border-bottom-width: 1;
-  border-color: rgb(204, 204, 204);
+  border-color: rgb(201, 201, 201);
 }
 
 .input-heading {
   color: #f74c01;
-  margin-bottom: 5;
   font-size: 16;
+}
+
+.input-field {
+  font-size: 16;
+  text-align: right;
+  margin-bottom: 25;
+  width: 60%;
 }
 
 .currentVal {
   color: black;
   font-size: 16;
   margin-left: 5;
-}
-
-.input-field {
-  width: 90%;
-  margin-top: 5;
-  margin-bottom: 25;
 }
 
 .save-btn {
@@ -218,6 +207,7 @@ export default {
   margin-top: 20;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 60;
   border-width: 1;
   border-color: #e15e5e;
   background-color: transparent;

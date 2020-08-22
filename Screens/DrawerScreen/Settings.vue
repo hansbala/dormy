@@ -1,19 +1,7 @@
 <template>
   <nb-container class="container" :style="{ backgroundColor: '#fff' }">
-    <nb-header>
-      <nb-left>
-        <touchable-opacity :on-press="navToMenu">
-          <image class="menu-icon" :source="require('../../assets/iconsv2/arrow-left.png')" />
-        </touchable-opacity>
-      </nb-left>
-      <nb-body>
-        <nb-title>Settings</nb-title>
-      </nb-body>
-      <nb-right />
-    </nb-header>
     <nb-content class="screen-wrapper">
       <view class="logo-wrapper">
-        <image class="logo" :source="require('../../assets/iconsv2/logo.png')" />
         <text class="title-txt">Account Settings</text>
 
         <view class="data">
@@ -84,9 +72,6 @@ export default {
     this.fetchUserData();
   },
   methods: {
-    navToMenu() {
-      this.navigation.navigate('Home');
-    },
     async fetchUserData() {
       let res = await getUserData(
         firebaseAuth.currentUser.uid,
@@ -131,7 +116,10 @@ export default {
 }
 
 .title-txt {
-  font-size: 30;
+  margin-top: 30;
+  margin: 35;
+  font-size: 20;
+  font-weight: 600;
 }
 
 .logo-wrapper {
