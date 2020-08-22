@@ -9,7 +9,7 @@ export async function getUserData(uid, failCallback) {
     let realName = '';
     await usersRef.doc(uid).get().then((doc) => {
         if (doc.exists) {
-            realName =  doc.data()
+            realName = doc.data()
         } else {
             failCallback();
         }

@@ -6,37 +6,76 @@
           <image class="menu-icon" :source="require('../../assets/iconsv2/arrow-left.png')" />
         </touchable-opacity>
       </nb-left>
-      <nb-body>
-        <nb-title>Settings</nb-title>
+      <!-- <nb-body>
+        <nb-title>Personal Information</nb-title>
       </nb-body>
-      <nb-right />
+      <nb-right /> -->
     </nb-header>
     <nb-content class="screen-wrapper">
-      <view class="logo-wrapper">
-        <image class="logo" :source="require('../../assets/iconsv2/logo.png')" />
-        <text class="title-txt">Account Settings</text>
-
+      <text class="edit-info-txt">Edit personal info</text>
+      <view class="personal-information">
         <view class="data">
+
           <view class="data-field">
             <view class="horizontal-flex">
-              <text class="input-heading">Username:</text>
-              <text class="currentVal">{{userData.realName}}</text>
+              <text class="input-heading">First name</text>
             </view>
-
-            <text-input class="input-field" placeholder="Enter New Username" v-model="username"></text-input>
+            <text-input
+              class="input-field"
+              :secureTextEntry="false"
+              v-model="username">{{userData.realName}}
+            </text-input>
           </view>
 
           <view class="data-field">
             <view class="horizontal-flex">
-              <text class="input-heading">Password:</text>
-              <text class="currentVal">******</text>
+              <text class="input-heading">Last name</text>
             </view>
             <text-input
               class="input-field"
-              placeholder="Enter New Password"
-              :secureTextEntry="true"
-              v-model="password"
-            ></text-input>
+              :secureTextEntry="false">{{userData.realName}}
+            </text-input>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Gender</text>
+            </view>
+            <text-input
+              class="input-field"
+              :secureTextEntry="false">Call to gender from DB
+            </text-input>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Email</text>
+            </view>
+            <text-input
+              class="input-field"
+              :secureTextEntry="false">weed420@brown.edu
+            </text-input>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Phone number</text>
+            </view>
+            <text-input
+              class="input-field"
+              :secureTextEntry="false">911
+            </text-input>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Password</text>
+            </view>
+            <text-input
+              class="input-field"
+              :secureTextEntry="false"
+              v-model="password">*****
+            </text-input>
           </view>
 
           <view class="data-field">
@@ -130,28 +169,27 @@ export default {
   padding-right: 10;
 }
 
-.title-txt {
-  font-size: 30;
+.edit-info-txt {
+  margin-top: 30;
+  margin: 35;
+  font-size: 20;
+  font-weight: 600;
 }
 
-.logo-wrapper {
+.personal-information {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.logo {
-  width: 100;
-  height: 100;
-}
-
 .data {
   width: 80%;
-  margin-top: 20;
 }
 
 .data-field {
   margin-bottom: 20;
+  border-bottom-width: 1;
+  border-color: rgb(204, 204, 204);
 }
 
 .input-heading {
@@ -167,11 +205,9 @@ export default {
 }
 
 .input-field {
-  border-width: 1;
-  border-radius: 3;
-  border-color: gray;
   width: 90%;
-  padding: 10;
+  margin-top: 5;
+  margin-bottom: 25;
 }
 
 .save-btn {

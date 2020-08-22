@@ -23,7 +23,7 @@ import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import LoginScreen from "./Screens/UserRegistration/Login.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
-import ProfileScreen from "./Screens/DrawerScreen/Profile.vue";
+import PersonalInfoScreen from "./Screens/DrawerScreen/PersonalInfo.vue";
 import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
 import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
@@ -106,6 +106,24 @@ const RideShareNavigatorStack = createStackNavigator({
     },
   },
 });
+
+// // Menu stack
+// const MainDrawer = createStackNavigator({
+//   Menu: {
+//     screen: MenuScreen,
+//     navigationOptions: {
+//       title: "Menu",
+//       header: null,
+//     },
+//   },
+//   Settings: {
+//     screen: SettingsScreen,
+//     navigationOptions: {
+//       title: "Settings",
+//       header: null,
+//     },
+//   },
+// });
 
 // Main application tabs
 const MainTabs = createBottomTabNavigator({
@@ -270,6 +288,7 @@ const MainTabs = createBottomTabNavigator({
 const MainDrawer = createDrawerNavigator(
   {
     Home: MainTabs,
+    'Personal Information': PersonalInfoScreen,
     Settings: SettingsScreen,
     "Get Help": GetHelpScreen,
     Logout: StartScreen,
@@ -283,24 +302,6 @@ const MainDrawer = createDrawerNavigator(
     contentComponent: MenuScreen,
   }
 );
-
-// // Menu stack
-// const MainDrawer = createStackNavigator({
-//   Menu: {
-//     screen: MenuScreen,
-//     navigationOptions: {
-//       title: "Menu",
-//       header: null,
-//     },
-//   },
-//   Settings: {
-//     screen: SettingsScreen,
-//     navigationOptions: {
-//       title: "Settings",
-//       header: null,
-//     },
-//   },
-// });
 
 // The main app with both navigation workflows
 const App = createSwitchNavigator({

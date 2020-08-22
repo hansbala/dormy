@@ -15,7 +15,7 @@
           v-for="item in drawerItems"
           :key="item.route"
           button
-          noBorder
+          border
           :onPress="() => handleListItemClick(item)"
           class="drawer-item"
         >
@@ -46,14 +46,6 @@ export default {
         {
           name: "Personal Information",
           route: "Personal Information",
-        },
-        {
-          name: "Housing",
-          route: "Housing",
-        },
-        {
-          name: "Rideshare",
-          route: "Rideshare",
         },
         {
           name: "Settings",
@@ -111,9 +103,9 @@ export default {
 .profile-card {
   display: flex;
   justify-content: center;
-  margin-top: 25;
-  height: 20%;
-  margin: 10;
+  margin-top: 40;
+  height: 100;
+  margin: 15;
 }
 
 .nav-drawer-img {
@@ -133,14 +125,20 @@ export default {
 
 .show-profile {
   font-size: 15;
-  font-weight: 600;
+  font-weight: 500;
   color: #56aabd;
 }
 
 .drawer-items-list {
   width: 100%;
-  margin-top: 0;
+  margin-top: -5;
   background-color: #fafafa;
+}
+
+.drawer-item {
+  margin-left: 30;
+  margin-right: 30;
+  height: 60;
 }
 
 .logout-btn {
@@ -151,10 +149,13 @@ export default {
   margin-top: 30;
   margin-left: auto;
   margin-right: auto;
-  background-color: #f74c01;
+  border-width: 1;
+  border-color: #e15e5e;
+  background-color: transparent;
 }
 
 .logout-txt {
   text-align: center;
+  color: #e15e5e;
 }
 </style>
