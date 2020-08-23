@@ -1,5 +1,11 @@
 <template>
-  <nb-container :style="{ backgroundColor: '#fff' }">
+  <!-- Add a loading screen to prevent seeing both the opt in page and the cards -->
+  <view class="loading-wrapper" v-if="isLoading">
+    <activity-indicator size="large" color="#f74c01" />
+    <text>Loading roommates, Please wait..</text>
+  </view>
+  <!-- Only display the cards if the user has opted in (changing roommateStatus) -->
+  <nb-container v-else-if="userData.roommateStatus">
     <nb-header class="header-wrapper">
       <view class="horizontal-flex">
         <view class="header-text">
@@ -32,13 +38,19 @@
       </view>
     </scroll-view>
   </nb-container>
+  <!-- TODO: Create the opt-in display and page -->
+  <nb-container v-else>
+    <text :style="{flex: 1, fontSize: 70}">TODO: Create the opt-in page</text>
+  </nb-container>
 </template>
 
 <script>
 import React from "react";
 import { View, Text, Image, StyleSheet, RefreshControl } from "react-native";
 import CardComponent from "./RoomateCard";
+import { getUserData } from "../../api/settingsApi.js";
 import { getUsers } from "../../api/roommatesApi.js";
+import { firebaseAuth } from "../../environment/config.js";
 import { Alert } from "react-native";
 
 export default {
@@ -59,15 +71,29 @@ export default {
       cardItemsArr: [],
       roommateCardPairs: [],
       refreshing: false,
+      userData: Object,
+      isLoading: true,
     };
   },
   mounted() {
     this.fetchUsers();
+    this.fetchUserData();
   },
   components: {
     CardComponent,
   },
   methods: {
+    // Fetches the current user's data and stores it in the userData field
+    // Used to determine if the user has opted in to the roommate section
+    async fetchUserData() {
+      let res = await getUserData(
+        firebaseAuth.currentUser.uid,
+        this.retrievingUserFailed
+      );
+      this.userData = res;
+      this.isLoading = false;
+      console.log("Logging your user data: ", this.userData);
+    },
     async fetchUsers() {
       let res = await getUsers();
       this.cardItemsArr = res;
@@ -90,6 +116,12 @@ export default {
       this.refreshing = true;
       this.fetchUsers();
       this.refreshing = false;
+    },
+    // failureCallback() passed in when trying to get the current user's data
+    retrievingUserFailed() {
+      Alert.alert("Error getting user information", "Error: " + errorMessage, {
+        cancelable: false,
+      });
     },
   },
 };
@@ -154,5 +186,12 @@ const styles = StyleSheet.create({
 /* Opacity should be 0 for empty cards */
 .emptyCard {
   opacity: 0;
+}
+
+/* Loading indicator styles */
+.loading-wrapper {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>
