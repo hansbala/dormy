@@ -40,7 +40,12 @@
   </nb-container>
   <!-- TODO: Create the opt-in display and page -->
   <nb-container v-else>
-    <text :style="{flex: 1, fontSize: 70}">TODO: Create the opt-in page</text>
+    <view class="post-btn-wrapper">
+      <text>TODO: Create a better opt-in button. Using this one in the meantime to redirect you to the roommate signup</text>
+      <nb-button :on-press="goToRoommateCreation" :style="{backgroundColor: '#f74c01'}">
+        <nb-text>Todo: Create a better button</nb-text>
+      </nb-button>
+    </view>
   </nb-container>
 </template>
 
@@ -67,7 +72,6 @@ export default {
         realName: "", // Used as the key in the html v-for
         isEmpty: true,
       },
-      // TODO: Pull these from firebase instead of hardcoding here
       cardItemsArr: [],
       roommateCardPairs: [],
       refreshing: false,
@@ -122,6 +126,10 @@ export default {
       Alert.alert("Error getting user information", "Error: " + errorMessage, {
         cancelable: false,
       });
+    },
+    // Navigates user to the roommate profile creation page
+    goToRoommateCreation() {
+      this.navigation.navigate("RoommateCreationPage");
     },
   },
 };
@@ -193,5 +201,12 @@ const styles = StyleSheet.create({
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+/* Opt-in button styling */
+.post-btn-wrapper {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
 </style>
