@@ -6,10 +6,12 @@ import { firebaseDB } from '../environment/config.js';
 // If it exists, it returns the users data, otherwise it calls the failCallback
 export async function getUserData(uid, failCallback) {
     const usersRef = firebaseDB.collection('users');
-    let realName = '';
+    let user = Object;
     await usersRef.doc(uid).get().then((doc) => {
         if (doc.exists) {
-            realName = doc.data()
+            user = doc.data()
+            user.firstName = user.realName.split(" ")[0]
+            user.lastName = user.realName.split(" ")[1]
         } else {
             failCallback();
         }
@@ -17,7 +19,7 @@ export async function getUserData(uid, failCallback) {
         console.log(err);
         failCallback();
     });
-    return realName;
+    return user;
 }
 
 //Updates a users setting

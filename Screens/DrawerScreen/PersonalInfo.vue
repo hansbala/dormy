@@ -2,7 +2,7 @@
   <nb-container class="container" :style="{ backgroundColor: '#fff' }">
     <nb-content class="screen-wrapper">
 
-      <text class="edit-txt">Edit personal info</text>
+      <text class="edit-txt">Edit personal information</text>
       <view class="personal-information">
         <view class="data">
 
@@ -11,7 +11,7 @@
               <text class="input-heading">First name</text>
               <text-input
                 class="input-field"
-                v-model="firstname">{{userData.realName}}
+                v-model="firstname">{{userData.firstName}}
               </text-input>
             </view>
           </view>
@@ -21,7 +21,7 @@
               <text class="input-heading">Last name</text>
               <text-input
                 class="input-field"
-                v-model="lastname">{{userData.realName}}
+                v-model="lastname">{{userData.lastName}}
               </text-input>
             </view>
           </view>
@@ -58,7 +58,7 @@
               <text class="input-heading">Email</text>
               <text-input
                 class="input-field"
-                v-model="email">weed@brown420.com
+                v-model="email">{{userData.email}}
               </text-input>
             </view>
           </view>
@@ -112,9 +112,6 @@ export default {
     this.fetchUserData();
   },
   methods: {
-    navToMenu() {
-      this.navigation.navigate('Home');
-    },
     async fetchUserData() {
       let res = await getUserData(
         firebaseAuth.currentUser.uid,

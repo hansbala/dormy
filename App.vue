@@ -137,19 +137,19 @@ const MenuNavigatorStack = createStackNavigator({
   "Personal Information": {
     screen: PersonalInfoScreen,
     navigationOptions: {
-      title: "Personal Information",
+      title: null,
     },
   },
   Settings: {
     screen: SettingsScreen,
     navigationOptions: {
-      title: "Settings",
+      title: null,
     },
   },
   'Get Help': {
     screen: GetHelpScreen,
     navigationOptions: {
-      title: "Get Help",
+      title: null,
     },
   },
 });
