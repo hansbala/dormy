@@ -12,10 +12,10 @@
       </touchable-opacity>
       <nb-list class="drawer-items-list">
         <nb-list-item
-          v-for="item in drawerItems"
+          v-for="item in menuItems"
           :key="item.route"
           button
-          noBorder
+          border
           :onPress="() => handleListItemClick(item)"
           class="drawer-item"
         >
@@ -42,18 +42,10 @@ export default {
   },
   data() {
     return {
-      drawerItems: [
+      menuItems: [
         {
           name: "Personal Information",
           route: "Personal Information",
-        },
-        {
-          name: "Housing",
-          route: "Housing",
-        },
-        {
-          name: "Rideshare",
-          route: "Rideshare",
         },
         {
           name: "Settings",
@@ -111,9 +103,8 @@ export default {
 .profile-card {
   display: flex;
   justify-content: center;
-  margin-top: 25;
-  height: 20%;
-  margin: 10;
+  margin-top: 30;
+  height: 130;
 }
 
 .nav-drawer-img {
@@ -121,26 +112,31 @@ export default {
   height: 80;
   border-radius: 70;
   align-self: flex-start;
-  margin-top: 5%;
-  margin: 15;
+  margin: 30;
 }
 
 .user-name {
   font-size: 25;
-  text-align: center;
+  margin-left: -10;
   margin-top: 4;
 }
 
 .show-profile {
   font-size: 15;
-  font-weight: 600;
+  font-weight: 500;
+  margin-left: -10;
   color: #56aabd;
 }
 
 .drawer-items-list {
   width: 100%;
-  margin-top: 0;
   background-color: #fafafa;
+}
+
+.drawer-item {
+  margin-left: 30;
+  margin-right: 30;
+  height: 70;
 }
 
 .logout-btn {
@@ -148,13 +144,16 @@ export default {
   justify-content: center;
   align-items: center;
   width: 60%;
-  margin-top: 30;
+  margin-top: 70;
   margin-left: auto;
   margin-right: auto;
-  background-color: #f74c01;
+  border-width: 1;
+  border-color: #e15e5e;
+  background-color: transparent;
 }
 
 .logout-txt {
   text-align: center;
+  color: #e15e5e;
 }
 </style>

@@ -1,47 +1,84 @@
 <template>
   <nb-container class="container" :style="{ backgroundColor: '#fff' }">
     <nb-content class="screen-wrapper">
-      <view class="logo-wrapper">
-        <text class="title-txt">Account Settings</text>
 
+      <text class="edit-txt">Edit personal information</text>
+      <view class="personal-information">
         <view class="data">
+
           <view class="data-field">
             <view class="horizontal-flex">
-              <text class="input-heading">Username:</text>
-              <text class="currentVal">{{userData.realName}}</text>
+              <text class="input-heading">First name</text>
+              <text-input
+                class="input-field"
+                v-model="firstname">{{userData.firstName}}
+              </text-input>
             </view>
-
-            <text-input class="input-field" placeholder="Enter New Username" v-model="username"></text-input>
           </view>
 
           <view class="data-field">
             <view class="horizontal-flex">
-              <text class="input-heading">Password:</text>
-              <text class="currentVal">******</text>
+              <text class="input-heading">Last name</text>
+              <text-input
+                class="input-field"
+                v-model="lastname">{{userData.lastName}}
+              </text-input>
             </view>
-            <text-input
-              class="input-field"
-              placeholder="Enter New Password"
-              :secureTextEntry="true"
-              v-model="password"
-            ></text-input>
           </view>
 
           <view class="data-field">
-            <text class="input-heading">Bio:</text>
-            <text class="currentVal">{{userData.bio}}</text>
-            <nb-textarea
-              placeholder="This would be a prop value"
-              :rowSpan="5"
-              bordered
-              v-model="bio"
-            />
+            <view class="horizontal-flex">
+              <text class="input-heading">Gender</text>
+              <text-input
+                class="input-field"
+                v-model="gender">Pull from DB
+              </text-input>
+            </view>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Mobile</text>
+              <text-input
+                class="input-field"
+                v-model="mobile">6099152488
+              </text-input>
+            </view>
           </view>
 
         </view>
+      </view>
+
+      <text class="security-txt">Security</text>
+      <view class="personal-information">
+        <view class="data">
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Email</text>
+              <text-input
+                class="input-field"
+                v-model="email">{{userData.email}}
+              </text-input>
+            </view>
+          </view>
+
+          <view class="data-field">
+            <view class="horizontal-flex">
+              <text class="input-heading">Password</text>
+              <text-input
+                class="input-field"
+                v-model="password">*****
+              </text-input>
+            </view>
+          </view>
+
+        </view>
+
         <nb-button :on-press="updateChanges" class="save-btn">
           <nb-text class="save-txt">Save</nb-text>
         </nb-button>
+
       </view>
     </nb-content>
   </nb-container>
@@ -63,9 +100,12 @@ export default {
   data() {
     return {
       userData: Object,
-      username: "",
-      password: "",
-      bio: "",
+      firstname: "",
+      lastname: "",
+      gender: "",
+      mobile: "",
+      email: "",
+      password: ""
     };
   },
   mounted() {
@@ -108,58 +148,52 @@ export default {
   flex-direction: row;
 }
 
-.menu-icon {
-  width: 30;
-  height: 30;
-  padding-left: 10;
-  padding-right: 10;
-}
-
-.title-txt {
+.edit-txt {
   margin-top: 30;
-  margin: 35;
+  margin: 10%;
   font-size: 20;
   font-weight: 600;
 }
 
-.logo-wrapper {
+.security-txt {
+  margin-top: 10;
+  margin: 10%;
+  font-size: 20;
+  font-weight: 600;
+}
+
+.personal-information {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.logo {
-  width: 100;
-  height: 100;
-}
-
 .data {
   width: 80%;
-  margin-top: 20;
 }
 
 .data-field {
-  margin-bottom: 20;
+  margin-bottom: 40;
+  border-bottom-width: 1;
+  border-color: rgb(201, 201, 201);
 }
 
 .input-heading {
   color: #f74c01;
-  margin-bottom: 5;
   font-size: 16;
+}
+
+.input-field {
+  font-size: 16;
+  text-align: right;
+  margin-bottom: 25;
+  width: 60%;
 }
 
 .currentVal {
   color: black;
   font-size: 16;
   margin-left: 5;
-}
-
-.input-field {
-  border-width: 1;
-  border-radius: 3;
-  border-color: gray;
-  width: 90%;
-  padding: 10;
 }
 
 .save-btn {
@@ -170,6 +204,7 @@ export default {
   margin-top: 20;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 60;
   border-width: 1;
   border-color: #e15e5e;
   background-color: transparent;

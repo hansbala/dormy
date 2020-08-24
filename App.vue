@@ -18,14 +18,11 @@ import Vue from "vue-native-core";
 import { VueNativeBase, Icon } from "native-base";
 Vue.use(VueNativeBase);
 
-import MenuScreen from "./Screens/Navigation/Menu.vue";
+
 import StartScreen from "./Start.vue";
 import CreateAccountScreen from "./Screens/UserRegistration/CreateAccount.vue";
 import LoginScreen from "./Screens/UserRegistration/Login.vue";
 import HomeScreen from "./Screens/Home/Home.vue";
-import ProfileScreen from "./Screens/DrawerScreen/Profile.vue";
-import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
-import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import HousingScreen from "./Screens/Housing/Housing.vue";
 import AddHousingScreen from "./Screens/Housing/AddHousing.vue";
 import HousingListingScreen from "./Screens/Housing/HousingListing.vue";
@@ -34,6 +31,10 @@ import MessagesScreen from "./Screens/Communication/Messages.vue";
 import RideShareListScreen from "./Screens/RideShare/RideShare-list.vue";
 import RoommateScreen from "./Screens/Roomate/Roomate.vue";
 import RoommateCardExpanded from "./Screens/Roomate/RoommateCardExpanded.vue";
+import MenuScreen from "./Screens/Navigation/Menu.vue";
+import PersonalInfoScreen from "./Screens/DrawerScreen/PersonalInfo.vue";
+import SettingsScreen from "./Screens/DrawerScreen/Settings.vue";
+import GetHelpScreen from "./Screens/DrawerScreen/GetHelp.vue";
 import RoommateCreationPage from "./Screens/Roomate/RoommateCreation.vue";
 
 // Will need the switch navigator for the login flow
@@ -90,7 +91,7 @@ const HousingNavigatorStack = createStackNavigator({
   },
 });
 
-// Ride Share stack
+// Rideshare stack
 const RideShareNavigatorStack = createStackNavigator({
   FindRideShare: {
     screen: RideShareScreen,
@@ -110,7 +111,7 @@ const RideShareNavigatorStack = createStackNavigator({
 
 // Roommate Stack
 const RoommateNavigatorStack = createStackNavigator({
-  Roommates: {
+  Roommate: {
     screen: RoommateScreen,
     navigationOptions: {
       title: "Browse",
@@ -127,6 +128,35 @@ const RoommateNavigatorStack = createStackNavigator({
     screen: RoommateCreationPage,
     navigationOptions: {
       title: "Join The Community",
+    },
+  },
+});
+
+// Menu stack
+const MenuNavigatorStack = createStackNavigator({
+  Menu: {
+    screen: MenuScreen,
+    navigationOptions: {
+      title: "Menu",
+      header: null,
+    },
+  },
+  "Personal Information": {
+    screen: PersonalInfoScreen,
+    navigationOptions: {
+      title: null,
+    },
+  },
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      title: null,
+    },
+  },
+  'Get Help': {
+    screen: GetHelpScreen,
+    navigationOptions: {
+      title: null,
     },
   },
 });
@@ -258,7 +288,7 @@ const MainTabs = createBottomTabNavigator({
     },
   },
   Menu: {
-    screen: MenuScreen,
+    screen: MenuNavigatorStack,
     navigationOptions: {
       tabBarIcon: ({ focused, color, size }) => {
         const styles = StyleSheet.create({
@@ -290,49 +320,13 @@ const MainTabs = createBottomTabNavigator({
   },
 });
 
-// Main drawer for the application
-const MainDrawer = createDrawerNavigator(
-  {
-    Home: MainTabs,
-    Settings: SettingsScreen,
-    "Get Help": GetHelpScreen,
-    Logout: StartScreen,
-  },
-  {
-    initialRouteName: "Logout",
-    contentOptions: {
-      activeTintColor: "orange",
-      inactiveBackgroundColor: "#e91e63",
-    },
-    contentComponent: MenuScreen,
-  }
-);
-
-// // Menu stack
-// const MainDrawer = createStackNavigator({
-//   Menu: {
-//     screen: MenuScreen,
-//     navigationOptions: {
-//       title: "Menu",
-//       header: null,
-//     },
-//   },
-//   Settings: {
-//     screen: SettingsScreen,
-//     navigationOptions: {
-//       title: "Settings",
-//       header: null,
-//     },
-//   },
-// });
-
 // The main app with both navigation workflows
 const App = createSwitchNavigator({
   Auth: {
     screen: AuthStack,
   },
   App: {
-    screen: MainDrawer,
+    screen: MainTabs,
   },
 });
 
