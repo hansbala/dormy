@@ -30,7 +30,7 @@
               :style="{margin: 5, marginLeft: 10, height: 20, width: 20}"
               :source="require('../../assets/iconsv2/location-icon.png')"
             />
-            <text :style="{flex: 1, alignText: 'center'}">{{item.preferredLocation}}</text>
+            <text :style="{flex: 1}">{{item.preferredLocation}}</text>
           </view>
         </view>
       </nb-cardItem>
@@ -42,9 +42,6 @@
 import React from "react";
 import { View, ImageBackground } from "react-native";
 export default {
-  mounted() {
-    this.show();
-  },
   props: {
     item: {
       type: Object,
@@ -54,9 +51,6 @@ export default {
     },
   },
   methods: {
-    show() {
-      console.log("card doc: ", this.item);
-    },
     goToRoommate() {
       this.navigation.navigate("RoommateCardExpanded");
     },

@@ -34,6 +34,7 @@ import MessagesScreen from "./Screens/Communication/Messages.vue";
 import RideShareListScreen from "./Screens/RideShare/RideShare-list.vue";
 import RoommateScreen from "./Screens/Roomate/Roomate.vue";
 import RoommateCardExpanded from "./Screens/Roomate/RoommateCardExpanded.vue";
+import RoommateCreationPage from "./Screens/Roomate/RoommateCreation.vue";
 
 // Will need the switch navigator for the login flow
 // to essentially remove the "Back" button from different
@@ -120,6 +121,12 @@ const RoommateNavigatorStack = createStackNavigator({
     screen: RoommateCardExpanded,
     navigationOptions: {
       title: "Individual Card",
+    },
+  },
+  RoommateCreationPage: {
+    screen: RoommateCreationPage,
+    navigationOptions: {
+      title: "Join The Community",
     },
   },
 });
