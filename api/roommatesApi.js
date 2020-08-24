@@ -5,7 +5,10 @@ import { firebaseDB } from '../environment/config.js';
 // If it exists, it returns a list of users, otherwise it calls the failCallback
 export async function getUsers() {
     let users = [];
-    let usersRef = await firebaseDB.collection('users').get();
+    let usersRef = await firebaseDB.collection('users').get()
+        .catch((err) => {
+            console.log(err);
+        });
     usersRef.forEach(doc => {
         const user = doc.data()
         user.id = doc.id;
