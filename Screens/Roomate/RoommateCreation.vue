@@ -61,14 +61,15 @@
       </view>
 
       <!-- Roommate lifestyle questions -->
-      <text class="section-header">Lifestyle and Habits</text>
+      <text class="section-header" :style="{marginTop: '15%'}">Lifestyle and Habits</text>
       <view class="section" :style="{marginTop: '5%'}">
         <text
           class="section-descriptor"
         >This will help us match you with the most compatible roommates!</text>
+        <!-- Cleanliness -->
         <view class="questionnaire">
           <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Cleanliness</text>
-          <text :style="{textAlign: 'right', flex: 1 }">{{cleanliness}}/10</text>
+          <text class="lifestyle-score">{{cleanliness}}/10</text>
         </view>
         <slider
           class="slider-actual"
@@ -86,6 +87,179 @@
           <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Messy</text>
           <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Spotless</text>
         </view>
+        <!-- Sleep Schedule  -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Bedtime</text>
+          <text class="lifestyle-score">{{bedtime}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="bedtimeChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Early</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Night Owl</text>
+        </view>
+        <!-- Tobacco Use Preference -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Tobacco</text>
+          <text class="lifestyle-score">{{tobacco}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="tobaccoChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Never</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Regularly</text>
+        </view>
+        <!-- Alcohol Level -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Drinking</text>
+          <text class="lifestyle-score">{{alcohol}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="alcoholChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Never</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Regularly</text>
+        </view>
+        <!-- Drug Use -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Drug Use</text>
+          <text class="lifestyle-score">{{drugUse}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="drugUseChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Never</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Regularly</text>
+        </view>
+        <!-- Interaction / Personality -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Personality</text>
+          <text class="lifestyle-score">{{personality}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="personalityChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Introvert</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Extrovert</text>
+        </view>
+        <!-- Eating Habits -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Meals</text>
+          <text class="lifestyle-score">{{eatingHabits}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="eatingHabitsChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">At Home</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Take Out</text>
+        </view>
+        <!-- Work Habits -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Work Habits</text>
+          <text class="lifestyle-score">{{workHabits}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="workHabitsChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">At home</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Out and About</text>
+        </view>
+        <!-- Guests -->
+        <view class="questionnaire">
+          <text class="lifestyle-description" :style="{textAlign: 'left', flex: 1}">Friends over?</text>
+          <text class="lifestyle-score">{{guests}}/10</text>
+        </view>
+        <slider
+          class="slider-actual"
+          :value="1"
+          :minimumValue="1"
+          :maximumValue="10"
+          :step="1"
+          :onValueChange="guestsChanged"
+          :minimumTrackTintColor="'#f74c01'"
+          :maximumTrackTintColor="'#f74c01'"
+          :thumbTintColor="'#ffffff'"
+          :thumbStyle="{borderColor: '#f74c01', borderRadius: 25, borderWidth: 1.5}"
+        />
+        <view class="questionnaire" :style="{marginTop: -5}">
+          <text class="lifestyle-extremes" :style="{textAlign: 'left'}">Rarely</text>
+          <text class="lifestyle-extremes" :style="{textAlign: 'right'}">Regularly</text>
+        </view>
+      </view>
+      <view class="post-btn-wrapper">
+        <nb-button class="post-btn" :on-press="submitPressed">
+          <nb-text>Complete Profile</nb-text>
+        </nb-button>
       </view>
     </nb-content>
   </view>
@@ -103,6 +277,14 @@ export default {
     return {
       budget: 1000,
       cleanliness: 1,
+      bedtime: 1,
+      tobacco: 1,
+      alcohol: 1,
+      drugUse: 1,
+      personality: 1,
+      guests: 1,
+      eatingHabits: 1,
+      workHabits: 1,
     };
   },
   methods: {
@@ -111,6 +293,45 @@ export default {
     },
     cleanlinessChanged(value) {
       this.cleanliness = Math.ceil(value);
+    },
+    bedtimeChanged(value) {
+      this.bedtime = Math.ceil(value);
+    },
+    tobaccoChanged(value) {
+      this.tobacco = Math.ceil(value);
+    },
+    alcoholChanged(value) {
+      this.alcohol = Math.ceil(value);
+    },
+    drugUseChanged(value) {
+      this.drugUse = Math.ceil(value);
+    },
+    personalityChanged(value) {
+      this.personality = Math.ceil(value);
+    },
+    guestsChanged(value) {
+      this.guests = Math.ceil(value);
+    },
+    eatingHabitsChanged(value) {
+      this.eatingHabits = Math.ceil(value);
+    },
+    workHabitsChanged(value) {
+      this.workHabits = Math.ceil(value);
+    },
+    // TODO: add this array of roommate stats to the firebase 
+    submitPressed() {
+      let lifestyleHabits = [
+        this.cleanliness,
+        this.bedtime,
+        this.tobacco,
+        this.alcohol,
+        this.drugUse,
+        this.personality,
+        this.eatingHabits,
+        this.workHabits,
+        this.guests,
+      ];
+      console.log(lifestyleHabits);
     },
   },
   components: {
@@ -150,6 +371,13 @@ export default {
 
 .lifestyle-description {
   font-size: 16;
+  margin-top: 10%;
+}
+
+.lifestyle-score {
+  text-align: right;
+  flex: 1;
+  margin-top: 10%;
 }
 
 .lifestyle-extremes {
@@ -204,5 +432,19 @@ export default {
   font-size: 20;
   font-weight: bold;
   text-align: center;
+}
+
+.post-btn-wrapper {
+  margin-top: 15%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  margin-bottom: 10%;
+}
+.post-btn {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #f74c01;
 }
 </style>
