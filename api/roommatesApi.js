@@ -18,10 +18,6 @@ export async function getUsers(uid) {
                 user.realName = user.realName.split(" ")[0];
                 users.push(user);
             }
-            user.id = doc.id;
-            handleDefaults(user);
-            user.realName = user.realName.split(" ")[0];
-            users.push(user);
         }
     })
     return users;
