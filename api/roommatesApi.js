@@ -3,7 +3,7 @@ import { firebaseDB } from '../environment/config.js';
 
 // Gets all users in database.
 // If it exists, it returns a list of users, otherwise it calls the failCallback
-export async function getUsers() {
+export async function getUsers(uid) {
     let users = [];
     let usersRef = await firebaseDB.collection('users').get()
         .catch((err) => {
@@ -12,6 +12,12 @@ export async function getUsers() {
     usersRef.forEach(doc => {
         const user = doc.data()
         if (user.roommateStatus) { // Only add if the user is opted into the roommate search
+            if (user.userUID != uid) {
+                user.id = doc.id;
+                handleDefaults(user);
+                user.realName = user.realName.split(" ")[0];
+                users.push(user);
+            }
             user.id = doc.id;
             handleDefaults(user);
             user.realName = user.realName.split(" ")[0];
