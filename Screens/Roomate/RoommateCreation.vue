@@ -7,6 +7,7 @@
         <text-input
           :placeholder="'Tell us about yourself! (Interests, career, hobbies)'"
           class="description-entry-box"
+          v-model="roommateProfileData.bio"
         />
       </view>
       <view class="section">
@@ -14,7 +15,7 @@
         <view class="slider-wrapper">
           <view class="text-wrapper">
             <text>
-              <text class="monthly-asking-price">${{ budget }}</text>/ month
+              <text class="monthly-asking-price">${{ roommateProfileData.budget }}</text>/ month
             </text>
           </view>
           <slider
@@ -37,8 +38,9 @@
         <view class="location-picker">
           <image class="icon" :source="require('../../assets/iconsv2/roommateLocation.png')" />
           <text-input
-            :placeholder="' Where are you looking? (Required)'"
+            :placeholder="'Where are you looking? (Required)'"
             class="location-entry-box"
+            v-model="roommateProfileData.location"
           />
         </view>
       </view>
@@ -47,7 +49,7 @@
         <text class="section-descriptor">Preferred Move in Date</text>
         <view class="location-picker">
           <image class="icon" :source="require('../../assets/iconsv2/cal.png')" />
-          <text-input :placeholder="' Move in date (Required)'" class="location-entry-box" />
+          <text-input :placeholder="'Move in date (Required)'" class="location-entry-box" />
         </view>
       </view>
       <!-- Duration of stay input box -->
@@ -56,7 +58,7 @@
         <text class="section-descriptor">Duration of Stay</text>
         <view class="location-picker">
           <image class="icon" :source="require('../../assets/iconsv2/roommateLocation.png')" />
-          <text-input :placeholder="' Months of stay (Required)'" class="location-entry-box" />
+          <text-input :placeholder="'Months of stay (Required)'" class="location-entry-box" />
         </view>
       </view>
 
@@ -267,6 +269,9 @@
 
 <script>
 import { Slider } from "react-native-elements";
+import { Alert } from "react-native";
+import { firebaseAuth } from "../../environment/config.js";
+import { addRoommateProfile } from "../../api/roommatesApi.js";
 export default {
   props: {
     navigation: {
@@ -275,7 +280,15 @@ export default {
   },
   data() {
     return {
-      budget: 1000,
+      // TODO: Implement the move in and duration of stay variables
+      roommateProfileData: {
+        bio: "",
+        location: "",
+        budget: 1000,
+        // moveInDate: "",
+        // durationOfStay: "",
+        lifestyleHabits: Array,
+      },
       cleanliness: 1,
       bedtime: 1,
       tobacco: 1,
@@ -289,7 +302,7 @@ export default {
   },
   methods: {
     budgetChanged(value) {
-      this.budget = Math.ceil(value);
+      this.roommateProfileData.budget = Math.ceil(value);
     },
     cleanlinessChanged(value) {
       this.cleanliness = Math.ceil(value);
@@ -318,8 +331,22 @@ export default {
     workHabitsChanged(value) {
       this.workHabits = Math.ceil(value);
     },
-    // TODO: add this array of roommate stats to the firebase 
+    // TODO: Add preferred move in date and duration of stay to the firebase
     submitPressed() {
+      // Ensure required fields are filled in
+      if (
+        this.roommateProfileData.bio === "" ||
+        this.roommateProfileData.location === ""
+      ) {
+        Alert.alert(
+          "Failed to Create Profile",
+          "Please fill in all the required fields",
+          {
+            cancelable: false,
+          }
+        );
+        return;
+      }
       let lifestyleHabits = [
         this.cleanliness,
         this.bedtime,
@@ -331,7 +358,14 @@ export default {
         this.workHabits,
         this.guests,
       ];
-      console.log(lifestyleHabits);
+      this.roommateProfileData.lifestyleHabits = lifestyleHabits;
+      addRoommateProfile(
+        firebaseAuth.currentUser.uid,
+        this.roommateProfileData
+      );
+      // Return to the roommate page once everything is successfully completed
+      // Using .push as it rerenders the page (necessary after changing bool roomate status)
+      this.navigation.push("Roommate");
     },
   },
   components: {
@@ -446,5 +480,10 @@ export default {
   justify-content: center;
   align-content: center;
   background-color: #f74c01;
+}
+
+.location-entry-box {
+  padding-left: 5px;
+  flex: 1;
 }
 </style>

@@ -5,7 +5,7 @@
     <text>Loading roommates, Please wait..</text>
   </view>
   <!-- Only display the cards if the user has opted in (changing roommateStatus) -->
-  <nb-container v-else-if="userData.roommateStatus">
+  <nb-container v-else-if="userData.roommateStatus" :key="userData.roommateStatus">
     <nb-header class="header-wrapper">
       <view class="horizontal-flex">
         <view class="header-text">

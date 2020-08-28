@@ -11,10 +11,12 @@ export async function getUsers() {
         });
     usersRef.forEach(doc => {
         const user = doc.data()
-        user.id = doc.id;
-        handleDefaults(user);
-        user.realName = user.realName.split(" ")[0];
-        users.push(user);
+        if (user.roommateStatus) { // Only add if the user is opted into the roommate search
+            user.id = doc.id;
+            handleDefaults(user);
+            user.realName = user.realName.split(" ")[0];
+            users.push(user);
+        }
     })
     return users;
 }
@@ -32,4 +34,19 @@ function handleDefaults(user) {
         user.location = "-";
     }
     return user;
+}
+
+// Adds the roommate-related fields to a user's profile
+export async function addRoommateProfile(uid, roommateData) {
+    const usersRef = firebaseDB.collection('users');
+
+    await usersRef.doc(uid).update({
+        budget: roommateData.budget,
+        bio: roommateData.bio,
+        preferredLocation: roommateData.location,
+        lifestyleHabits: roommateData.lifestyleHabits,
+        roommateStatus: true,
+        // moveInDate: roommateData.moveInDate,
+        // durationOfStay: roommateData.durationOfStay,
+    });
 }
