@@ -13,18 +13,19 @@
             :source="{uri: item.image}"
           />
 
-          <!-- Name, TODO: Add the compatibility score and potentially the age-->
-          <view class="profile-info">
+          <!-- Name, TODO: Add the age-->
+          <view v-if="!item.isEmpty" class="profile-info" :style="{alignItems: 'center'}">
             <text class="profile-info-txt">{{item.realName}}</text>
+            <text class="compatibility">{{cosineSim(item.lifestyleHabits, lifestyleHabits)}}</text>
           </view>
 
-          <!-- Budget for the room. TODO: Don't hardcode, pull from a user account-->
+          <!-- Budget  -->
           <view class="profile-info">
             <text class="profile-ppm">${{item.budget}}</text>
             <text :style="{color: '#808080', flex: 1}">/ Mo</text>
           </view>
 
-          <!-- Roommate location. TODO: Don't hardcode, pull from a user account -->
+          <!-- Location  -->
           <view class="address-preview-wrapper">
             <image
               :style="{margin: 5, marginLeft: 10, height: 20, width: 20}"
@@ -46,6 +47,11 @@ export default {
     item: {
       type: Object,
     },
+    // This is the array of habits passed in from the roommate screen that is
+    // Used with item.lifestyleHabits to compute a compatibility score
+    lifestyleHabits: {
+      type: Array,
+    },
     navigation: {
       type: Object,
     },
@@ -53,6 +59,23 @@ export default {
   methods: {
     goToRoommate() {
       this.navigation.navigate("RoommateCardExpanded");
+    },
+
+    // Calculates the similarity score using cosine similarity
+    cosineSim(A, B) {
+      var dotproduct = 0;
+      var mA = 0;
+      var mB = 0;
+      for (let i = 0; i < A.length; i++) {
+        // here you missed the i++
+        dotproduct += A[i] * B[i];
+        mA += A[i] * A[i];
+        mB += B[i] * B[i];
+      }
+      mA = Math.sqrt(mA);
+      mB = Math.sqrt(mB);
+      var similarity = dotproduct / (mA * mB);
+      return Math.round(100*similarity);
     },
   },
   components: {},
@@ -70,6 +93,14 @@ export default {
   margin-left: 13;
   font-size: 20;
   font-weight: bold;
+}
+
+.compatibility {
+  flex: 2;
+  margin: 10;
+  font-size: 15;
+  font-weight: bold;
+  text-align: right;
 }
 
 .profile-ppm {

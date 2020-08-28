@@ -4,8 +4,8 @@
       <text class="section-header">Background Information</text>
       <view class="section">
         <text class="section-descriptor">Bio</text>
-        <text-input
-          :placeholder="'Tell us about yourself! (Interests, career, hobbies)'"
+        <nb-textarea
+          :placeholder="'Tell us about yourself! Let others know about your hobbies, interests, and career!'"
           class="description-entry-box"
           v-model="roommateProfileData.bio"
         />
@@ -392,7 +392,7 @@ export default {
 }
 
 .description-entry-box {
-  height: 50;
+  height: 100;
   border-color: #a9a9a9;
   border-width: 1;
   border-radius: 5;
