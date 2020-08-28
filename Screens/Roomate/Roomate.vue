@@ -32,6 +32,7 @@
             :class="[card.isEmpty ? 'emptyCard' : 'other']"
             :navigation="this.props.navigation"
             :item="card"
+            :lifestyleHabits="userData.lifestyleHabits"
             :style="{margin: 7}"
           ></CardComponent>
         </view>
