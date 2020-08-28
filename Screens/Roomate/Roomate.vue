@@ -99,7 +99,7 @@ export default {
       console.log("Logging your user data: ", this.userData);
     },
     async fetchUsers() {
-      let res = await getUsers();
+      let res = await getUsers(firebaseAuth.currentUser.uid);
       this.cardItemsArr = res;
       this.createPairsForDisplay();
     },
