@@ -41,7 +41,7 @@ App.vue -> Entry point
 The FireBase database and all other communication for the app is done with the following Gmail address (try to keep this secure). This prevents any personal conflicts:
 ```
 Email:  dormyproject@gmail.com
-Pass:   weed@brown420 
+Pass:   ******
 ```
 
 ## Requirements
