@@ -2,6 +2,8 @@
 
 The Dormy app for iOS and Android. Written in Vue Native.
 
+![Dormy App Image](https://user-images.githubusercontent.com/20383602/79877510-f2205a00-8409-11ea-9c20-688f5a7a99e6.jpg)	
+
 ## TODO
 * Matching rideShare and possibly remove the listing once matched with someone
 * Messaging functionality
